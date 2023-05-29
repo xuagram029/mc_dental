@@ -1,12 +1,24 @@
-import { useState } from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Landing from './pages/Landing'
+import Login from './pages/Login'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Landing />
+    },
+    {
+      path: "login",
+      element: <Login />
+    }
+  ])
 
   return (
-    <div className="">
-      <h1 className='text-3xl font-bold underline'>HELLO MC DENTAL</h1>
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   )
 }
 
