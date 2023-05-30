@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Landing from './pages/Landing'
 import Login from './pages/Login'
-import RegisterUser from './pages/RegisterUser'
 import { Registration } from './pages/Registration'
 
 function App() {
@@ -14,10 +13,6 @@ function App() {
     {
       path: "login",
       element: <Login />
-    },
-    {
-      path: "register-user",
-      element: <RegisterUser />
     },
     {
       path: "register",

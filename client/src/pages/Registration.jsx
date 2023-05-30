@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import bgPic from "../assets/loginPic.jpg"
 import {AiOutlineEye} from 'react-icons/ai'
+import {BsArrowBarLeft} from 'react-icons/bs'
 
 export const Registration = () => {
 
@@ -15,13 +16,16 @@ export const Registration = () => {
     };
 
   return (
-    <div className='bg-white h-screen flex'>
-        <div className='basis-1/3 px-2'>
-            <img src={bgPic} alt="aparatus" className='h-full w-full rounded-l-3xl'/>
+    <div className='bg-white lg:h-screen sm:h-full flex'>
+        <div className='basis-1/3 lg:block sm:hidden'>
+            <img src={bgPic} alt="aparatus" className='h-full w-full'/>
         </div>
-        <div className='basis-2/3 mr-4 rounded-r-3xl border-r-2 border-gray-300'>
-            <h1 className='font-pop font-bold text-3xl text-gray-700 pt-4'>Registration Form</h1>
-            <form className='flex text-gray-700'>
+        <div className='lg:basis-2/3 sm:basis-full'>
+            <h1 className='font-pop font-bold text-3xl text-gray-700 pt-4 pl-4 flex items-center gap-x-2'>
+                <a href="/"><BsArrowBarLeft /></a>
+                Registration Form
+            </h1>
+            <form className='flex text-gray-700 sm:flex-col'>
                 <div className='basis-1/2 px-8 space-y-4 py-4'>
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Last Name:</span>

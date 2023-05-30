@@ -27,7 +27,7 @@ const Landing = () => {
             </div>
             <div className='text-white font-pop font-semibold lg:space-x-4 sm:space-x-2'>
                 <a href="login" className='border-white border-2 px-8 py-3 rounded-3xl hover:bg-acsent hover:border-acsent'>Login</a>
-                <a href="#" className='bg-white border-2 border-white text-primary px-6 py-3 rounded-3xl hover:bg-second hover:text-white hover:border-second'>Sign Up</a>
+                <a href="register" className='bg-white border-2 border-white text-primary px-6 py-3 rounded-3xl hover:bg-second hover:text-white hover:border-second'>Sign Up</a>
             </div>
         </nav>
         <section className='flex items-center py-16 px-8 gap-x-8'>
@@ -48,6 +48,10 @@ const Landing = () => {
         </section>
       </div>
       <div id='about' className='h-screen bg-white'>
+
+      </div>
+
+      <div id='services' className='h-screen bg-second'>
 
       </div>
     </div>
