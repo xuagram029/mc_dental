@@ -12,7 +12,7 @@ const Landing = () => {
       <div className='h-screen lg:px-8 sm:px-2 bg-primary shadow-inner pt-16'>
         <section className='flex items-center py-16 px-8 gap-x-8'>
             <div className='lg:basis-1/2 sm:basis-full'>
-                <h1 className='text-white uppercase lg:text-8xl sm:text-4xl font-pop font-medium'>
+                <h1 className='text-white uppercase lg:text-8xl sm:text-4xl font-pop font-extrabold'>
                     Smile, It lets your teeth breathe
                 </h1>
                 <p className='text-white font-lora font-thin text-justify pt-8 pb-16 opacity-80'>
@@ -35,7 +35,7 @@ const Landing = () => {
         <Services />
       </div>
 
-      <div id='contacts' className='h-screen bg-slate-400'>
+      <div id='contacts' className='h-screen bg-rose-300'>
         <Contacts />
       </div>
     </div>
