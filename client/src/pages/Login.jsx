@@ -30,7 +30,7 @@ const Login = () => {
                     Login
                 </button>
             </form>
-            <p className='text-gray-700 font-pop font-semibold pt-8'>Don't have an account? <a href="register-user" className='text-blue-950 hover:underline'>Register Here.</a></p>
+            <p className='text-gray-700 font-pop font-semibold pt-8'>Don't have an account? <a href="register" className='text-blue-950 hover:underline'>Register Here.</a></p>
         </div>
 
         <div className='lg:basis-1/2 lg:block sm:hidden'>

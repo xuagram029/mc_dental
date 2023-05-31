@@ -4,8 +4,8 @@ import mcLogo from '../assets/mcLogo.png'
 export const NavBar = () => {
   return (
     <>
-        <nav className='w-full lg:fixed sm:static lg:bg-transparent sm:bg-primary p-4 flex items-center justify-between'>
-            <img src={ mcLogo } alt="MC Logo" className='w-20 p-1 border-4 border-white rounded-full' />
+        <nav className='w-full lg:fixed sm:static lg:bg-transparent sm:bg-primary py-4 px-12 flex items-center justify-between'>
+            <a href="#home"><img src={ mcLogo } alt="MC Logo" className='w-20 p-1 border-4 border-white rounded-full' /></a>
             <div className='lg:flex items-center gap-x-16 font-pop font-medium text-white sm:hidden'>
                 <a href="#about" class="group transition duration-300">
                     About Us

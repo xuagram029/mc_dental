@@ -9,10 +9,10 @@ const Landing = () => {
   return (
     <div className='w-full'>
       <NavBar />
-      <div className='h-screen lg:px-8 sm:px-2 bg-primary shadow-inner pt-16'>
+      <div id="home" className='h-screen lg:px-8 sm:px-2 bg-primary shadow-inner pt-16'>
         <section className='flex items-center py-16 px-8 gap-x-8'>
             <div className='lg:basis-1/2 sm:basis-full'>
-                <h1 className='text-white uppercase lg:text-8xl sm:text-4xl font-pop font-extrabold'>
+                <h1 className='text-white uppercase lg:text-8xl sm:text-4xl font-pop font-bold'>
                     Smile, It lets your teeth breathe
                 </h1>
                 <p className='text-white font-lora font-thin text-justify pt-8 pb-16 opacity-80'>
