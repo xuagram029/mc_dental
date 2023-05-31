@@ -8,7 +8,7 @@ export const Contacts = () => {
   return (
     <div className='h-full bg-rose-300 rounded-md flex sm:flex-col lg:flex-row'>
       <div className='basis-1/3 bg-primary lg:my-28 sm:my-0 lg:ml-10 rounded-md sm:order-2 lg:order-1'>
-        <h1 className='text-2xl font-pop text-white font-semibold text-center py-6 px-14'>Site Map of Our MC Dental Clinic Branches</h1>
+        <h1 className='text-2xl font-pop text-white font-medium text-center py-6 px-14'>Site Map of Our MC Dental Clinic Branches</h1>
         <div className='flex items-center justify-center'>
           <iframe width="350" height="350" frameborder="10" scrolling="no" marginheight="0" marginwidth="auto" src="https://www.google.com/maps/d/u/2/embed?mid=1Cfo3U3CA0XbgSr5YDve5LiIu5RvHFNM&ehbc=2E312F">
           </iframe>
@@ -26,12 +26,12 @@ export const Contacts = () => {
           <div className='flex flex-col gap-y-3 text-white'>
             <span className='flex items-center gap-x-8 text-xl'>
               <HiLocationMarker className='text-lg text-white' />
-              <p className=' text-base font-medium'>Branch 1: 2341 Leveriza St., Pasay City, Philippines</p>
+              <p className='font-medium'>Branch 1: 2341 Leveriza St., Pasay City, Philippines</p>
             </span>
 
             <span className='flex items-center gap-x-8 text-xl'>
               <HiLocationMarker className='scale-0' />
-              <p className='text-base font-medium'>Branch 2: 2519 P. Zamora, Pasay City, Philippines</p>
+              <p className='tfont-medium'>Branch 2: 2519 P. Zamora, Pasay City, Philippines</p>
             </span>
               
           </div>
@@ -40,18 +40,18 @@ export const Contacts = () => {
             <span>
               <BsFillTelephoneFill className='text-white' />
             </span>
-            <p>+63960-609-4407</p>
+            <p className='font-medium'>+63 960-609-4407</p>
           </div>
 
           <div className='flex flex-col text-white'>
             <span className='flex items-center gap-x-8'>
               <BsClock className='text-lg text-white' />
-              <p className='font-medium'>Mon to Sat: <i className='text-sm font-light'>9:00am - 7:00pm</i></p>
+              <p className='font-medium'>Mon to Sat: <i className='font-light'>9:00am - 7:00pm</i></p>
             </span>
 
             <span className='flex items-center gap-x-8'>
               <BsClock className='scale-0' />
-              <p className='font-medium'>Sunday: <i className='text-sm font-light'>Appointment Only</i></p>
+              <p className='font-medium'>Sunday: <i className='font-light'>Appointment Only</i></p>
             </span>
           </div>
         </div>
