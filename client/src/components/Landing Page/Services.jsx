@@ -9,7 +9,7 @@ import service5 from '../../assets/Services/service5.jpg'
 export const Services = () => {
   return (
     <>
-        <div className="mb-8 text-center">
+        <div className="lg:pt-24 sm:pt-8 pb-8 text-center">
             <h2 className="text-4xl font-pop font-bold text-primary py-4">Our Services</h2>
         </div>
 
