@@ -15,11 +15,16 @@ import PendingAppointments from './pages/PendingAppointments';
 import PatientAppointments from './pages/PatientAppointments';
 import ErrorPage from './pages/ErrorPage';
 import Supplies from './pages/Supplies';
+import SwitchLogin from './pages/SwitchLogin';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />
+  },
+  {
+    path: "login-as",
+    element: <SwitchLogin />
   },
   {
     path: "/dentist-signup",

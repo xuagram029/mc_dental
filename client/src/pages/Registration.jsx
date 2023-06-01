@@ -160,10 +160,10 @@ export const Registration = () => {
                         <input name='username' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
-                    <label className='flex flex-col'>
+                    <label className='relative flex flex-col'>
                         <span className='font-pop font-semibold'>Password:</span>
                         <input name='password' onChange={handleChange} type={passType} className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
-                        <span onClick={handlePassType} className='cursor-pointer relative -top-7 lg:left-[240px] sm:left-[270px] w-10 text-xl'><AiOutlineEye /></span>
+                        <span onClick={handlePassType} className='cursor-pointer absolute inset-y-0 end-0 grid place-content-center text-xl'><AiOutlineEye /></span>
                     </label>
 
                     {agreement && (
@@ -175,9 +175,11 @@ export const Registration = () => {
                     )}
 
                     <span className='font-pop text-sm space-y-3'>
-                        <span className='flex items-center pt-6'>
-                            <input name='' onChange={handleChange} type="checkbox" /> {/* onChange={handleAgreement} name='agreement'*/}
-                            <p className='flex items-center gap-x-1'>I agree with the <p onClick={() => setOpenModal(!openModal)} className='text-violet-500 cursor-pointer hover:text-violet-800'>terms and conditions</p></p>
+                        <span className='flex items-center pt-6 flex-wrap gap-x-2'>
+                            <input name='' onChange={handleChange} type="checkbox" /> 
+                            {/* onChange={handleAgreement} name='agreement'*/}
+                            <p className='flex items-center gap-x-1'>I agree with the </p>
+                            <strong onClick={() => setOpenModal(!openModal)} className='text-violet-500 cursor-pointer hover:text-violet-800'>terms and conditions</strong>
                         </span>
                         <p>Already have an account? <a href="login" className='font-semibold hover:underline text-primary'>Sign In Here.</a></p>
                     </span>

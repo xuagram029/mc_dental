@@ -74,7 +74,7 @@ const Login = () => {
                 </button>
             {err && <div className='text-red-700'>{err}</div>}
             </form>
-            <p className='text-gray-700 font-pop font-semibold py-8'>Don't have an account?<Link className='underline' to='/user-signup'>Sign up</Link></p>
+            <p className='text-gray-700 font-pop font-semibold'>Don't have an account?<Link className='hover:underline text-primary px-1' to='/user-signup'>Sign up Here</Link></p>
             <a href="/">
                 <img src={loginLogo} alt="mc login logo" className='w-96 max-w-full mx-auto p-8' style={{mixBlendMode: "multiply"}}/>
             </a>
