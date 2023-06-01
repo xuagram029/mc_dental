@@ -1,5 +1,5 @@
 const express = require('express')
-const { regPatient, login, logout } = require('../controller/patientController')
+const { regPatient, login, logout, getAppointment } = require('../controller/patientController')
 const { verifyToken, verifyAdmin, verifyUser } = require('../middlewares/verifyToken')
 const router = express.Router()
 
@@ -15,11 +15,15 @@ const router = express.Router()
 
 router.route("/")
     .post(regPatient)
+    // .get(getAppointment)
 
 router.route("/login")
     .post(login)
 
 router.route("/logout")
     .post(logout)
+
+router.route("/appointments/:id")
+    .get(getAppointment)
 
 module.exports = router;

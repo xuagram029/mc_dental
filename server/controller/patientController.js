@@ -3,27 +3,93 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require("dotenv").config()
 
+const getPatient = (req, res) => {
+  const {id} = req.params
+  db.query("SELECT * FROM patients WHERE id = ?", id, (err, data) => {
+    if(err) return res.sendStatus(500)
+    
+    return res.json(data)
+  })
+}
 
 const regPatient = (req, res) => {
-    const { firstname, lastname, birthday, username, password, address, occupation, mobile, nationality, civil_status, age, sex, religion, email, guardian, good_health, m_treat, c_treated, illness, op_details, hozpitalized, hozpitalized_details, medication, meds, tobacco, alcohol, allergies, pregnant, nursing, birth_control, b_type, b_pressure, condition, bleeding_time, clotting_time } = req.body
+    const { firstname, middlename, lastname, gender, civil_status, birthdate, age, religion, nationality, address, mobile, occupation, email, referred_by, username, password } = req.body
     const enc_password = bcrypt.hashSync(password, 10)
+    
+    const values = [firstname, middlename, lastname, gender, civil_status, birthdate, age, religion, nationality, address, mobile, occupation, email, referred_by, username, enc_password]
 
-    const values = [firstname, lastname, birthday, username, enc_password, address, occupation, mobile, nationality, civil_status, age, sex, religion, email, guardian, good_health, m_treat, c_treated, illness, op_details, hozpitalized, hozpitalized_details, medication, meds, tobacco, alcohol, allergies, pregnant, nursing, birth_control, b_type, b_pressure, condition, bleeding_time, clotting_time]
+    if(!firstname || !middlename || !lastname || !gender || !civil_status || !birthdate || !age || !religion || !nationality || !address || !mobile || !occupation || !email || !referred_by || !username || !enc_password){
+      return res.status(401).json({message: "Please Fill all the fields"})
+    }
+    
     db.query("SELECT * FROM patients WHERE username = ?", [username], (err, result) => {
-        if(err) return res.sendStatus(500)
-
-        if(result.length > 0){
-            return res.status(409).json({ message: 'Username already taken' });
+      if(err) return res.sendStatus(500)
+      
+      if(result.length > 0){
+        return res.status(409).json({ message: 'Username already taken' });
+      }
+      db.query("INSERT INTO patients(firstname, middlename, lastname, gender, civil_status, birthdate, age, religion, nationality, address, mobile, occupation, email, referred_by, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [...values], (err, data) => {
+        if (err) {
+          console.error("Error during patient registration:", err);
+          return res.status(500).json({ error: "An error occurred during registration" });
         }
-        db.query("INSERT INTO patients(`firstname`, `lastname`, `birthday`, `username`, `password`, `address`, `occupation`, `mobile`, `nationality`, `civil_status`, `age`, `sex`, `religion`, `email`, `guardian`, good_health, m_treat, c_treated, `illness`, `op_details`, `hozpitalized`, `hozpitalized_details`, `medication`, `meds`, `tobacco`, `alcohol`, `allergies`, `pregnant`, `nursing`, `birth_control`, `b_type`, `b_pressure`, `condition`, `bleeding_time`, `clotting_time`) VALUES (?)", [values], (err, data) => {
-            if (err) {
-              console.error("Error during patient registration:", err);
-              return res.status(500).json({ error: "An error occurred during registration" });
-            }
-            return res.json({ message: "Registration Successful" });
-          });
+        return res.json({ message: "Registration Successful" });
+      });
+      
     })
+  };
+  
+  // const { firstname, lastname, birthday, username, password, address, occupation, mobile, nationality, civil_status, age, sex, religion, email, guardian, good_health, m_treat, c_treated, illness, op_details, hozpitalized, hozpitalized_details, medication, meds, tobacco, alcohol, allergies, pregnant, nursing, birth_control, b_type, b_pressure, condition, bleeding_time, clotting_time } = req.body
+  const updatePatient = (req, res) => {
+    const { id } = req.params;
+  const { storedPass, password } = req.body;
+
+  if (!storedPass || !password) {
+    return res.status(401).json({ message: "Please enter all fields" });
+  }
+
+  db.query("SELECT * FROM patients WHERE id = ?", id, async (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error", error: err });
+    }
+
+    if (result.length > 0) {
+      const patient = result[0];
+      try {
+        const match = await bcrypt.compare(storedPass, patient.password);
+
+        if (match) {
+          const newEncryptedPassword = bcrypt.hashSync(password, 10);
+
+          db.query(
+            "UPDATE patients SET `password` = ? WHERE id = ?",
+            [newEncryptedPassword, id],
+            (err, resp) => {
+              if (err) {
+                return res.status(500).json({ message: "Database error", error: err });
+              }
+              return res.json({ message: "Password updated successfully" });
+            }
+          );
+        } else {
+          return res.status(401).json({ message: "Current password does not match" });
+        }
+      } catch (error) {
+        return res.status(500).json({ message: "Bcrypt error", error });
+      }
+    } else {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+  });
 };
+
+const getAppointment = (req, res) => {
+  const { id } = req.params
+  db.query("SELECT * FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id WHERE p.id = ?", id, (err, data) => {
+    if(err) return res.status(500).json(err)
+    return res.json(data)
+  })
+}
 
 const login = (req, res) => {
     const { username, password } = req.body;
@@ -74,7 +140,7 @@ const logout = (req, res) => {
   res.send("Logged out successfully");
 };
 
-module.exports = { regPatient, login, logout }
+module.exports = { regPatient, getPatient, updatePatient, login, logout, getAppointment }
 
 // const regPatient = (req, res) => {
 //     const {
