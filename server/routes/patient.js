@@ -1,5 +1,5 @@
 const express = require('express')
-const { regPatient, login, logout, getPatient, updatePatient } = require('../controller/patientController')
+const { regPatient, login, logout } = require('../controller/patientController')
 const { verifyToken, verifyAdmin, verifyUser } = require('../middlewares/verifyToken')
 const router = express.Router()
 
@@ -21,9 +21,5 @@ router.route("/login")
 
 router.route("/logout")
     .post(logout)
-
-router.route("/:id")
-    .get(getPatient)
-    .put(updatePatient)
 
 module.exports = router;
