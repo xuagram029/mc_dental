@@ -2,6 +2,7 @@ import {useState, useContext, useEffect} from 'react'
 import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const DentistProfile = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
@@ -50,6 +51,7 @@ const DentistProfile = () => {
 
   return (
     <div className='w-screen'>
+        <button><Link to='/dentist-dashboard'>back</Link></button>
     <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
         <h2 className="text-xl font-bold mb-4">Update Information</h2>
         <div className="grid grid-cols-2 gap-4">

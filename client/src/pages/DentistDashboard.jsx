@@ -6,6 +6,7 @@ import { AuthContext } from '../context/AuthContext'
 const DentistDashboard = () => {
     const { user, dispatch } = useContext(AuthContext)
     const navigate = useNavigate()
+    const name = user?.resp[0]?.name
 
     useEffect(() => {
         if(user?.resp[0]?.role === 'dentist'){
@@ -32,14 +33,18 @@ const DentistDashboard = () => {
   return (
     <div>
         DentistDashboard
+        <h1>HELLO {name}</h1>
         <button 
-            className="block w-20 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+            className="block w-32 mb-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
             onClick={handleLogout}
         >Logout
         </button>
         <button
-            className="block w-20 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+            className="block w-32 mb-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
         ><Link to='/dentist-profile'>Profile</Link></button>
+        <button
+            className="block w-32 mb-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+        ><Link to='/supplies'>Supplies</Link></button>
     </div>
   )
 }
