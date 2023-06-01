@@ -22,8 +22,6 @@ const PatientProfile = () => {
             navigate('/patient-profile')
         }else if(user?.resp[0]?.role === 'patient'){
             navigate('/patient-dashboard')
-        }else{
-            navigate('/dentist-login')
         }
     }, [user, navigate])
 

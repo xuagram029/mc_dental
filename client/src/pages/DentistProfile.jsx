@@ -17,9 +17,9 @@ const DentistProfile = () => {
         if (user && user.resp && user.resp.length > 0) {
           if (user.resp[0].role === 'user') {
             navigate('/patient-dashboard');
-          } else if (user.resp[0].role === 'dentist') {
-            navigate('/dentist-dashboard');
           }
+        }else if(!user){
+            navigate('/dentist-login')
         }
       }, [user, navigate]);
 
