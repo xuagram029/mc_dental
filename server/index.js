@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
 // Routes
 app.use('/patient', require('./routes/patient'));
 app.use('/dentist', require('./routes/dentist'));
+app.use('/appointment', require('./routes/appointment'));
+app.use('/supplies', require('./routes/supplies'));
 
 // Error Handler Middleware
 app.use((err, req, res, next) => {
