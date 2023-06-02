@@ -1,31 +1,11 @@
-import {useState, useContext} from 'react'
+import {useState}from 'react'
 import mcLogo from '../assets/mcloginlogo.png'
 import { Link, useNavigate, NavLink } from 'react-router-dom'
-import axios from 'axios'
-import { AuthContext } from '../context/AuthContext'
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-const PatientNavbar = () => {
+const AdminNavbar = () => {
 
-    const [navbar, setNavbar] = useState(false);
-    const { user, error, loading, dispatch } = useContext(AuthContext)
-    const navigate = useNavigate()
-    const id = user?.resp[0]?.id
-    const name = user?.resp[0]?.firstname
-    const handleLogout = async (e) => {
-        e.preventDefault()
-        try {
-            const res = await axios.post('http://localhost:8000/patient/logout')
-            console.log(res.data.message)
-            dispatch({type: "LOGOUT"})
-            navigate('/login')
-        } catch (err) {
-            // console.log(err)
-            console.log(err)
-        }
-    }  
-
+    const [navbar, setNavbar] = useState(false);  
+    
   return (
     <nav className="font-pop w-full bg-second shadow">
     <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
@@ -80,47 +60,52 @@ const PatientNavbar = () => {
             >
                 <ul className="font-medium items-center justify-center space-y-8 md:flex md:space-x-10 md:space-y-0">
                     <li className="text-white hover:text-acsent hover:border-b-2">
-                        <NavLink to="/patient-dashboard">Dashboard</NavLink>
+                        <NavLink to='admin-dashboard'>Dashboard</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
-                        <NavLink to={`/appointments/${id}`}>Appointments</NavLink>
+                        <NavLink to='/admin-patientinfo'>Patient Info</NavLink>
+                    </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to='/supplies'>Supplies</NavLink>
+                    </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to='/admin-manageuser'>Manage User</NavLink>
                     </li>
                 </ul>
 
-                <div className="mt-3 space-y-2 lg:hidden md:inline-block">
-                <Link
-                        to='/patient-profile'
+                <div className="mt-6 space-y-6 lg:hidden md:inline-block">
+                    <Link
+                        to=''
                         className="lg:px-4 sm:px-0 lg:py-8 lg:text-sm sm:text-normal text-white font-semibold hover:text-rose-300"
                     >
                         Profile
                     </Link>
-            <div
-                onClick={handleLogout}
-                className="cursor-pointer inline-block w-full px-4 py-2 text-center text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
-            >
-                Logout
-            </div>
-        </div>
+                    <div
+                        // onClick={handleLogout}
+                        className="cursor-pointer inline-block w-full px-4 py-2 text-center text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
+                    >
+                        Logout
+                    </div>
+                </div>
             </div>
         </div>
         <div className="hidden space-x-2 md:inline-block">
             <NavLink
-                to='/patient-profile'
+                to='admin-profile'
                 className="px-4 py-2 text-sm text-white font-semibold hover:text-rose-300"
             >
-                Hello {name}!
+                {/* Hello {name}! */}
             </NavLink>
             <a
-                onClick={handleLogout}
+                // onClick={handleLogout}
                 className="cursor-pointer px-4 py-2 text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
             >
                 Logout
             </a>
         </div>
     </div>
-    <ToastContainer />
 </nav>
   )
 }
 
-export default PatientNavbar
+export default AdminNavbar

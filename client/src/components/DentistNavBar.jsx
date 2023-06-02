@@ -93,7 +93,7 @@ const DentistNavBar = () => {
                     </Link>
                     <div
                         onClick={handleLogout}
-                        className="inline-block w-full px-4 py-2 text-center text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
+                        className="cursor-pointer inline-block w-full px-4 py-2 text-center text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
                     >
                         Logout
                     </div>
@@ -108,8 +108,8 @@ const DentistNavBar = () => {
                 Hello {name}!
             </NavLink>
             <a
-                href="javascript:void(0)"
-                className="px-4 py-2 text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
+                onClick={handleLogout}
+                className="cursor-pointer px-4 py-2 text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
             >
                 Logout
             </a>

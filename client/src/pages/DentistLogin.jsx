@@ -5,6 +5,8 @@ import { AuthContext } from '../context/AuthContext'
 import dentist from '../assets/dents.png'
 import {AiOutlineEye} from 'react-icons/ai'
 import {BsArrowBarLeft} from 'react-icons/bs'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DentistLogin = () => {
     const [passType, setPassType] = useState("password")
@@ -42,7 +44,17 @@ const DentistLogin = () => {
             navigate('/dentist-dashboard')
         } catch (error) {
             dispatch({ type: "LOGIN_SUCCESS",  payload: error.response.data.error})
-            setErr(error.response.data.error)
+
+            toast.error(error.response.data.error, {
+              position: "top-center",
+              autoClose: 3500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              });
         }
     }
 
@@ -96,6 +108,7 @@ const DentistLogin = () => {
             <img src={dentist} alt="dentist" className='' />
           </div>
         </div>
+        <ToastContainer />
     </div>
   )
 }

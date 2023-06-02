@@ -29,7 +29,7 @@ const SwitchLogin = () => {
               <span className='absolute scale-0 inset-14 font-pop text-xl font-bold text-white uppercase group-hover:scale-100 transition-all duration-300'>Dentist</span>
               <p className='text-center font-pop text-white pt-4 font-semibold group-hover:scale-0 transition-all duration-300'>Dentist</p>
             </Link>
-            <Link className='relative group'>
+            <Link to="/admin-login" className='relative group'>
               <img src={admin} alt="admin" className='rounded-[50px] group-hover:blur' />
               <span className='absolute scale-0 inset-14 font-pop text-xl font-bold text-white uppercase group-hover:scale-100 transition-all duration-300'>Admin</span>
               <p className='text-center font-pop text-white pt-4 font-semibold group-hover:scale-0 transition-all duration-300'>Admin</p>

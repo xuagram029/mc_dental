@@ -2,7 +2,7 @@ import {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-const DentistReg = ({setSignInModal}) => {
+const DentistReg = ({setAddUserModal, addUserModal}) => {
 
   // name, specialty, number, username, password
   const [name, setName] = useState('')
@@ -25,7 +25,6 @@ const DentistReg = ({setSignInModal}) => {
           setError(err.response.data.message)
       }
   }  
-
   return (
     <>
           <div
@@ -121,24 +120,13 @@ const DentistReg = ({setSignInModal}) => {
                         </div>
                         {error && <div className='text-red-700'>{error}</div>}
                     </form>
-
-        <p className="mt-8 text-xs font-light text-center text-gray-700">
-            {" "}
-            Already have an account?{" "}
-            <Link 
-                to='/dentist-login'
-                className="font-medium text-indigo-600 hover:underline"
-            >
-                Sign in
-            </Link>
-        </p>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setSignInModal(false)}
+                    onClick={() => setAddUserModal(false)}
                   >
                     Close
                   </button>

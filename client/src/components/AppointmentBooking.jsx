@@ -2,6 +2,8 @@ import { useContext, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PatientAppointment = () => {
     const { user } = useContext(AuthContext)
@@ -33,9 +35,27 @@ const PatientAppointment = () => {
       };
       const res = await axios.post('http://localhost:8000/appointment', data);
       console.log(res.data.message);
-      // navigate('/')
+      toast.success("Your appointment has been set", {
+        position: "top-center",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     } catch (error) {
-      console.log(error);
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
   
@@ -70,6 +90,7 @@ const PatientAppointment = () => {
               type="text"
               class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Full Name"
+              required
             />
         </label>
         
@@ -81,6 +102,7 @@ const PatientAppointment = () => {
               type="number"
               class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Phone Number"
+              required
             />
         </label>
   
@@ -89,14 +111,15 @@ const PatientAppointment = () => {
           <input
               name='date'
               onChange={handleChange}
-              type="datetime-local"
+              type="date"
               class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              required
             />
         </label>
 
         <label htmlFor="service">
           <span>Select a Service</span>
-          <select name="service" id="" onChange={(e) => setPatient({...patient, service: e.target.value})} className='w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm'>
+          <select required name="service" id="" onChange={(e) => setPatient({...patient, service: e.target.value})} className='w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm'>
               <option hidden>--SELECT--</option>
               <option value="Composite Restoration">Composite Restoration</option>
               <option value="Direct Composite Veeners">Direct Composite Veeners</option>
@@ -114,6 +137,7 @@ const PatientAppointment = () => {
         </button>
       </form>
     </div>
+    <ToastContainer />
   </div>
   )
 }

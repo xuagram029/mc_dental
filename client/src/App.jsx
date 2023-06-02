@@ -14,6 +14,8 @@ import PatientAppointments from './pages/PatientAppointments';
 import ErrorPage from './pages/ErrorPage';
 import Supplies from './pages/Supplies';
 import SwitchLogin from './pages/SwitchLogin';
+import AdminLogin from './pages/AdminLogin';
+import AdminManageUser from './pages/AdminManageUser';
 
 const router = createBrowserRouter([
   {
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
   {
     path: "register",
     element: <Registration />
+  },
+  {
+    path: "admin-login",
+    element: <AdminLogin />
+  },
+  {
+    path: "admin-manageuser",
+    element: <AdminManageUser />
   },
   {
     path: '*',

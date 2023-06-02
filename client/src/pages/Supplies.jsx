@@ -9,6 +9,7 @@ import { MdOutlineDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import DentistNavBar from '../components/DentistNavBar';
 import SupplyAddModal from '../components/Supplies/SupplyAddModal';
+import SuppltEditModal from '../components/Supplies/SuppltEditModal';
 
 
 const Supplies = () => {
@@ -172,25 +173,7 @@ const Supplies = () => {
 
         { modal && <SupplyAddModal modal={modal} setModal={setModal} handleChange={handleChange} addSupply={addSupply} />}
 
-        {
-            editModal &&
-            <div className='border border-black w-96 h-96 absolute left-[550px] bg-slate-300 '>
-                <div>
-                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => {setEditModal(!editModal)}}>X</button>
-                </div>
-                <div>
-                    <label htmlFor="name">Name: </label>
-                    <input type="text" value={editName} onChange={(e) => {setEditName(e.target.value)}}/>
-                </div>
-                <div>
-                    <label htmlFor="quantity">Quantity: </label>
-                    <input type="number" value={editQuantity} onChange={(e) => {setEditQuantity(e.target.value)}}/>
-                </div>
-                <div>
-                    <button className='w-[90%] border border-black py-4 rounded-xl' onClick={editMedicine}>EDIT ITEM</button>
-                </div>
-            </div>
-        }
+        { editModal && <SuppltEditModal editMedicine={editMedicine} setEditModal={setEditModal} editModal={editModal} editQuantity={editQuantity} setEditQuantity={setEditQuantity} editName={editName} setEditName={setEditName} addSupply={addSupply} />}
     </div>
   )
 }

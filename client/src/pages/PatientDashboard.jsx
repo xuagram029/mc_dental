@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import AppointmentBooking from '../components/AppointmentBooking'
 import PatientNavbar from '../components/PatientNavbar'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PatientDashboard = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
@@ -26,6 +28,7 @@ const PatientDashboard = () => {
     <div>
         <PatientNavbar />
         <AppointmentBooking />
+        <ToastContainer />
     </div>
   )
 }

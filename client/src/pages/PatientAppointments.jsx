@@ -38,7 +38,7 @@ const PatientAppointments = () => {
         },
         {
             name: "Date",
-            selector: row => new Date(row.date).toLocaleString(),
+            selector: row => new Date(row.date).toLocaleDateString("en-US", {dateStyle: "long"}),
             sortable: true
         },
         {
@@ -63,7 +63,8 @@ const PatientAppointments = () => {
   return (
     <div className='h-screen w-full'>
         <PatientNavbar />
-        <div className="font-pop font-bold flex flex-col items-center justify-center">
+        <div className='mt-8 mx-10'>
+        <div className="font-pop font-bold flex flex-col items-center justify-center border-2 border-black">
             <DataTable
                 title="Appointment History"
                 data={appointments}
@@ -80,6 +81,7 @@ const PatientAppointments = () => {
                     </div>
                     }
             />
+        </div>
         </div>
     </div>
   )

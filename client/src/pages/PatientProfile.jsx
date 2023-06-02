@@ -2,6 +2,9 @@ import {useState, useContext, useEffect} from 'react'
 import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import PatientNavbar from '../components/PatientNavbar'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PatientProfile = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
@@ -46,14 +49,33 @@ const PatientProfile = () => {
                 const res = await axios.put(`http://localhost:8000/patient/${id}`, {storedPass, password: newPassword}) //password
                 console.log(res.data.message)
                 window.location.reload()
+                toast.success("New Password has been set", {
+                    position: "top-center",
+                    autoClose: 3500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
             }
         } catch (error) {
-            console.log(error.response.data.message);
+            toast.error(error.response.data.message, {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         }
     }
   return (
     <div className='w-screen'>
-        <button><Link to='/patient-dashboard'>back</Link></button>
+    <PatientNavbar />   
     <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
         <h2 className="text-xl font-bold mb-4">Update Information</h2>
         <div className="grid grid-cols-2 gap-4">
@@ -104,12 +126,13 @@ const PatientProfile = () => {
 
         </div>
             <button
-            className="w-full bg-rose-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
+            className="w-full bg-rose-500 hover:bg-rose-300 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
             onClick={handleUpdate}
             >
             Submit
             </button>
     </div>
+    <ToastContainer />
 </div>
   )
 }

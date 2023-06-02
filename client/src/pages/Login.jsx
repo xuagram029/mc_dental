@@ -7,6 +7,8 @@ import loginLogo from "../assets/mcloginlogo.png"
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [passType, setPassType] = useState("password")
@@ -45,6 +47,16 @@ const Login = () => {
         } catch (error) {
             dispatch({ type: "LOGIN_SUCCESS",  payload: error.response.data.error})
             setErr(error.response.data.error)
+            toast.error(error.response.data.error, {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         }
     }
 
@@ -83,7 +95,6 @@ const Login = () => {
                 type='submit' className='bg-white rounded w-full py-3 font-pop font-semibold my-4' >
                     Login
                 </button>
-            {err && <div className='text-red-700'>{err}</div>}
             </form>
             <p className='text-gray-700 font-pop font-semibold'>Don't have an account?<Link className='hover:underline text-primary px-1' to='/user-signup'>Sign up Here</Link></p>
             <a href="/">
@@ -94,6 +105,7 @@ const Login = () => {
         <div className='lg:basis-1/2 lg:block sm:hidden'>
             <img src={loginPic} alt="name plate" className='w-[450px] pl-20 pt-10' style={{mixBlendMode: "multiply"}}/>
         </div>
+        <ToastContainer />
     </div>
   )
 }
