@@ -59,9 +59,9 @@ const DentistLogin = () => {
     }
 
   return (
-    <div className='font-pop bg-acsent h-screen flex items-center justify-center px-16'>
-        <div className='bg-white p-8 shadow-xl rounded-md max-w-5xl flex'>
-          <div className='basis-1/2 flex flex-col justify-center'>
+    <div className='font-pop bg-acsent h-screen flex items-center justify-center lg:px-16 sm:px-4'>
+        <div className='bg-white lg:p-8 sm:p-2 shadow-xl rounded-md max-w-5xl flex'>
+          <div className='lg:basis-1/2 sm:basis-full flex flex-col justify-center'>
           <a href="/" className='pl-8 font-pop flex items-center gap-x-2 text-base font-semibold text-gray-700 mb-8'>
                 <BsArrowBarLeft/> Go Back to Home Page
           </a>
@@ -98,13 +98,12 @@ const DentistLogin = () => {
             >
                 Sign in
             </button>
-            {err && <div className='text-red-700'>{err}</div>}
             <p className="text-center text-sm text-gray-500">
                 No account? Kindly inform the Admin
             </p>
             </form>
           </div>
-          <div className='basis-1/2 flex items-center justify-center'>
+          <div className='basis-1/2 sm:hidden lg:flex items-center justify-center'>
             <img src={dentist} alt="dentist" className='' />
           </div>
         </div>

@@ -93,6 +93,26 @@ const Supplies = () => {
         }
     }
 
+    const customStyles = {
+        header: {
+          style: {
+            fontSize: "1.5rem",
+            fontFamily: "Montserrat",
+          },
+        },
+        headCells: {
+          style: {
+            fontSize: "0.875rem",
+            backgroundColor: "#AD8B73",
+            color: "#fff",
+          },
+        },
+        cells: {
+          style: {
+            fontWeight: 600,
+          },
+        },
+      };
 
     const columns = [
         // {
@@ -152,16 +172,17 @@ const Supplies = () => {
                 data={supplies}
                 columns={columns}
                 pagination
+                customStyles={customStyles}
                 fixedHeader
                 fixedHeaderScrollHeight="550px"
                 subHeader
                 subHeaderComponent={
-                    <div className='flex items-center gap-x-4 w-full justify-between'>
-                        <div className='flex items-center gap-x-4'>
+                    <div className='flex items-center gap-4 w-full lg:justify-between sm:flex-wrap'>
+                        <div className='flex items-center gap-x-4 lg:order-1 sm:order-2'>
                             <RiUserSearchLine className='text-2xl text-black'/>
                             <input type="text" onChange={handleFilter} placeholder='Search' className='border-b-2 border-black p-1 text-sm font-normal focus:outline-none'/>
                         </div>
-                        <div onClick={toggleModal} className='flex items-center gap-x-4 bg-primary text-white cursor-pointer px-6 py-3 rounded-md hover:bg-second'>
+                        <div onClick={toggleModal} className='lg:ml-0 lg:order-2 sm:ml-8 flex items-center gap-x-4 bg-primary text-white cursor-pointer px-6 py-3 rounded-md hover:bg-second'>
                             <IoMdAddCircle className=' text-white text-xl'/>
                             <span>Add Supply</span>
                         </div>

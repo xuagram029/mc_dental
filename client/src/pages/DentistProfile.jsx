@@ -53,9 +53,9 @@ const DentistProfile = () => {
   return (
     <div className='h-screen bg-white'>
         <DentistNavBar />
-        <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
+        <div className={`bg-white rounded-lg shadow-lg border border-black lg:p-10 sm:p-2 h-[500px] mt-10 mx-10 `}>
         <h2 className="text-xl font-bold mb-4">Update Information</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid lg:grid-cols-2 sm:grid-cols-1 lg:gap-4 sm:gap-0">
         <div className="mb-4">
             <label className="block font-bold mb-2" htmlFor="name">
             Name:
@@ -72,7 +72,7 @@ const DentistProfile = () => {
         </div>
         <div className="mb-4">
             <label className="block font-bold mb-2" htmlFor="lastname">
-            specialty:
+            Specialty:
             </label>
             <input
             className="w-full border border-gray-400 p-2 rounded"

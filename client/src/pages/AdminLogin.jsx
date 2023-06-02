@@ -21,10 +21,10 @@ const AdminLogin = () => {
   return (
     <div className='font-pop bg-white h-screen flex items-center justify-center'>
       <div className='bg-second p-4 rounded-lg shadow-2xl flex mx-10'>
-        <div className='basis-1/2 flex items-cente justify-center'>
+        <div className='basis-1/2 lg:flex sm:hidden items-cente justify-center'>
             <img src={admin} alt="Admin Logo" />
         </div>
-        <div className='basis-1/2'>
+        <div className='lg:basis-1/2 sm:basis-full'>
         <a href="/" className='pl-8 font-pop flex items-center gap-x-2 text-base font-semibold text-white mb-8 hover:text-black'>
                 <BsArrowBarLeft/> Go Back to Home Page
           </a>
@@ -61,9 +61,6 @@ const AdminLogin = () => {
             >
                 Sign in
             </button>
-            <p className="text-center text-sm text-gray-500">
-                No account? Kindly inform the Admin
-            </p>
             </form>
         </div>
       </div>

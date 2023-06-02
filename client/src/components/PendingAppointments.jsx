@@ -60,6 +60,27 @@ const PendingAppointments = () => {
         const res = await axios.delete(`http://localhost:8000/appointment/${id}`)
         console.log(res.data.message)
     }
+
+    const customStyles = {
+      header: {
+        style: {
+          fontSize: "1.5rem",
+          fontFamily: "Montserrat",
+        },
+      },
+      headCells: {
+        style: {
+          fontSize: "0.875rem",
+          backgroundColor: "#AD8B73",
+          color: "#fff",
+        },
+      },
+      cells: {
+        style: {
+          fontWeight: 600,
+        },
+      },
+    };
     
     const columns = [
         {
@@ -111,12 +132,14 @@ const PendingAppointments = () => {
       
   return (
     <div className='font-pop font-bold text-black flex items-center justify-center'>
-        <div className={`mt-8 mx-10 w-full border-2 border-black`}>
+        <div className={`mt-8 mx-10 w-full border-2 border-black flex flex-col items-center
+        justify-center`}>
                 <DataTable
                 title="Pending Appointments"
                 data={appointments}
                 columns={columns}
                 pagination
+                customStyles={customStyles}
                 fixedHeader
                 fixedHeaderScrollHeight="550px"
                 subHeader

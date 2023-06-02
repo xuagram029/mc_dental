@@ -78,7 +78,7 @@ const PatientProfile = () => {
     <PatientNavbar />   
     <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
         <h2 className="text-xl font-bold mb-4">Update Information</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
         <div className="mb-4">
             <label className="block font-bold mb-2" htmlFor="name">
             Current Password

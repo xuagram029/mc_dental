@@ -25,6 +25,27 @@ const PatientAppointments = () => {
         getAppointments()
     }, [])
 
+    const customStyles = {
+        header: {
+          style: {
+            fontSize: "1.5rem",
+            fontFamily: "Montserrat",
+          },
+        },
+        headCells: {
+          style: {
+            fontSize: "0.875rem",
+            backgroundColor: "#AD8B73",
+            color: "#fff",
+          },
+        },
+        cells: {
+          style: {
+            fontWeight: 600,
+          },
+        },
+      };
+
     const columns = [
         // {
         //     name: 'Full Name',
@@ -70,6 +91,7 @@ const PatientAppointments = () => {
                 data={appointments}
                 columns={columns}
                 pagination
+                customStyles={customStyles}
                 fixedHeader
                 fixedHeaderScrollHeight="550px"
                 subHeader
