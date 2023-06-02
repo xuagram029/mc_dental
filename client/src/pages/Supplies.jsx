@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router'
 import  DataTable  from 'react-data-table-component'
-import { GrAddCircle } from 'react-icons/gr';
+import { IoMdAddCircle } from 'react-icons/io';
 import { RiUserSearchLine } from 'react-icons/ri';
 import { FiEdit3 } from 'react-icons/fi';
 import { MdOutlineDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import DentistNavBar from '../components/DentistNavBar';
+import SupplyAddModal from '../components/Supplies/SupplyAddModal';
 
 
 const Supplies = () => {
@@ -140,48 +142,35 @@ const Supplies = () => {
       }
 
   return (
-    <div className='relative'>
-        <div className="flex flex-col md:flex-row">
-            <Link to='/patient-dashboard'>Back</Link>
-        <div className="flex flex-col w-full md:w-3/4 lg:w-screen">
-            <div className="flex ml-8 mt-5 justify-between items-center space-x-6 font-bold font-pop text-base">
-                <h1 className="text-4xl">Supplies List</h1>
-            </div>
-            <GrAddCircle className='cursor-pointer text-3xl' onClick={toggleModal}/>
-            <span>ADD SUPPLY</span>
-            <div className='w-[90vw]'>
-                <div className='p-[50px 10%] mt-2 ml-5 flex'>
-                <RiUserSearchLine className='text-2xl mt-1'/>
-                <input type="text" onChange={handleFilter} placeholder='search user' className='text-center border border-black rounded-md'/>
-                </div>
-                <DataTable
+    <div>
+        <DentistNavBar />
+        <div className='mx-10 mt-8'>
+        <div className="font-pop font-bold flex flex-col w-full items-center justify-center border-2 border-black">
+            <DataTable
+                title="Supplies"
                 data={supplies}
                 columns={columns}
                 pagination
-                />
-            </div>
+                fixedHeader
+                fixedHeaderScrollHeight="550px"
+                subHeader
+                subHeaderComponent={
+                    <div className='flex items-center gap-x-4 w-full justify-between'>
+                        <div className='flex items-center gap-x-4'>
+                            <RiUserSearchLine className='text-2xl text-black'/>
+                            <input type="text" onChange={handleFilter} placeholder='Search' className='border-b-2 border-black p-1 text-sm font-normal focus:outline-none'/>
+                        </div>
+                        <div onClick={toggleModal} className='flex items-center gap-x-4 bg-primary text-white cursor-pointer px-6 py-3 rounded-md hover:bg-second'>
+                            <IoMdAddCircle className=' text-white text-xl'/>
+                            <span>Add Supply</span>
+                        </div>
+                    </div>
+                }
+            />
         </div>
         </div>
 
-        {
-            modal &&
-            <div className='border border-black w-96 h-96 absolute left-[550px] bg-slate-300 '>
-                <div>
-                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => {setModal(!modal)}}>X</button>
-                </div>
-                <div>
-                    <label htmlFor="name">Name: </label>
-                    <input type="text" name='name' onChange={handleChange}/>
-                </div>
-                <div>
-                    <label htmlFor="quantity">Quantity: </label>
-                    <input type="number" name='quantity' onChange={handleChange}/>
-                </div>
-                <div>
-                    <button className='w-[90%] border border-black py-4 rounded-xl' onClick={addSupply}>ADD ITEM</button>
-                </div>
-            </div>
-        }
+        { modal && <SupplyAddModal modal={modal} setModal={setModal} handleChange={handleChange} addSupply={addSupply} />}
 
         {
             editModal &&

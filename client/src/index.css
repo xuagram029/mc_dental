@@ -12,11 +12,11 @@
 }
 
 .glassV2 {
-  background: rgba( 226, 232, 240, 0.5 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 5px );
--webkit-backdrop-filter: blur( 5px );
-border-radius: 10px;
+  background: rgba(226, 232, 240, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 10px;
 }
 
 .bgImg {
@@ -24,9 +24,9 @@ border-radius: 10px;
   background-size: cover;
 }
 
-/* * {
-  border: 2px solid red;
-} */
+.active {
+  @apply border-b-2 border-white;
+}
 
 /* * {
   border: 2px solid red;

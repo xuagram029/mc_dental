@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import '.././index.css'
 import {BsArrowBarLeft} from 'react-icons/bs'
+import { AiOutlineEye } from 'react-icons/ai'
 import loginPic from "../assets/12345.jpg"
 import loginLogo from "../assets/mcloginlogo.png"
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,11 +9,20 @@ import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
 
 const Login = () => {
+    const [passType, setPassType] = useState("password")
     const [ username, setUsername] = useState('')
     const [ password, setPassword] = useState('')
     const [err, setErr] = useState(null)
     const navigate = useNavigate()
     const { user, error, loading, dispatch } = useContext(AuthContext)
+
+    const handlePassType = () => {
+        if (passType === "password") {
+            setPassType("text");
+            return;
+          }
+          setPassType("password");
+        };
 
     useEffect(() => {
         if (user && user.resp && user.resp.length > 0) {
@@ -58,13 +68,14 @@ const Login = () => {
                     focus:outline-none' />
                 </label>
 
-                <label className='flex flex-col gap-y-1 pb-4'>
+                <label className='relative flex flex-col gap-y-1 pb-4'>
                     <span className='text-lg font-medium font-pop'>Password:</span>
-                    <input type="password" 
+                    <input type={passType} 
                     className='p-2 rounded opacity-50 focus:outline-none' 
                     placeholder="Enter password"
                     onChange={(e) => {setPassword(e.target.value)}}
                     />
+                    <span onClick={handlePassType} className='cursor-pointer absolute top-11 end-4 text-xl'><AiOutlineEye /></span>
                 </label>
 
                 <button 

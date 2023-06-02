@@ -4,14 +4,12 @@ import DentistSignup from './pages/DentistSignup';
 import DentistLogin from './pages/DentistLogin';
 import DentistDashboard from './pages/DentistDashboard';
 import DentistProfile from './pages/DentistProfile';
-import PatientLogin from './pages/PatientLogin';
 import PatientDashboard from './pages/PatientDashboard';
 import PatientProfile from './pages/PatientProfile';
 import Login from './pages/Login'
 import { Registration } from './pages/Registration'
 import Landing from './pages/Landing'
-import AppointmentBooking from './pages/AppointmentBooking';
-import PendingAppointments from './pages/PendingAppointments';
+import PendingAppointments from './components/PendingAppointments';
 import PatientAppointments from './pages/PatientAppointments';
 import ErrorPage from './pages/ErrorPage';
 import Supplies from './pages/Supplies';
@@ -42,10 +40,7 @@ const router = createBrowserRouter([
     path: "/dentist-profile",
     element: <DentistProfile />,
   },
-  {
-    path: "/patient-login",
-    element: <PatientLogin />,
-  },
+  // patient
   // client
   {
     path: "/appointments/:id",
@@ -59,16 +54,7 @@ const router = createBrowserRouter([
     path: "/patient-profile",
     element: <PatientProfile />,
   },
-  // patient
-  {
-    path: "/appointment-booking",
-    element: <AppointmentBooking />,
-  },
   // admin side
-  {
-    path: "/patient-appointments",
-    element: <PendingAppointments />,
-  },
   {
     path: "/supplies",
     element: <Supplies />,

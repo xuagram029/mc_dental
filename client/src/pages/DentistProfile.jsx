@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import DentistNavBar from '../components/DentistNavBar'
 
 const DentistProfile = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
@@ -14,15 +15,15 @@ const DentistProfile = () => {
     const id = user?.resp[0]?.id
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (user && user.resp && user.resp.length > 0) {
-          if (user.resp[0].role === 'user') {
-            navigate('/patient-dashboard');
-          }
-        }else if(!user){
-            navigate('/dentist-login')
-        }
-      }, [user, navigate]);
+    // useEffect(() => {
+    //     if (user && user.resp && user.resp.length > 0) {
+    //       if (user.resp[0].role === 'user') {
+    //         navigate('/patient-dashboard');
+    //       }
+    //     }else if(!user){
+    //         navigate('/dentist-login')
+    //     }
+    //   }, [user, navigate]);
 
     useEffect(() => {
         const getUser = async () => {
@@ -50,9 +51,9 @@ const DentistProfile = () => {
     }
 
   return (
-    <div className='w-screen'>
-        <button><Link to='/dentist-dashboard'>back</Link></button>
-    <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
+    <div className='h-screen bg-white'>
+        <DentistNavBar />
+        <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
         <h2 className="text-xl font-bold mb-4">Update Information</h2>
         <div className="grid grid-cols-2 gap-4">
         <div className="mb-4">
@@ -136,7 +137,7 @@ const DentistProfile = () => {
         Submit
         </button>
     </div>
-</div>
+    </div>
   )
 }
 

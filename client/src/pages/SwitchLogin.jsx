@@ -26,7 +26,7 @@ const SwitchLogin = () => {
             </Link>
             <Link to="/dentist-login" className='relative group transition duration-300'>
               <img src={dentist} alt="dentist" className='rounded-[50px] group-hover:blur' />
-              <span className='absolute scale-0 inset-14 font-pop text-xl font-bold text-black uppercase group-hover:scale-100 transition-all duration-300'>Dentist</span>
+              <span className='absolute scale-0 inset-14 font-pop text-xl font-bold text-white uppercase group-hover:scale-100 transition-all duration-300'>Dentist</span>
               <p className='text-center font-pop text-white pt-4 font-semibold group-hover:scale-0 transition-all duration-300'>Dentist</p>
             </Link>
             <Link className='relative group'>

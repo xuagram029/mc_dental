@@ -2,13 +2,25 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
+import dentist from '../assets/dents.png'
+import {AiOutlineEye} from 'react-icons/ai'
+import {BsArrowBarLeft} from 'react-icons/bs'
 
 const DentistLogin = () => {
+    const [passType, setPassType] = useState("password")
     const [ username, setUsername] = useState('')
     const [ password, setPassword] = useState('')
     const [err, setErr] = useState(null)
     const navigate = useNavigate()
     const { user, error, loading, dispatch } = useContext(AuthContext)
+
+    const handlePassType = () => {
+      if (passType === "password") {
+          setPassType("text");
+          return;
+        }
+        setPassType("password");
+      };
 
     useEffect(() => {
         if (user && user.resp && user.resp.length > 0) {
@@ -35,104 +47,54 @@ const DentistLogin = () => {
     }
 
   return (
-    <div>
-        <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-lg">
-            <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
-            WELCOME BACK ADMIN
-            </h1>
-
-            <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati sunt
-            dolores deleniti inventore quaerat mollitia?
-            </p>
-
-            <form
-            action=""
-            className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
-            >
-            <p className="text-center text-lg font-medium">Sign in to your account</p>
-
-            <div>
-                <label htmlFor="email" className="sr-only">Username</label>
-
-                <div className="relative">
-                <input
+    <div className='font-pop bg-acsent h-screen flex items-center justify-center px-16'>
+        <div className='bg-white p-8 shadow-xl rounded-md max-w-5xl flex'>
+          <div className='basis-1/2 flex flex-col justify-center'>
+          <a href="/" className='pl-8 font-pop flex items-center gap-x-2 text-base font-semibold text-gray-700 mb-8'>
+                <BsArrowBarLeft/> Go Back to Home Page
+          </a>
+          <h1 className='text-2xl text-black font-extrabold text-center'>Welcome Back!</h1>
+          <form className="space-y-4 px-8">
+            <p className="text-center text-lg font-medium py-8">Sign in to your account</p>
+            <label htmlFor='email'>
+              <span>Username:</span>
+              <input
                     type="email"
-                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                    className="w-full text-sm py-4 px-2 border-b-2 border-primary focus:outline-none mb-4"
                     placeholder="Enter username"
                     onChange={(e) => {setUsername(e.target.value)}}
                 />
+            </label>
 
-                <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                    />
-                    </svg>
-                </span>
-                </div>
-            </div>
-
-            <div>
-                <label htmlFor="password" className="sr-only">Password</label>
-
-                <div className="relative">
-                <input
-                    type="password"
-                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+            <label htmlFor="password" className='relative'>
+              <span>Password:</span>
+              <input
+                    type={passType}
+                    className="w-full text-sm py-4 px-2 border-b-2 border-primary focus:outline-none"
                     placeholder="Enter password"
                     onChange={(e) => {setPassword(e.target.value)}}
                 />
-
-                <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                    </svg>
-                </span>
-                </div>
-            </div>
+              <span onClick={handlePassType} className='cursor-pointer absolute top-10 end-4 text-xl text-primary'>
+                  <AiOutlineEye />
+              </span>
+            </label>
 
             <button
                 type="submit"
-                className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+                className="block w-full rounded-lg bg-second px-5 py-3 text-sm font-semibold text-white hover:bg-acsent"
                 onClick={handleSubmit}
             >
                 Sign in
             </button>
             {err && <div className='text-red-700'>{err}</div>}
             <p className="text-center text-sm text-gray-500">
-                No account?
-                <Link className='underline' to='/dentist-signup'>Sign up</Link>
+                No account? Kindly inform the Admin
             </p>
             </form>
-        </div>
+          </div>
+          <div className='basis-1/2 flex items-center justify-center'>
+            <img src={dentist} alt="dentist" className='' />
+          </div>
         </div>
     </div>
   )
