@@ -1,5 +1,5 @@
 const express = require('express')
-const { regPatient, login, logout, getAppointment } = require('../controller/patientController')
+const { regPatient, login, logout, getAppointment, getPatient, updatePatient, updateProfile, getPatients } = require('../controller/patientController')
 const { verifyToken, verifyAdmin, verifyUser } = require('../middlewares/verifyToken')
 const router = express.Router()
 
@@ -14,6 +14,7 @@ const router = express.Router()
 // })
 
 router.route("/")
+    .get(getPatients)
     .post(regPatient)
     // .get(getAppointment)
 
@@ -25,5 +26,12 @@ router.route("/logout")
 
 router.route("/appointments/:id")
     .get(getAppointment)
+
+router.route("/profile/:id")
+    .put(updateProfile)
+
+router.route("/:id")
+    .get(getPatient)
+    .put(updatePatient)
 
 module.exports = router;

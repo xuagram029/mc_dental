@@ -9,16 +9,15 @@ const DentistDashboard = () => {
     const { user, dispatch } = useContext(AuthContext)
     const navigate = useNavigate()
 
-
     useEffect(() => {
-        if(user?.resp[0]?.role === 'dentist'){
-            navigate('/dentist-dashboard')
-        }else if(user?.resp[0]?.role === 'user'){
-            navigate('/')
-        }else{
-            navigate('/dentist-login')
+        if(!user){
+          navigate('/dentist-login')
+        }else if(user?.resp[0]?.role === 'admin'){
+          navigate('/admin-dashboard')
+        }else if(user?.resp[0]?.role === 'patient'){
+          navigate('/patient-dashboard')
         }
-    }, [user])
+      }, [user])
 
     
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router'
 import  DataTable  from 'react-data-table-component'
@@ -10,9 +10,11 @@ import { Link } from 'react-router-dom';
 import DentistNavBar from '../components/DentistNavBar';
 import SupplyAddModal from '../components/Supplies/SupplyAddModal';
 import SuppltEditModal from '../components/Supplies/SuppltEditModal';
+import { AuthContext } from '../context/AuthContext';
 
 
 const Supplies = () => {
+    const { user } = useContext(AuthContext)
     const [ supplies, setSupplies] = useState([])
     const [ filteredSupplies, setFilteredSupplies] = useState([])
     const [modal, setModal] = useState(false)
@@ -25,6 +27,7 @@ const Supplies = () => {
         name: "", 
         quantity:""
     })
+    const role = user?.resp[0]?.role;
 
     useEffect(() => {
         const getSupplies = async () => {
@@ -143,16 +146,16 @@ const Supplies = () => {
               </button>
             ),
             button: true
-          },
-          {
-            name: "Delete",
-            cell: row => (
-              <button onClick={() => deleteMedicine(row.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                <MdOutlineDelete className='text-base'/>
-              </button>
-            ),
-            button: true
-          }
+        },
+        {
+        name: "Delete",
+        cell: row => (
+            <button onClick={() => deleteMedicine(row.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            <MdOutlineDelete className='text-base'/>
+            </button>
+        ),
+        button: true
+        }
     ]
 
     const handleFilter = (e) => {
@@ -182,10 +185,11 @@ const Supplies = () => {
                             <RiUserSearchLine className='text-2xl text-black'/>
                             <input type="text" onChange={handleFilter} placeholder='Search' className='border-b-2 border-black p-1 text-sm font-normal focus:outline-none'/>
                         </div>
-                        <div onClick={toggleModal} className='lg:ml-0 lg:order-2 sm:ml-8 flex items-center gap-x-4 bg-primary text-white cursor-pointer px-6 py-3 rounded-md hover:bg-second'>
-                            <IoMdAddCircle className=' text-white text-xl'/>
-                            <span>Add Supply</span>
-                        </div>
+                        { role !== 'admin' ?                         
+                         null : <div onClick={toggleModal} className='lg:ml-0 lg:order-2 sm:ml-8 flex items-center gap-x-4 bg-primary text-white cursor-pointer px-6 py-3 rounded-md hover:bg-second'>
+                         <IoMdAddCircle className=' text-white text-xl'/>
+                         <span>Add Supply</span>
+                     </div> }
                     </div>
                 }
             />

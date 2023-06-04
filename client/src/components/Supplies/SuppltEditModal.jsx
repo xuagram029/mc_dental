@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 
 const SuppltEditModal = ({editMedicine, editQuantity, editName, editModal, setEditQuantity, setEditName, setEditModal}) => {
+  const { user } = useContext(AuthContext)
+  const role  = user?.resp[0].role
   return (
     <>
           <div
@@ -18,10 +21,13 @@ const SuppltEditModal = ({editMedicine, editQuantity, editName, editModal, setEd
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                 <div className='space-y-8'>
+                  {
+                    role !== 'admin' ? null : 
                 <div>
                     <label htmlFor="name">Name: </label>
                     <input required type="text" value={editName} onChange={(e) => {setEditName(e.target.value)}} className='w-full p-2 border border-black rounded focus:outline-none'/>
-                </div>
+                </div> 
+                  }
                 <div>
                     <label htmlFor="quantity">Quantity: </label>
                     <input required type="number" value={editQuantity} onChange={(e) => {setEditQuantity(e.target.value)}}className='w-full p-2 border border-black rounded focus:outline-none'/>

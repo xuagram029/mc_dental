@@ -24,15 +24,17 @@ const DentistLogin = () => {
         setPassType("password");
       };
 
-    useEffect(() => {
-        if (user && user.resp && user.resp.length > 0) {
-          if (user.resp[0].role === 'dentist') {
-            navigate('/dentist-dashboard');
-          } else if (user.resp[0].role === 'user') {
-            navigate('/');
-          }
+      useEffect(() => {
+        if(!user){
+          navigate('/dentist-login')
+        }else if(user?.resp[0]?.role === 'admin'){
+          navigate('/admin-dashboard')
+        }else if(user?.resp[0]?.role === 'patient'){
+          navigate('/patient-dashboard')
+        }else{
+          navigate('/dentist-dashboard')
         }
-      }, [user, navigate]);
+      }, [user])
       
 
     const handleSubmit = async (e) => {

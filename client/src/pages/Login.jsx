@@ -27,14 +27,14 @@ const Login = () => {
         };
 
     useEffect(() => {
-        if (user && user.resp && user.resp.length > 0) {
-          if (user.resp[0].role === 'user') {
-            navigate('/patient-dashboard');
-          } else if (user.resp[0].role === 'dentist') {
-            navigate('/dentist-dashboard');
-          }
+        if(user){
+        navigate('/patient-dashboard')
+        }else if(user?.resp[0]?.role === 'dentist'){
+        navigate('/dentist-dashboard')
+        }else if(user?.resp[0]?.role === 'admin'){
+        navigate('/admin-dashboard')
         }
-      }, [user, navigate]);
+    }, [user])
       
 
     const handleSubmit = async (e) => {
@@ -96,7 +96,7 @@ const Login = () => {
                     Login
                 </button>
             </form>
-            <p className='text-gray-700 font-pop font-semibold'>Don't have an account?<Link className='hover:underline text-primary px-1' to='/user-signup'>Sign up Here</Link></p>
+            <p className='text-gray-700 font-pop font-semibold'>Don't have an account?<Link className='hover:underline text-primary px-1' to='/register'>Sign up Here</Link></p>
             <a href="/">
                 <img src={loginLogo} alt="mc login logo" className='w-96 max-w-full mx-auto p-8' style={{mixBlendMode: "multiply"}}/>
             </a>

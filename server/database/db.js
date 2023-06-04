@@ -3,7 +3,7 @@ const mysql = require("mysql");
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "", // kung naka xamp gawing empty string pero advisable gumamit ng mysql workbench para isang import lang
+  password: "1234", // kung naka xamp gawing empty string pero advisable gumamit ng mysql workbench para isang import lang
   database: "mcdental_db",
 });
 

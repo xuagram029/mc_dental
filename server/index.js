@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 });
 
 // Routes
+app.use('/admin', require('./routes/admin'));
 app.use('/patient', require('./routes/patient'));
 app.use('/dentist', require('./routes/dentist'));
 app.use('/appointment', require('./routes/appointment'));

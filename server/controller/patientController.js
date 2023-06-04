@@ -3,6 +3,13 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require("dotenv").config()
 
+const getPatients = (req, res) => {
+  db.query("SELECT * FROM patients", (err, data) => {
+    if(err) return res.sendStatus(500)
+    return res.json(data)
+  })
+}
+
 const getPatient = (req, res) => {
   const {id} = req.params
   db.query("SELECT * FROM patients WHERE id = ?", id, (err, data) => {
@@ -39,9 +46,24 @@ const regPatient = (req, res) => {
     })
   };
   
-  // const { firstname, lastname, birthday, username, password, address, occupation, mobile, nationality, civil_status, age, sex, religion, email, guardian, good_health, m_treat, c_treated, illness, op_details, hozpitalized, hozpitalized_details, medication, meds, tobacco, alcohol, allergies, pregnant, nursing, birth_control, b_type, b_pressure, condition, bleeding_time, clotting_time } = req.body
-  const updatePatient = (req, res) => {
+  const updateProfile = (req, res) => {
     const { id } = req.params;
+    const { firstname, middlename, lastname, age, mobile, address, birthdate, email } = req.body;
+  
+    db.query(
+      "UPDATE patients SET `firstname` = ?, `middlename` = ?, `lastname` = ?, `age` = ?, `mobile` = ?, `address` = ?, `birthdate` = ?, `email` = ? WHERE id = ?",
+      [firstname, middlename, lastname, age, mobile, address, birthdate, email, id],
+      (err, data) => {
+        if (err) return res.status(401).json(err);
+        return res.json({ message: "Profile Updated" });
+      }
+    );
+  };
+  
+
+  // const { firstname, middlename, lastname, gender, civil_status, birthdate, age, religion, nationality, address, mobile, occupation, email, reffered_by, username, guardian, good_health, m_treat, c_treated, illness, op_details, hozpitalized, hozpitalized_details, medication, meds, tobacco, alcohol, allergies, pregnant, nursing, birth_control, b_type, b_pressure, condition, bleeding_time, clotting_time } = req.body
+const updatePatient = (req, res) => {
+  const { id } = req.params;
   const { storedPass, password } = req.body;
 
   if (!storedPass || !password) {
@@ -85,7 +107,7 @@ const regPatient = (req, res) => {
 
 const getAppointment = (req, res) => {
   const { id } = req.params
-  db.query("SELECT * FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id WHERE p.id = ?", id, (err, data) => {
+  db.query("SELECT a.id, a.date, a.service, a.status FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id WHERE p.id = ?", id, (err, data) => {
     if(err) return res.status(500).json(err)
     return res.json(data)
   })
@@ -140,7 +162,7 @@ const logout = (req, res) => {
   res.send("Logged out successfully");
 };
 
-module.exports = { regPatient, getPatient, updatePatient, login, logout, getAppointment }
+module.exports = { regPatient, getPatient, getPatients,  updatePatient, login, logout, getAppointment, updateProfile }
 
 // const regPatient = (req, res) => {
 //     const {

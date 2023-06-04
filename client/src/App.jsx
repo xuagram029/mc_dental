@@ -16,11 +16,19 @@ import Supplies from './pages/Supplies';
 import SwitchLogin from './pages/SwitchLogin';
 import AdminLogin from './pages/AdminLogin';
 import AdminManageUser from './pages/AdminManageUser';
+import AdminPatientList from './pages/AdminPatientList';
+import Message from './pages/Message';
+import AdminPatientInfo from './pages/AdminPatientInfo';
+import Calendar from './pages/Calendar';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />
+  },
+  {
+    path: "/calendar",
+    element: <Calendar />
   },
   {
     path: "login-as",
@@ -66,7 +74,7 @@ const router = createBrowserRouter([
     element: <Login/>,
   },
   {
-    path: "register",
+    path: "/register",
     element: <Registration />
   },
   {
@@ -76,6 +84,18 @@ const router = createBrowserRouter([
   {
     path: "admin-manageuser",
     element: <AdminManageUser />
+  },
+  {
+    path: "admin-message",
+    element: <Message />
+  },
+  {
+    path: "admin-patient-records",
+    element: <AdminPatientList />
+  },
+  {
+    path: "admin-patientinfo",
+    element: <AdminPatientInfo />
   },
   {
     path: '*',

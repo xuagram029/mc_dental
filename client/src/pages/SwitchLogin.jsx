@@ -7,7 +7,6 @@ import mcLogo from '../assets/mcLogo.png'
 import { useNavigate } from 'react-router-dom'
 
 const SwitchLogin = () => {
-
   const navigate = useNavigate()
   const handleBack = () => {
     navigate("/")

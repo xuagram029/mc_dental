@@ -1,11 +1,23 @@
-import {useState}from 'react'
+import {useContext, useState}from 'react'
 import mcLogo from '../assets/mcloginlogo.png'
 import { Link, useNavigate, NavLink } from 'react-router-dom'
+import axios from 'axios'
+import { AuthContext } from '../context/AuthContext'
 
 const AdminNavbar = () => {
-
+    const { user, dispatch } = useContext(AuthContext)
     const [navbar, setNavbar] = useState(false);  
-    
+
+    const handleLogout = async () => {
+        try {
+            const res = await axios.get('http://localhost:8000/admin/logout')
+            dispatch({type: "LOGOUT"})
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
   return (
     <nav className="font-pop w-full bg-second shadow">
     <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
@@ -66,10 +78,13 @@ const AdminNavbar = () => {
                         <NavLink to='/admin-patientinfo'>Patient Info</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to='/admin-patient-records'>Patient Records</NavLink>
+                    </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to='/supplies'>Supplies</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
-                        <NavLink to='/admin-manageuser'>Manage User</NavLink>
+                        <NavLink to='/admin-manageuser'>Manage Dentist</NavLink>
                     </li>
                 </ul>
 
@@ -81,7 +96,7 @@ const AdminNavbar = () => {
                         Profile
                     </Link>
                     <div
-                        // onClick={handleLogout}
+                        onClick={handleLogout}
                         className="cursor-pointer inline-block w-full px-4 py-2 text-center text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
                     >
                         Logout
@@ -96,12 +111,12 @@ const AdminNavbar = () => {
             >
                 {/* Hello {name}! */}
             </NavLink>
-            <a
-                // onClick={handleLogout}
+            <button
+                onClick={handleLogout}
                 className="cursor-pointer px-4 py-2 text-gray-800 bg-white rounded-md shadow hover:bg-gray-100"
             >
                 Logout
-            </a>
+            </button>
         </div>
     </div>
 </nav>

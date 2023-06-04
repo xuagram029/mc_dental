@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import bgPic from "../assets/loginPic.jpg"
 import {AiOutlineEye} from 'react-icons/ai'
 import {BsArrowBarLeft} from 'react-icons/bs'
@@ -7,14 +7,25 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../context/AuthContext'
 
 export const Registration = () => {
-
   const [passType, setPassType] = useState("password")
   const [agreement, setAgreement] = useState(true)
   const [openModal, setOpenModal] = useState(false)
+  const {user} = useContext(AuthContext)
   const navigate = useNavigate()
-  const [user, setUser] = useState({
+  useEffect(() => {
+    if(user){
+      navigate('/login')
+    }else if(user?.resp[0]?.role === 'dentist'){
+      navigate('/dentist-dashboard')
+    }else if(user?.resp[0]?.role === 'admin'){
+      navigate('/admin-dashboard')
+    }
+  }, [user])
+
+  const [patient, setPatient] = useState({
      firstname: "",
      middlename: "",
      lastname: "",
@@ -46,13 +57,13 @@ export const Registration = () => {
     };
     
     const handleChange = (e) => {
-        setUser((prev) => ({...prev, [e.target.name]: e.target.value}))
+        setPatient((prev) => ({...prev, [e.target.name]: e.target.value}))
       }
     
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('http://localhost:8000/patient', user)
+            const res = await axios.post('http://localhost:8000/patient', patient)
             alert(res.data.message)
             navigate('/login')
             // console.log(user);
@@ -70,7 +81,7 @@ export const Registration = () => {
         }
     }
 
-    console.log(user)
+    console.log(patient)
   return (
     <div className='bg-white lg:h-screen md:h-full sm:h-full flex'>
         <div className='basis-1/3 lg:block sm:hidden'>
@@ -100,7 +111,7 @@ export const Registration = () => {
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Gender:</span>
-                        <select required name="gender" onChange={(e) => setUser({ ...user, gender: e.target.value })} id="" className='bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'>
+                        <select required name="gender" onChange={(e) => setPatient({ ...patient, gender: e.target.value })} id="" className='bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'>
                             <option value="">--Select Gender--</option>
                             <option value="Single">Male</option>
                             <option value="Married">Female</option>
@@ -109,7 +120,7 @@ export const Registration = () => {
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Civil Status:</span>
-                        <select required name="civil_status" onChange={(e) => setUser({...user, civil_status: e.target.value})} id="" className='bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'>
+                        <select required name="civil_status" onChange={(e) => setPatient({...patient, civil_status: e.target.value})} id="" className='bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'>
                             <option value="">--Select Civil Status--</option>
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
