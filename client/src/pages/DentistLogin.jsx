@@ -45,7 +45,7 @@ const DentistLogin = () => {
             dispatch({ type: "LOGIN_SUCCESS",  payload: res.data})
             navigate('/dentist-dashboard')
         } catch (error) {
-            dispatch({ type: "LOGIN_SUCCESS",  payload: error.response.data.error})
+            dispatch({ type: "LOGIN_FAIL",  payload: error.response.data.error})
 
             toast.error(error.response.data.error, {
               position: "top-center",

@@ -45,7 +45,7 @@ const Login = () => {
             dispatch({ type: "LOGIN_SUCCESS",  payload: res.data})
             navigate('/patient-dashboard')
         } catch (error) {
-            dispatch({ type: "LOGIN_SUCCESS",  payload: error.response.data.error})
+            dispatch({ type: "LOGIN_FAIL",  payload: error.response.data.error})
             setErr(error.response.data.error)
             toast.error(error.response.data.error, {
                 position: "top-center",

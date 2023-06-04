@@ -5,7 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
-import AdminNavbar from '../components/AdminNavbar';
+import AdminNavbar from './AdminNavbar';
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
@@ -40,20 +40,19 @@ const Calendar = () => {
 
   const eventContent = (eventInfo) => {
     return (
-      <div className='text-white bg-rose-500 rounded-lg p-2 text-center'>
+      <div className='font-pop text-white bg-primary rounded-lg p-2 flex flex-col flex-wrap'>
         <p className='font-bold'>Agenda:</p>
-        <p>{eventInfo.event.title}</p>
-        <p className='font-bold'>ID:</p>
-        <p>{eventInfo.event.id}</p>
+        <p className='text-xs'>{eventInfo.event.title}</p>
+        <p className='font-bold flex items-center gap-x-2'>ID: <p>{eventInfo.event.id}</p></p>
+        
       </div>
     );
   };
 
   return (
     <>
-      <AdminNavbar />
     <div className='flex h-screen sm:flex-row'>
-      <div className='ml-5 flex-grow'>
+      <div className='mx-10 mt-8 flex-grow'>
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView='dayGridMonth'

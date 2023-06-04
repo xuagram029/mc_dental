@@ -4,6 +4,8 @@ import  DataTable  from 'react-data-table-component'
 import { RiUserSearchLine } from 'react-icons/ri';
 // import axios from '../api/axios';
 import axios from 'axios';
+import {MdTextsms} from "react-icons/md"
+import Message from './Message';
 
 const PendingAppointments = () => {
 
@@ -36,6 +38,7 @@ const PendingAppointments = () => {
     // console.log(formattedDate);
     
     const [ appointments, setAppointments] = useState([])
+    const [openSMS, setOpenSMS] = useState(false)
     const [ filteredAppointments, setFilteredAppointments] = useState([])
     useEffect(()=>{
         const getAppointments = async() =>{
@@ -143,13 +146,19 @@ const PendingAppointments = () => {
                 subHeader
                 subHeaderAlign="left"
                 subHeaderComponent={
-                    <div className='flex items-center gap-x-4'>
+                    <div className='flex items-center justify-between w-full'>
+                        <div className='flex items-center gap-x-4'>
                         <RiUserSearchLine className='text-2xl text-black'/>
                         <input type="text" onChange={handleFilter} placeholder='Search' className='border-b-2 border-black p-1 text-sm font-normal focus:outline-none'/>
+                        </div>
+                        <div>
+                          <button onClick={() => setOpenSMS(true)} className='bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second'><MdTextsms/>SMS</button>
+                        </div>
                     </div>
                 }
                 />
             </div>
+            {openSMS && <Message setOpenSMS={setOpenSMS} />}
     </div>
   )
 }

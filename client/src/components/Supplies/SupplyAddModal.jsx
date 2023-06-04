@@ -40,8 +40,8 @@ const SupplyAddModal = ({modal, setModal, handleChange, addSupply}) => {
                   >
                     Close
                   </button>
-                  <button className='border border-black py-3 px-6 rounded-xl hover:bg-primary hover:text-white hover:border-white' onClick={addSupply}>
-                    ADD ITEM
+                  <button className="px-4 py-2 text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600" onClick={addSupply}>
+                    Add Item
                 </button>
                 </div>
               </div>

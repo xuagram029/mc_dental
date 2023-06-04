@@ -43,7 +43,7 @@ const SuppltEditModal = ({editMedicine, editQuantity, editName, editModal, setEd
                   >
                     Close
                   </button>
-                  <button className='border border-black py-3 px-6 rounded-xl hover:bg-primary hover:text-white hover:border-white' onClick={editMedicine}>
+                  <button className="px-4 py-2 text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600" onClick={editMedicine}>
                     EDIT ITEM
                 </button>
                 </div>

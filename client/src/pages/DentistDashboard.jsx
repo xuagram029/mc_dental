@@ -4,6 +4,7 @@ import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
 import DentistNavBar from '../components/DentistNavBar'
 import PendingAppointments from '../components/PendingAppointments'
+import Calendar from '../components/Calendar'
 
 const DentistDashboard = () => {
     const { user, dispatch } = useContext(AuthContext)
@@ -21,9 +22,11 @@ const DentistDashboard = () => {
 
     
   return (
-    <div>
+    <div className='h-full'>
         <DentistNavBar />
         <PendingAppointments />
+        <h1 className='pt-8 text-center font-pop font-bold text-2xl text-gray-700'>Appoinment Calendar</h1>
+        <Calendar />
     </div>
   )
 }

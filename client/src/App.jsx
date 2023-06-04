@@ -9,17 +9,19 @@ import PatientProfile from './pages/PatientProfile';
 import Login from './pages/Login'
 import { Registration } from './pages/Registration'
 import Landing from './pages/Landing'
-import PendingAppointments from './components/PendingAppointments';
 import PatientAppointments from './pages/PatientAppointments';
 import ErrorPage from './pages/ErrorPage';
-import Supplies from './pages/Supplies';
 import SwitchLogin from './pages/SwitchLogin';
 import AdminLogin from './pages/AdminLogin';
 import AdminManageUser from './pages/AdminManageUser';
 import AdminPatientList from './pages/AdminPatientList';
-import Message from './pages/Message';
+import Message from './components/Message';
 import AdminPatientInfo from './pages/AdminPatientInfo';
-import Calendar from './pages/Calendar';
+import AdminDashboard from './pages/AdminDashboard';
+import DentistSupplies from './pages/DentistSupplies';
+import AdminSupplies from './pages/AdminSupplies';
+import DentistPatientInfo from './pages/DentistPatientInfo';
+import PatientPassword from './pages/PatientPassword';
 
 const router = createBrowserRouter([
   {
@@ -27,8 +29,8 @@ const router = createBrowserRouter([
     element: <Landing />
   },
   {
-    path: "/calendar",
-    element: <Calendar />
+    path: "/admin-dashboard",
+    element: <AdminDashboard />
   },
   {
     path: "login-as",
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
     path: "/dentist-profile",
     element: <DentistProfile />,
   },
+  {
+    path: "/dentist-supplies",
+    element: <DentistSupplies />
+  },
+  {
+    path: "/dentist-patientinfo",
+    element: <DentistPatientInfo />
+  },
   // patient
   // client
   {
@@ -64,11 +74,11 @@ const router = createBrowserRouter([
     path: "/patient-profile",
     element: <PatientProfile />,
   },
-  // admin side
   {
-    path: "/supplies",
-    element: <Supplies />,
+    path: "/patient-password",
+    element: <PatientPassword />
   },
+  // admin side
   {
     path: "/login",
     element: <Login/>,
@@ -96,6 +106,10 @@ const router = createBrowserRouter([
   {
     path: "admin-patientinfo",
     element: <AdminPatientInfo />
+  },
+  {
+    path: "admin-supplies",
+    element: <AdminSupplies />
   },
   {
     path: '*',

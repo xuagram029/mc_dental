@@ -85,6 +85,9 @@ const PatientNavbar = () => {
                     <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to={`/appointments/${id}`}>Appointments</NavLink>
                     </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to={`/patient-profile`}>Profile</NavLink>
+                    </li>
                 </ul>
 
                 <div className="mt-3 space-y-2 lg:hidden md:inline-block">
@@ -105,7 +108,7 @@ const PatientNavbar = () => {
         </div>
         <div className="hidden space-x-2 md:inline-block">
             <NavLink
-                to='/patient-profile'
+                to='/patient-password'
                 className="px-4 py-2 text-sm text-white font-semibold hover:text-rose-300"
             >
                 Hello {name}!

@@ -9,6 +9,8 @@ import DentistReg from '../components/DentistReg';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminManageUser = () => {
     const { user } = useContext(AuthContext)
@@ -84,6 +86,7 @@ const AdminManageUser = () => {
         try {
             const res = await axios.delete(`http://localhost:8000/admin/dentist/${id}`)
             console.log(res.data.message);
+            window.location.reload(true)
         } catch (error) {
             console.log(error);
         }
@@ -169,15 +172,17 @@ const AdminManageUser = () => {
             }
         />
       </div>
+      <ToastContainer />
 
       {
       editModal &&
-      <div
+      <>
+        <div
       className="font-pop justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
     >
       <div className="relative w-auto my-6 mx-auto max-w-4xl ">
         {/*content*/}
-        <div className="max-h-[90vh] overflow-y-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-primary outline-none focus:outline-none">
+        <div className="max-h-[90vh] overflow-y-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
           {/*header*/}
           <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
             <h3 className="text-2xl font-semibold">
@@ -248,12 +253,6 @@ const AdminManageUser = () => {
                       />
                   </div>
                   {/* {err && <div className="text-red-600">{err}</div>} */}
-                  <div className="mt-6">
-                      <button onClick={editDentist} 
-                      className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">
-                          Update
-                      </button>
-                  </div>
                   {/* {error && <div className='text-red-700'>{error}</div>} */}
               </form>
           </div>
@@ -266,11 +265,18 @@ const AdminManageUser = () => {
             >
               Close
             </button>
+            <button onClick={editDentist} 
+                      className="px-4 py-2 text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">
+                          Update
+            </button>
           </div>
         </div>
       </div>
     </div>
-      }
+    
+    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+      </>
+    }
 
       {addUserModal && <DentistReg setAddUserModal={setAddUserModal} addUserModal={addUserModal} />}
     </div>

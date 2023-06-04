@@ -1,6 +1,8 @@
 import {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DentistReg = ({setAddUserModal, addUserModal}) => {
 
@@ -18,11 +20,31 @@ const DentistReg = ({setAddUserModal, addUserModal}) => {
       try {
           const res = await axios.post('http://localhost:8000/dentist', {name, specialty, number, username, password})
           console.log(res.data.message)
-          navigate('/dentist-login')
+            window.location.reload(true)
+            toast.success("New User Added", {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+
       } catch (err) {
           // console.log(err)
-          console.log(err.response.data.message)
           setError(err.response.data.message)
+          toast.error(error, {
+            position: "top-center",
+            autoClose: 3500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
       }
   }  
   return (
@@ -114,11 +136,8 @@ const DentistReg = ({setAddUserModal, addUserModal}) => {
                         </div>
                         {/* {err && <div className="text-red-600">{err}</div>} */}
                         <div className="mt-6">
-                            <button onClick={handleSubmit} className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">
-                                Submit
-                            </button>
+                            
                         </div>
-                        {error && <div className='text-red-700'>{error}</div>}
                     </form>
                 </div>
                 {/*footer*/}
@@ -130,6 +149,10 @@ const DentistReg = ({setAddUserModal, addUserModal}) => {
                   >
                     Close
                   </button>
+
+                  <button onClick={handleSubmit} className="px-4 py-2 text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">
+                                Submit
+                    </button>
                 </div>
               </div>
             </div>

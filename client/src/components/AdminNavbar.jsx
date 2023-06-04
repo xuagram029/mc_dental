@@ -7,12 +7,13 @@ import { AuthContext } from '../context/AuthContext'
 const AdminNavbar = () => {
     const { user, dispatch } = useContext(AuthContext)
     const [navbar, setNavbar] = useState(false);  
+    const navigate = useNavigate()
 
     const handleLogout = async () => {
         try {
             const res = await axios.get('http://localhost:8000/admin/logout')
             dispatch({type: "LOGOUT"})
-            console.log(res.data);
+            navigate("/")
         } catch (error) {
             console.log(error);
         }
@@ -72,7 +73,7 @@ const AdminNavbar = () => {
             >
                 <ul className="font-medium items-center justify-center space-y-8 md:flex md:space-x-10 md:space-y-0">
                     <li className="text-white hover:text-acsent hover:border-b-2">
-                        <NavLink to='admin-dashboard'>Dashboard</NavLink>
+                        <NavLink to='/admin-dashboard'>Dashboard</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to='/admin-patientinfo'>Patient Info</NavLink>
@@ -81,7 +82,7 @@ const AdminNavbar = () => {
                         <NavLink to='/admin-patient-records'>Patient Records</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
-                        <NavLink to='/supplies'>Supplies</NavLink>
+                        <NavLink to='/admin-supplies'>Supplies</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to='/admin-manageuser'>Manage Dentist</NavLink>

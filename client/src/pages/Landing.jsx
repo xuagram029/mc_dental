@@ -4,7 +4,7 @@ import { AboutUs } from '../components/Landing Page/AboutUs'
 import { Services } from '../components/Landing Page/Services'
 import { Contacts } from '../components/Landing Page/Contacts'
 import { NavBar } from '../components/NavBar'
-import Calendar from './Calendar'
+import Calendar from '../components/Calendar'
 
 const Landing = () => {
   return (

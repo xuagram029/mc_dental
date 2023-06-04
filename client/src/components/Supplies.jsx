@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router'
 import  DataTable  from 'react-data-table-component'
 import { IoMdAddCircle } from 'react-icons/io';
 import { RiUserSearchLine } from 'react-icons/ri';
 import { FiEdit3 } from 'react-icons/fi';
 import { MdOutlineDelete } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import DentistNavBar from '../components/DentistNavBar';
-import SupplyAddModal from '../components/Supplies/SupplyAddModal';
-import SuppltEditModal from '../components/Supplies/SuppltEditModal';
+import SupplyAddModal from './Supplies/SupplyAddModal';
+import SuppltEditModal from './Supplies/SuppltEditModal';
 import { AuthContext } from '../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Supplies = () => {
@@ -66,7 +65,16 @@ const Supplies = () => {
             console.log(res.data)
             window.location.reload()
         } catch (error) {
-            console.log(error);
+            toast.error(error.response.data.message, {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         }
     }
 
@@ -147,15 +155,15 @@ const Supplies = () => {
             ),
             button: true
         },
-        {
-        name: "Delete",
-        cell: row => (
-            <button onClick={() => deleteMedicine(row.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-            <MdOutlineDelete className='text-base'/>
-            </button>
-        ),
-        button: true
-        }
+        role === 'admin' && {
+            name: 'Delete',
+            cell: row => (
+              <button onClick={() => deleteMedicine(row.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                <MdOutlineDelete className='text-base'/>
+              </button>
+            ),
+            button: true
+          }
     ]
 
     const handleFilter = (e) => {
@@ -167,7 +175,6 @@ const Supplies = () => {
 
   return (
     <div>
-        <DentistNavBar />
         <div className='mx-10 mt-8'>
         <div className="font-pop font-bold flex flex-col w-full items-center justify-center border-2 border-black">
             <DataTable

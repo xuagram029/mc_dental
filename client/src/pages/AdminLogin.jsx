@@ -5,6 +5,8 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios'
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminLogin = () => {
     const { user, loading, error, dispatch } = useContext(AuthContext)
@@ -43,10 +45,19 @@ const AdminLogin = () => {
       try {
         const res = await axios.post('http://localhost:8000/admin', credentials)
         dispatch({type: "LOGIN_SUCCESS", payload: res.data})
-        console.log(res.data);
+        navigate('/admin-dashboard')
       } catch (error) {
         dispatch({type: "LOGIN_FAIL", payload: error})
-        console.log(error.response.data.error);
+        toast.error(error.response.data.error, {
+          position: "top-center",
+          autoClose: 3500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       }
     }    
     
@@ -98,6 +109,7 @@ const AdminLogin = () => {
             </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
 
-const PatientAppointment = () => {
+const AppointmentBooking = ({setOpenModal}) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const patient_id = user?.resp[0]?.id;
@@ -112,8 +112,9 @@ const PatientAppointment = () => {
         progress: undefined,
         theme: "light",
         });
+        window.location.reload(true)
     } catch (error) {
-      toast.error(error, {
+      toast.error(error.response.data.message, {
         position: "top-center",
         autoClose: 3500,
         hideProgressBar: false,
@@ -127,17 +128,36 @@ const PatientAppointment = () => {
   };
   
   return (
-  <div class="font-pop mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-lg">
-      <h1 class="text-center text-2xl font-bold text-primary sm:text-3xl">
-      Set your appointment now
-      </h1>
-      <form
-        class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
+    <>
+    <div
+      className="font-pop justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
+    >
+      <div className="relative w-auto my-6 mx-auto max-w-xl ">
+        {/*content*/}
+        <div className="max-h-[90vh] overflow-y-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          {/*header*/}
+          <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+            <h3 className="text-2xl font-semibold">
+              Terms and Conditions Agreement
+            </h3>
+            <button
+              className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+              onClick={() => setShowModal(false)}
+            >
+              <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                ×
+              </span>
+            </button>
+          </div>
+          {/*body*/}
+          <div className="relative p-6 flex-auto">
+          <form
       >
         <label htmlFor="dentist">
           <span>Appointment Date:</span>
           <DatePicker
+                required
+                className='border-2 w-full p-3 rounded-lg border-gray-200'
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
                 minDate={new Date()}
@@ -159,7 +179,7 @@ const PatientAppointment = () => {
           <input
                 disabled
                 type="text"
-                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm border-2"
                 placeholder={patient_fullname}
           />
         </label>
@@ -168,21 +188,22 @@ const PatientAppointment = () => {
           <span>Mobile No:</span>
           <input
               name='number'
+              required
               onChange={handleChange}
               type="number"
-              class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm border-2"
               placeholder="Phone Number"
-              required
             />
         </label>
   
         <label htmlFor="date">
           <span>Desire Date to Schedule:</span>
           <select
+                required
                 name="time"
                 id=""
                 onChange={(e) => setPatient({ ...patient, time: e.target.value })}
-                className='w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm'>
+                className='w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm border-2'>
                 <option value="">--SELECT--</option>
                 {filteredTimes.length > 0 &&
                 filteredTimes.map((time) => {
@@ -200,7 +221,7 @@ const PatientAppointment = () => {
 
         <label htmlFor="service">
           <span>Select a Service</span>
-          <select required name="service" id="" onChange={(e) => setPatient({...patient, service: e.target.value})} className='w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm'>
+          <select required name="service" id="" onChange={(e) => setPatient({...patient, service: e.target.value})} className='w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm border-2'>
               <option hidden>--SELECT--</option>
               <option value="Composite Restoration">Composite Restoration</option>
               <option value="Direct Composite Veeners">Direct Composite Veeners</option>
@@ -210,17 +231,31 @@ const PatientAppointment = () => {
             </select>  
         </label>
   
-        <button
+        
+      </form>
+          </div>
+          {/*footer*/}
+          <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+            <button
+              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={() => setOpenModal(false)}
+            >
+              Okay
+            </button>
+            <button
           onClick={handleSubmit}
-          class="block w-full rounded-lg bg-primary px-5 py-3 text-sm font-medium text-white hover:bg-second"
+          className="px-4 py-2 text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
         >
           Book Appointment
         </button>
-      </form>
+          </div>
+        </div>
+      </div>
     </div>
-    <ToastContainer />
-  </div>
+    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+  </>
   )
 }
 
-export default PatientAppointment
+export default AppointmentBooking

@@ -2,6 +2,9 @@ import {useState, useContext, useEffect} from 'react'
 import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import PatientNavbar from '../components/PatientNavbar'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PatientPassword = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
@@ -41,16 +44,34 @@ const PatientPassword = () => {
                 console.log("new password and current pass does not match")
             }else{
                 const res = await axios.put(`http://localhost:8000/patient/${id}`, {storedPass, password: newPassword}) //password
-                console.log(res.data.message)
+                toast.success("Password Updated", {
+                    position: "top-center",
+                    autoClose: 3500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
                 window.location.reload()
             }
         } catch (error) {
-            console.log(error.response.data.message);
+            toast.error(error.response.data.message, {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         }
     }
   return (
     <div className='w-screen'>
-        <button><Link to='/patient-dashboard'>back</Link></button>
+        <PatientNavbar />
     <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
         <h2 className="text-xl font-bold mb-4">Update Information</h2>
         <div className="grid grid-cols-2 gap-4">
@@ -107,6 +128,7 @@ const PatientPassword = () => {
             Submit
             </button>
     </div>
+    <ToastContainer />
 </div>
   )
 }

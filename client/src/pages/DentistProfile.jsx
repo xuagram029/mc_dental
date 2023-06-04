@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import DentistNavBar from '../components/DentistNavBar'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DentistProfile = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
@@ -43,10 +45,30 @@ const DentistProfile = () => {
         e.preventDefault()
         try {
             const res = await axios.put(`http://localhost:8000/dentist/${id}`, {name, specialty, number, username}) //password
-            console.log(res.data.message)
-            window.location.reload()
+            toast.success("Profile Info has been updated", {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            setTimeout(() => {
+                window.location.reload()
+            }, 1500);
         } catch (error) {
-            console.log(error.response.data.message);
+            toast.error(error.response.data.message, {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         }
     }
 
@@ -137,6 +159,7 @@ const DentistProfile = () => {
         Submit
         </button>
     </div>
+    <ToastContainer />
     </div>
   )
 }
