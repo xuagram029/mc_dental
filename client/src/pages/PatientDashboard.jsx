@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
 import AppointmentBooking from './AppointmentBooking'
+import Calendar from './Calendar'
 
 const PatientDashboard = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
@@ -25,7 +26,7 @@ const PatientDashboard = () => {
         e.preventDefault()
         try {
             const res = await axios.post('http://localhost:8000/patient/logout')
-            console.log(res.data.message)
+            // console.log(res.data.message)
             dispatch({type: "LOGOUT"})
             navigate('/login')
         } catch (err) {
@@ -43,10 +44,14 @@ const PatientDashboard = () => {
         </button>
         <button
             className="block w-36 mt-4 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
-        ><Link to='/patient-profile'>Change Password</Link></button>
+        ><Link to='/patient-password'>Change Password</Link></button>
+        <button
+            className="block w-36 mt-4 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+        ><Link to={`/patient-profile`}>Profile</Link></button>
         <button
             className="block w-36 mt-4 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
         ><Link to={`/appointments/${id}`}>Appointments</Link></button>
+        <Calendar />
         <AppointmentBooking />
     </div>
   )

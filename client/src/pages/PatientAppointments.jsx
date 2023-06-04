@@ -56,8 +56,9 @@ const PatientAppointments = () => {
         const newData = filteredAppointments.filter(row =>
           row.service.toLowerCase().includes(e.target.value.toLowerCase()) 
         );    
-        setAppointments(newData)
+        setAppointments(newData);
       }
+      
 
   return (
     <div>
