@@ -139,23 +139,24 @@ const Supplies = () => {
             sortable: true
         },
         {
-            name: "Edit",
+            name: 'Edit',
             cell: row => (
               <button onClick={() => toggleEditModal(row.id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 <FiEdit3 className='text-white text-base'/>
               </button>
             ),
+            button: true,
+            right: role !== 'admin', // Move the button to the right if user is not an admin
+          },
+          role === 'admin' && {
+            name: 'Delete',
+            cell: row => (
+              <button onClick={() => deleteMedicine(row.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                <MdOutlineDelete className='text-base'/>
+              </button>
+            ),
             button: true
-        },
-        {
-        name: "Delete",
-        cell: row => (
-            <button onClick={() => deleteMedicine(row.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-            <MdOutlineDelete className='text-base'/>
-            </button>
-        ),
-        button: true
-        }
+          }
     ]
 
     const handleFilter = (e) => {

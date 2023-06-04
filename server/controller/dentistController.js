@@ -21,7 +21,9 @@ const getDentist = (req, res) => {
 const regDentist = (req, res) => {
     const { name, specialty, number, username, password } = req.body
     const enc_password = bcrypt.hashSync(password, 10)
-
+    if(!name || !specialty || !number || !username || !password){
+      return res.status(401).json({message: "Please enter all fields"})
+    }
     const values = [name, specialty, number, username, enc_password]
     db.query("SELECT * FROM dentists WHERE username = ?", [username], (err, result) => {
         if(err) return res.sendStatus(500)

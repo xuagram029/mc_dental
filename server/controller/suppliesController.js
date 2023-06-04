@@ -17,7 +17,9 @@ const getSupply = (req, res) => {
 
 const addSuplies = (req, res) => {
     const { name, quantity } = req.body
-    console.log(name, quantity);
+    if(!name || !quantity) {
+        return res.status(401).json({message: "Please fill all the fields"})
+    }
     db.query("INSERT INTO supplies(`name`, `quantity`) VALUES(?, ?)", [name, quantity], (err, data) => {
         if(err) return res.status(500).json(err)
         return res.json({message: "Supply added successfully"})

@@ -49,7 +49,9 @@ const regPatient = (req, res) => {
   const updateProfile = (req, res) => {
     const { id } = req.params;
     const { firstname, middlename, lastname, age, mobile, address, birthdate, email } = req.body;
-  
+    if(!firstname || !middlename || !lastname || !age || mobile || !address || !birthdate || !email){
+      return res.status(401).json({message: "Please fill all the fields"})
+    }
     db.query(
       "UPDATE patients SET `firstname` = ?, `middlename` = ?, `lastname` = ?, `age` = ?, `mobile` = ?, `address` = ?, `birthdate` = ?, `email` = ? WHERE id = ?",
       [firstname, middlename, lastname, age, mobile, address, birthdate, email, id],

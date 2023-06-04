@@ -36,6 +36,9 @@ const makeAppointment = (req, res) => {
   const appointmentDate = new Date(date).toISOString().split('T')[0];
   
   // Check if the appointment limit for the given date has been reached
+  if(!time || !name || !date || !service || !number || !id){
+    return res.status(401).json({message: "Please Input all fields"})
+  }
   db.query('SELECT COUNT(*) AS appointmentCount FROM appointments WHERE date = ?', [appointmentDate], (err, results) => {
     if (err) {
       console.error('Error querying the database: ' + err.stack);
