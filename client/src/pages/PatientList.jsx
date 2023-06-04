@@ -41,15 +41,9 @@ const PatientList = () => {
     }
 
     const columns = [
-        // {
-        //     name: 'Full Name',
-        //     selector: row => row.name,
-        //     sortable: true
-        // },
         {
             name: 'Patient ID',
             selector: row => row.id,
-            // sortable: true
         },
         {
             name: "Firstname",

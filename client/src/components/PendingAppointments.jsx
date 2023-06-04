@@ -6,7 +6,6 @@ import { RiUserSearchLine } from 'react-icons/ri';
 import axios from 'axios';
 
 const PendingAppointments = () => {
-    const [count, setCount] = useState(1)
 
     // useEffect(() => {
     //     const interval = setInterval(() => {
@@ -41,7 +40,6 @@ const PendingAppointments = () => {
     useEffect(()=>{
         const getAppointments = async() =>{
           const res = await axios.get('http://localhost:8000/appointment/pending')
-        //   setUsers(res.data)
             setAppointments(res.data)
             setFilteredAppointments(res.data)
         }
@@ -49,13 +47,11 @@ const PendingAppointments = () => {
       },[])
 
     const acceptAppointment = async (id) => {
-        // e.preventDefault()
-        // window.location.reload()
+        window.location.reload()
         const res = await axios.put(`http://localhost:8000/appointment/${id}`)
         console.log(res.data.message)
     }
     const rejectAppointment = async (id) => {
-        // e.preventDefault()
         window.location.reload()
         const res = await axios.delete(`http://localhost:8000/appointment/${id}`)
         console.log(res.data.message)
@@ -94,17 +90,18 @@ const PendingAppointments = () => {
             sortable: true
         },
         {
-            name: "Date",
-            selector: row => new Date(row.date).toLocaleString(),
-            sortable: true
+          name: "Date",
+          selector: row => new Date(row.date).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }),
+          sortable: true
         },
+        
         {
             name: "Agenda",
             selector: row => row.service,
             sortable: true
         },
         {
-          name: "Edit",
+          name: "Accept",
           cell: row => (
             <button onClick={() => acceptAppointment(row.id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               ✓
@@ -125,7 +122,8 @@ const PendingAppointments = () => {
     
     const handleFilter = (e) => {
         const newData = filteredAppointments.filter(row =>
-          row.name.toLowerCase().includes(e.target.value.toLowerCase()) 
+          row.name.toLowerCase().includes(e.target.value.toLowerCase()) || 
+          row.service.toLowerCase().includes(e.target.value.toLowerCase()) 
         );    
         setAppointments(newData)
       }

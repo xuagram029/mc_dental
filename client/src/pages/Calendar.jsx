@@ -1,82 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useContext, useEffect, useState } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router';
+import AdminNavbar from '../components/AdminNavbar';
 
 const Calendar = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [disabledDates, setDisabledDates] = useState([]);
+  const [events, setEvents] = useState([]);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/appointment/all');
+        console.log(response.data);
+        const transformedEvents = response.data.map(event => ({
+          id: event.id,
+          title: event.service,
+          start: new Date(event.date).toISOString(), // Convert the date to the correct format
+        }));
+        setEvents(transformedEvents);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+    fetchEvents();
+  }, []);
 
   // useEffect(() => {
-  //   // Fetch disabled dates from the server
-  //   axios
-  //     .get('/disabled-dates')
-  //     .then((response) => {
-  //       setDisabledDates(response.data.disabledDates);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching disabled dates:', error);
-  //     });
-  // }, []);
+  //   if(!user){
+  //     navigate('/admin-login')
+  //   }else if(user?.resp[0]?.role === 'user'){
+  //     navigate('/')
+  //  }
+  // }, [user])
 
-  const isDateDisabled = (date) => {
-    // Check if the date is present in the disabledDates array
-    return disabledDates.some((disabledDate) =>
-      isSameDay(disabledDate, date)
+  const eventContent = (eventInfo) => {
+    return (
+      <div className='text-white bg-rose-500 rounded-lg p-2 text-center'>
+        <p className='font-bold'>Agenda:</p>
+        <p>{eventInfo.event.title}</p>
+        <p className='font-bold'>ID:</p>
+        <p>{eventInfo.event.id}</p>
+      </div>
     );
   };
 
-  const isSameDay = (date1, date2) =>
-    date1.getDate() === date2.getDate() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getFullYear() === date2.getFullYear();
-
   return (
-    <DatePicker
-      selected={selectedDate}
-      onChange={(date) => setSelectedDate(date)}
-      filterDate={isDateDisabled}
-    />
+    <>
+      <AdminNavbar />
+    <div className='flex h-screen sm:flex-row'>
+      <div className='ml-5 flex-grow'>
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          initialView='dayGridMonth'
+          events={events}
+          eventContent={eventContent}
+          height='100%'
+          aspectRatio={1.5}
+          eventClassNames={['appointment-cell']} // Add a custom CSS class for appointment cells
+        />
+      </div>
+    </div>
+    </>
   );
 };
 
 export default Calendar;
-
-
-// import React, { useState } from 'react';
-// import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
-
-// const Calendar = () => {
-//     const [selectedDate, setSelectedDate] = useState(null);
-  
-//     // Function to check if a date should be disabled
-//     const isDateEnabled = (date) => {
-//         // Define the enabled dates
-//         const enabledDates = [
-//           new Date(2023, 5, 1), // Example enabled dates
-//           new Date(2023, 5, 3),
-//         ];
-//         // Check if the date is present in the enabledDates array
-//         return enabledDates.some((enabledDate) =>
-//           isSameDay(enabledDate, date)
-//         );
-//       };
-  
-//     // Function to compare two dates and check if they are the same
-//     const isSameDay = (date1, date2) =>
-//       date1.getDate() === date2.getDate() &&
-//       date1.getMonth() === date2.getMonth() &&
-//       date1.getFullYear() === date2.getFullYear();
-  
-//     return (
-// <DatePicker
-//   selected={selectedDate}
-//   onChange={(date) => setSelectedDate(date)}
-//   filterDate={(date) => !isDateEnabled(date)}
-// />
-//     );
-//   };
-  
-//   export default Calendar;
-  

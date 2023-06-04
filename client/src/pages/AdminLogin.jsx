@@ -1,11 +1,35 @@
 import {BsArrowBarLeft} from "react-icons/bs"
 import {AiOutlineEye} from "react-icons/ai"
 import admin from '../assets/adminPanel.png'
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import axios from 'axios'
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from 'react-router-dom'
 
 const AdminLogin = () => {
-
+    const { user, loading, error, dispatch } = useContext(AuthContext)
+    const navigate = useNavigate()
     const [passType, setPassType] = useState("password")
+    const [credentials, setCredentials] = useState({
+      username: "",
+      password: ""
+    })
+    
+    useEffect(() => {
+      if(!user){
+        navigate('/admin-login')
+      }else if(user?.resp[0]?.role === 'dentist'){
+        navigate('/patient-dashboard')
+      }else{
+        // navigate('/admin-dashboard')
+        navigate('/admin-manageuser')
+      }
+    }, [user])
+
+    const handleChange = (e) => {
+      setCredentials((prev) => setCredentials({...prev, [e.target.name]: e.target.value}))
+    }
+
     const handlePassType = () => {
         if (passType === "password") {
             setPassType("text");
@@ -14,8 +38,16 @@ const AdminLogin = () => {
           setPassType("password");
         };
 
-    const handleSubmit = () => {
-        BsWindowSidebar.alert("okay")
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      try {
+        const res = await axios.post('http://localhost:8000/admin', credentials)
+        dispatch({type: "LOGIN_SUCCESS", payload: res.data})
+        console.log(res.data);
+      } catch (error) {
+        dispatch({type: "LOGIN_FAIL", payload: error})
+        console.log(error.response.data.error);
+      }
     }    
     
   return (
@@ -34,10 +66,11 @@ const AdminLogin = () => {
             <label htmlFor='email'>
               <span className="font-semibold">Username:</span>
               <input
-                    type="email"
+                    type="text"
+                    name="username"
                     className="w-full text-sm py-4 px-2 border-b-2 border-white focus:outline-none mb-4 bg-transparent text-black font-medium"
                     placeholder="Enter username"
-                    onChange={(e) => {setUsername(e.target.value)}}
+                    onChange={handleChange}
                 />
             </label>
 
@@ -45,9 +78,10 @@ const AdminLogin = () => {
               <span className="font-semibold">Password:</span>
               <input
                     type={passType}
+                    name="password"
                     className="w-full text-sm py-4 px-2 border-b-2 border-white focus:outline-none bg-transparent text-black font-medium"
                     placeholder="Enter password"
-                    onChange={(e) => {setPassword(e.target.value)}}
+                    onChange={handleChange}
                 />
               <span onClick={handlePassType} className='cursor-pointer absolute top-10 end-4 text-xl text-black'>
                   <AiOutlineEye />

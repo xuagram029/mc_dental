@@ -15,15 +15,15 @@ const DentistProfile = () => {
     const id = user?.resp[0]?.id
     const navigate = useNavigate()
 
-    // useEffect(() => {
-    //     if (user && user.resp && user.resp.length > 0) {
-    //       if (user.resp[0].role === 'user') {
-    //         navigate('/patient-dashboard');
-    //       }
-    //     }else if(!user){
-    //         navigate('/dentist-login')
-    //     }
-    //   }, [user, navigate]);
+    useEffect(() => {
+        if(!user){
+          navigate('/dentist-login')
+        }else if(user?.resp[0]?.role === 'admin'){
+          navigate('/admin-dashboard')
+        }else if(user?.resp[0]?.role === 'patient'){
+          navigate('/patient-dashboard')
+        }
+      }, [user])
 
     useEffect(() => {
         const getUser = async () => {

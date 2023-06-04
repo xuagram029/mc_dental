@@ -8,11 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const PatientProfile = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
-    // const [name, setName] = useState('')
-    // const [specialty, setSpecialty] = useState('')
-    // const [number, setNumber] = useState('')
-    // const [username, setUsername] = useState('')
-    // const [password, setPassword] = useState('')
     const [storedPass, setStoredPass] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [conPassword, setConPassword] = useState('')
@@ -21,12 +16,14 @@ const PatientProfile = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(user?.resp[0]?.role === 'user'){
-            navigate('/patient-profile')
-        }else if(user?.resp[0]?.role === 'patient'){
-            navigate('/patient-dashboard')
+        if(!user){
+          navigate('/login')
+        }else if(user?.resp[0]?.role === 'dentist'){
+          navigate('/dentist-dashboard')
+        }else if(user?.resp[0]?.role === 'admin'){
+          navigate('/admin-dashboard')
         }
-    }, [user, navigate])
+      }, [user])
 
     useEffect(() => {
         const getUser = async () => {

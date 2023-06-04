@@ -61,7 +61,7 @@ const regPatient = (req, res) => {
   };
   
 
-  // const { firstname, lastname, birthday, username, password, address, occupation, mobile, nationality, civil_status, age, sex, religion, email, guardian, good_health, m_treat, c_treated, illness, op_details, hozpitalized, hozpitalized_details, medication, meds, tobacco, alcohol, allergies, pregnant, nursing, birth_control, b_type, b_pressure, condition, bleeding_time, clotting_time } = req.body
+  // const { firstname, middlename, lastname, gender, civil_status, birthdate, age, religion, nationality, address, mobile, occupation, email, reffered_by, username, guardian, good_health, m_treat, c_treated, illness, op_details, hozpitalized, hozpitalized_details, medication, meds, tobacco, alcohol, allergies, pregnant, nursing, birth_control, b_type, b_pressure, condition, bleeding_time, clotting_time } = req.body
 const updatePatient = (req, res) => {
   const { id } = req.params;
   const { storedPass, password } = req.body;
@@ -107,7 +107,7 @@ const updatePatient = (req, res) => {
 
 const getAppointment = (req, res) => {
   const { id } = req.params
-  db.query("SELECT * FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id WHERE p.id = ?", id, (err, data) => {
+  db.query("SELECT a.id, a.date, a.service, a.status FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id WHERE p.id = ?", id, (err, data) => {
     if(err) return res.status(500).json(err)
     return res.json(data)
   })

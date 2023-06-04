@@ -13,15 +13,14 @@ const PatientDashboard = () => {
     // console.log(user?.resp[0]?.id);
 
     useEffect(() => {
-        if(user && user.resp[0] && user.resp[0].role === 'user'){
-            navigate('/patient-dashboard')
+        if(!user){
+          navigate('/login')
         }else if(user?.resp[0]?.role === 'dentist'){
-            navigate('/dentist-dashboard')
+          navigate('/dentist-dashboard')
+        }else if(user?.resp[0]?.role === 'admin'){
+          navigate('/admin-dashboard')
         }
-        else{
-            navigate('/login')
-        }
-    }, [user, navigate])
+      }, [user])
 
     
   return (

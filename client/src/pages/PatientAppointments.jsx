@@ -1,16 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router'
 import  DataTable  from 'react-data-table-component'
 import { RiUserSearchLine } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PatientNavbar from '../components/PatientNavbar';
+import { AuthContext } from '../context/AuthContext';
 
 
 const PatientAppointments = () => {
+    const { user } = useContext(AuthContext)
     const [ appointments, setAppointments] = useState([])
     const [ filteredAppointments, setFilteredAppointments] = useState([])
     const { id } = useParams()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+      if(!user){
+        navigate('/login')
+      }else if(user?.resp[0]?.role === 'dentist'){
+        navigate('/dentist-dashboard')
+      }else if(user?.resp[0]?.role === 'admin'){
+        navigate('/admin-dashboard')
+      }
+    }, [user])
+
     useEffect(() => {
         const getAppointments = async () => {
             try {
@@ -24,6 +38,16 @@ const PatientAppointments = () => {
         }
         getAppointments()
     }, [])
+
+    const cancelAppointment = async (id) => {
+      try {
+        const res = await axios.delete(`http://localhost:8000/appointment/cancel/${id}`)
+        console.log(res.data.message);
+        window.location.reload()
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     const customStyles = {
         header: {
@@ -68,9 +92,16 @@ const PatientAppointments = () => {
             sortable: true
         },
         {
-            name: "Status",
-            selector: row => row.status,
-            sortable: true
+            name: "Action",
+            cell: row => (
+              row.status === 'pending' ? 
+              (<button onClick={() => {cancelAppointment(row.id)}}
+              className='bg-red-500 rounded-lg py-2 px-4'>
+                cancel
+              </button>)
+              : null
+            ),
+            button: true,
         },
     ]
 

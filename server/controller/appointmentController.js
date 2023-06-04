@@ -120,6 +120,17 @@ const getAppointments = (req, res) => {
       }
     });
   };
+
+const getAllAppointment = (req, res) => {
+    db.query("SELECT * FROM appointments", (err, data) => {
+      if (err) {
+        console.error('Error retrieving appointments:', err);
+        res.status(500).json({ error: 'Failed to retrieve appointments.' });
+      } else {
+        res.json(data);
+      }
+    });
+  };
   
 const getPendingAppointments = (req, res) => {
 db.query("SELECT * FROM appointments WHERE status = 'pending'", (err, data) => {
@@ -138,33 +149,8 @@ const rejectAppointment = (req, res) => {
         if (err) {
         console.error('Error retrieving appointment:', err);
         res.status(500).json({ error: 'Failed to retrieve appointment.' });
-        } else if (result.length > 0) {
-        const number = result[0].number;
-        db.query("DELETE FROM appointments WHERE id = ?", id, (err, data) => {
-            if (err) {
-            console.error('Error deleting appointment:', err);
-            res.status(500).json({ error: 'Failed to delete appointment.' });
-            } else {
-            const from = "MC Dental";
-            const to = "639994535251";
-            const text = 'Your appointment is rejected.';
-
-            vonage.sms.send({ to, from, text })
-                .then(resp => {
-                console.log('Message sent successfully');
-                console.log(resp);
-                res.json({ message: 'Deleted successfully' });
-                })
-                .catch(err => {
-                console.log('There was an error sending the message.');
-                console.error(err);
-                res.status(500).json({ error: 'Failed to send rejection message.' });
-                });
-            }
-        });
-        } else {
-        res.status(404).json({ error: 'Appointment not found.' });
         }
+        return res.json({message: "Appointment Cancelled"})
     });
 };
 
@@ -174,35 +160,17 @@ db.query("UPDATE appointments SET status = 'accepted' WHERE id = ?", id, (err, d
     if (err) {
     console.error('Error updating appointment:', err);
     res.status(500).json({ error: 'Failed to update appointment.' });
-    } else {
-    db.query("SELECT number FROM appointments WHERE id = ?", id, (err, result) => {
-        if (err) {
-        console.error('Error retrieving appointment:', err);
-        res.status(500).json({ error: 'Failed to retrieve appointment.' });
-        } else if (result.length > 0) {
-        const number = result[0].number;
-        const from = "Cara Cares";
-        const to = "639994535251";
-        const text = 'Your appointment has been accepted.';
-
-        vonage.sms.send({ to, from, text })
-            .then(resp => {
-            console.log('Message sent successfully');
-            console.log(resp);
-            res.json({ message: 'Updated successfully' });
-            })
-            .catch(err => {
-            console.log('There was an error sending the message.');
-            console.error(err);
-            res.status(500).json({ error: 'Failed to send acceptance message.' });
-            });
-        } else {
-        console.log("No results found");
-        res.status(404).json({ error: 'Appointment not found.' });
-        }
-    });
     }
+    return res.json({message: "Appointment Accepted"})
 });
 };
 
-module.exports = { getPatients, getPatient, makeAppointment, getAppointments, getPendingAppointments, rejectAppointment, acceptAppointment, getDisabledDates, getTimes }
+const cancelAppointment = (req, res) => {
+  const { id } = req.params
+  db.query("DELETE FROM appointments WHERE id = ?", id, (err, data) => {
+    if(err) return res.status(500).json(err)
+    return res.json({message: "Appointment Canceled Success"})
+  })
+}
+
+module.exports = { getPatients, getPatient, makeAppointment, getAppointments, getPendingAppointments, rejectAppointment, acceptAppointment, getDisabledDates, getTimes, cancelAppointment, getAllAppointment }

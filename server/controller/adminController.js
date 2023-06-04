@@ -2,10 +2,26 @@ const db = require('../database/db');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require("dotenv").config()
+const { Vonage } = require('@vonage/server-sdk');
 
-const getPatients = (req, res) => {
-  db.query("SELECT * FROM patients", (err, data) => {
+const vonage = new Vonage({
+  apiKey: "5a66a2ad",
+  apiSecret: "cZ2IytlT4jEevb1T"
+});
+
+
+const getPatientRecords = (req, res) => {
+  db.query("SELECT p.firstname, p.lastname, a.service, a.date FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id", (err, data) => {
     if(err) return res.sendStatus(500)
+    return res.json(data)
+  })
+}
+
+const getAllPatient = (req, res) => {
+  const {id} = req.params
+  db.query("SELECT * FROM patients", id, (err, data) => {
+    if(err) return res.sendStatus(500)
+    
     return res.json(data)
   })
 }
@@ -19,25 +35,152 @@ const getPatient = (req, res) => {
   })
 }
 
-const regPatient = (req, res) => {
-    const { firstname, middlename, lastname, gender, civil_status, birthdate, age, religion, nationality, address, mobile, occupation, email, referred_by, username, password } = req.body
+const updatePatient = (req, res) => {
+  const { id } = req.params;
+  const {
+    firstname,
+    middlename,
+    lastname,
+    gender,
+    civil_status,
+    birthdate,
+    age,
+    religion,
+    nationality,
+    address,
+    mobile,
+    occupation,
+    email,
+    referred_by,
+    username,
+    guardian,
+    good_health,
+    m_treat,
+    c_treated,
+    illness,
+    op_details,
+    hozpitalized,
+    hozpitalized_details,
+    medication,
+    meds,
+    tobacco,
+    alcohol,
+    allergies,
+    pregnant,
+    nursing,
+    birth_control,
+    b_type,
+    b_pressure,
+    condition,
+    bleeding_time,
+    clotting_time,
+  } = req.body;
+
+  db.query(
+    "UPDATE patients SET `firstname` = ?, `middlename` = ?, `lastname` = ?, `gender` = ?, `civil_status` = ?, `birthdate` = ?, `age` = ?, `religion` = ?, `nationality` = ?, `address` = ?, `mobile` = ?, `occupation` = ?, `email` = ?, `referred_by` = ?, `username` = ?, `guardian` = ?, `good_health` = ?, `m_treat` = ?, `c_treated` = ?, `illness` = ?, `op_details` = ?, `hozpitalized` = ?, `hozpitalized_details` = ?, `medication` = ?, `meds` = ?, `tobacco` = ?, `alcohol` = ?, `allergies` = ?, `pregnant` = ?, `nursing` = ?, `birth_control` = ?, `b_type` = ?, `b_pressure` = ?, `condition` = ?, `bleeding_time` = ?, `clotting_time` = ? WHERE id = ?",
+    [
+      firstname,
+      middlename,
+      lastname,
+      gender,
+      civil_status,
+      birthdate,
+      age,
+      religion,
+      nationality,
+      address,
+      mobile,
+      occupation,
+      email,
+      referred_by,
+      username,
+      guardian,
+      good_health,
+      m_treat,
+      c_treated,
+      illness,
+      op_details,
+      hozpitalized,
+      hozpitalized_details,
+      medication,
+      meds,
+      tobacco,
+      alcohol,
+      allergies,
+      pregnant,
+      nursing,
+      birth_control,
+      b_type,
+      b_pressure,
+      condition,
+      bleeding_time,
+      clotting_time,
+      id,
+    ],
+    async (err, result) => {
+      if (err) {
+        return res.status(500).json({ message: "Database error", error: err });
+      }
+      return res.json({ message: "Update Success" });
+    }
+  );
+};
+
+
+const getDentists = (req, res) => {
+  db.query("SELECT * FROM dentists", (err, data) =>{
+    if(err) return res.status(500).json(err)
+    return res.json(data)
+  })
+}
+
+const getDentist = (req, res) => {
+  const { id } = req.params
+  db.query("SELECT * FROM dentists WHERE id = ?", id, (err, data) => {
+      if(err) return res.sendStatus(500)
+      return res.json(data)
+  })
+}
+
+const updateDentist = (req, res) => {
+  const { id } = req.params
+  const { name, specialty, number, username } = req.body
+  db.query("UPDATE dentists SET `name` = ?, `specialty` = ?, `number` = ?, `username` = ? WHERE id = ? ", [ name, specialty, number, username, id], (err,data) => {
+    if( !name || !specialty || !number || !username){
+      return res.status(401).json({message: "Please Enter All the fields"})
+    }
+    if(err) return res.status(500).json(err)
+    return res.json({message: "Update Success"})
+  })
+}
+
+const deleteDentist = (req, res) => {
+  const { id } = req.params
+  db.query("DELETE FROM dentists WHERE id = ?", id, (err, data) => {
+    if(err) return res.status(500).json(err)
+    return res.json({message: "Deleted successfully"})
+  })
+}
+
+const regAdmin = (req, res) => {
+    const { username, password } = req.body
     const enc_password = bcrypt.hashSync(password, 10)
     
-    const values = [firstname, middlename, lastname, gender, civil_status, birthdate, age, religion, nationality, address, mobile, occupation, email, referred_by, username, enc_password]
+    const values = [ username, enc_password ]
 
-    if(!firstname || !middlename || !lastname || !gender || !civil_status || !birthdate || !age || !religion || !nationality || !address || !mobile || !occupation || !email || !referred_by || !username || !enc_password){
+    if( !username || !enc_password ){
       return res.status(401).json({message: "Please Fill all the fields"})
     }
     
-    db.query("SELECT * FROM patients WHERE username = ?", [username], (err, result) => {
+    db.query("SELECT * FROM admins WHERE username = ?", [username], (err, result) => {
       if(err) return res.sendStatus(500)
       
       if(result.length > 0){
         return res.status(409).json({ message: 'Username already taken' });
       }
-      db.query("INSERT INTO patients(firstname, middlename, lastname, gender, civil_status, birthdate, age, religion, nationality, address, mobile, occupation, email, referred_by, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [...values], (err, data) => {
+      db.query("INSERT INTO admins( username, password ) VALUES ( ?, ? )", [...values], (err, data) => {
         if (err) {
-          console.error("Error during patient registration:", err);
+          console.error("Error during admin registration:", err);
           return res.status(500).json({ error: "An error occurred during registration" });
         }
         return res.json({ message: "Registration Successful" });
@@ -46,64 +189,8 @@ const regPatient = (req, res) => {
     })
   };
   
-  const updateProfile = (req, res) => {
-    const { id } = req.params;
-    const { firstname, middlename, lastname, age, mobile, address, birthdate, email } = req.body;
-  
-    db.query(
-      "UPDATE patients SET `firstname` = ?, `middlename` = ?, `lastname` = ?, `age` = ?, `mobile` = ?, `address` = ?, `birthdate` = ?, `email` = ? WHERE id = ?",
-      [firstname, middlename, lastname, age, mobile, address, birthdate, email, id],
-      (err, data) => {
-        if (err) return res.status(401).json(err);
-        return res.json({ message: "Profile Updated" });
-      }
-    );
-  };
-  
 
   // const { firstname, lastname, birthday, username, password, address, occupation, mobile, nationality, civil_status, age, sex, religion, email, guardian, good_health, m_treat, c_treated, illness, op_details, hozpitalized, hozpitalized_details, medication, meds, tobacco, alcohol, allergies, pregnant, nursing, birth_control, b_type, b_pressure, condition, bleeding_time, clotting_time } = req.body
-const updatePatient = (req, res) => {
-  const { id } = req.params;
-  const { storedPass, password } = req.body;
-
-  if (!storedPass || !password) {
-    return res.status(401).json({ message: "Please enter all fields" });
-  }
-
-  db.query("SELECT * FROM patients WHERE id = ?", id, async (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: "Database error", error: err });
-    }
-
-    if (result.length > 0) {
-      const patient = result[0];
-      try {
-        const match = await bcrypt.compare(storedPass, patient.password);
-
-        if (match) {
-          const newEncryptedPassword = bcrypt.hashSync(password, 10);
-
-          db.query(
-            "UPDATE patients SET `password` = ? WHERE id = ?",
-            [newEncryptedPassword, id],
-            (err, resp) => {
-              if (err) {
-                return res.status(500).json({ message: "Database error", error: err });
-              }
-              return res.json({ message: "Password updated successfully" });
-            }
-          );
-        } else {
-          return res.status(401).json({ message: "Current password does not match" });
-        }
-      } catch (error) {
-        return res.status(500).json({ message: "Bcrypt error", error });
-      }
-    } else {
-      return res.status(404).json({ message: "Patient not found" });
-    }
-  });
-};
 
 const getAppointment = (req, res) => {
   const { id } = req.params
@@ -113,6 +200,26 @@ const getAppointment = (req, res) => {
   })
 }
 
+const sendMessage = (req, res) => {
+  const { number, message } = req.body;
+
+  // const from = "MC Dental";
+  // const to = "639994535251";
+  // const text = message ;
+
+  // vonage.sms.send({ to, from, text })
+  //     .then(resp => {
+  //     console.log('Message sent successfully');
+  //     console.log(resp);
+  //     res.json({ message: 'Updated successfully' });
+  //     })
+  //     .catch(err => {
+  //     console.log('There was an error sending the message.');
+  //     console.error(err);
+  //     res.status(500).json({ error: 'Failed to send acceptance message.' });
+  // }); 
+}
+
 const login = (req, res) => {
     const { username, password } = req.body;
   
@@ -120,7 +227,7 @@ const login = (req, res) => {
       return res.status(401).json({ error: "Please enter username and password" });
     }
   
-    db.query("SELECT * FROM patients WHERE username = ?", username, (err, resp) => {
+    db.query("SELECT * FROM admins WHERE username = ?", username, (err, resp) => {
       if (err) {
         console.error("Error during login:", err);
         return res.status(500).json({ error: "An error occurred during login" });
@@ -162,7 +269,7 @@ const logout = (req, res) => {
   res.send("Logged out successfully");
 };
 
-module.exports = { regPatient, getPatient, getPatients,  updatePatient, login, logout, getAppointment, updateProfile }
+module.exports = { regAdmin, getPatient, getPatientRecords, getDentists, getDentist, updateDentist, login, logout, getAppointment, deleteDentist, sendMessage, getAllPatient,  updatePatient}
 
 // const regPatient = (req, res) => {
 //     const {

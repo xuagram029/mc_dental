@@ -4,20 +4,22 @@ import DentistSignup from './pages/DentistSignup';
 import DentistLogin from './pages/DentistLogin';
 import DentistDashboard from './pages/DentistDashboard';
 import DentistProfile from './pages/DentistProfile';
-import PatientLogin from './pages/PatientLogin';
 import PatientDashboard from './pages/PatientDashboard';
-import PatientPassword from './pages/PatientPassword';
+import PatientProfile from './pages/PatientProfile';
 import Login from './pages/Login'
 import { Registration } from './pages/Registration'
 import Landing from './pages/Landing'
-import AppointmentBooking from './pages/AppointmentBooking';
-import PendingAppointments from './pages/PendingAppointments';
+import PendingAppointments from './components/PendingAppointments';
 import PatientAppointments from './pages/PatientAppointments';
 import ErrorPage from './pages/ErrorPage';
 import Supplies from './pages/Supplies';
-import PatientProfile from './pages/PatientProfile';
-import PatientList from './pages/PatientList';
-import Filter from './pages/Filter';
+import SwitchLogin from './pages/SwitchLogin';
+import AdminLogin from './pages/AdminLogin';
+import AdminManageUser from './pages/AdminManageUser';
+import AdminPatientList from './pages/AdminPatientList';
+import Message from './pages/Message';
+import AdminPatientInfo from './pages/AdminPatientInfo';
+import Calendar from './pages/Calendar';
 
 const router = createBrowserRouter([
   {
@@ -25,8 +27,12 @@ const router = createBrowserRouter([
     element: <Landing />
   },
   {
-    path: "/filter",
-    element: <Filter />
+    path: "/calendar",
+    element: <Calendar />
+  },
+  {
+    path: "login-as",
+    element: <SwitchLogin />
   },
   {
     path: "/dentist-signup",
@@ -44,10 +50,7 @@ const router = createBrowserRouter([
     path: "/dentist-profile",
     element: <DentistProfile />,
   },
-  {
-    path: "/patient-login",
-    element: <PatientLogin />,
-  },
+  // patient
   // client
   {
     path: "/appointments/:id",
@@ -58,27 +61,10 @@ const router = createBrowserRouter([
     element: <PatientDashboard />,
   },
   {
-    path: "/patient-password",
-    element: <PatientPassword />,
-  },
-  {
     path: "/patient-profile",
     element: <PatientProfile />,
   },
-  {
-    path: "/patient-list",
-    element: <PatientList />,
-  },
-  // patient
-  {
-    path: "/appointment-booking",
-    element: <AppointmentBooking />,
-  },
   // admin side
-  {
-    path: "/patient-appointments",
-    element: <PendingAppointments />,
-  },
   {
     path: "/supplies",
     element: <Supplies />,
@@ -88,8 +74,28 @@ const router = createBrowserRouter([
     element: <Login/>,
   },
   {
-    path: "register",
+    path: "/register",
     element: <Registration />
+  },
+  {
+    path: "admin-login",
+    element: <AdminLogin />
+  },
+  {
+    path: "admin-manageuser",
+    element: <AdminManageUser />
+  },
+  {
+    path: "admin-message",
+    element: <Message />
+  },
+  {
+    path: "admin-patient-records",
+    element: <AdminPatientList />
+  },
+  {
+    path: "admin-patientinfo",
+    element: <AdminPatientInfo />
   },
   {
     path: '*',
@@ -98,6 +104,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+
   return (
     <div className="">
       <RouterProvider router={router} />
