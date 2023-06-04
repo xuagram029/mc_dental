@@ -2,19 +2,20 @@ import {useState, useContext, useEffect} from 'react'
 import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import PatientNavbar from '../components/PatientNavbar'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PatientProfile = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
-    const [firstname, setFirstName] = useState('')
-    const [middlename, setMiddleName] = useState('')
-    const [lastname, setLastName] = useState('')
-    const [age, setAge] = useState('')
-    const [number, setNumber] = useState('')
-    const [address, setAddress] = useState('')
-    const [birthdate, setBirthdate] = useState('')
-    const [email, setEmail] = useState('')
-    // const [newPassword, setNewPassword] = useState('')
-    // const [conPassword, setConPassword] = useState('')
+    // const [name, setName] = useState('')
+    // const [specialty, setSpecialty] = useState('')
+    // const [number, setNumber] = useState('')
+    // const [username, setUsername] = useState('')
+    // const [password, setPassword] = useState('')
+    const [storedPass, setStoredPass] = useState('')
+    const [newPassword, setNewPassword] = useState('')
+    const [conPassword, setConPassword] = useState('')
 
     const id = user?.resp[0]?.id
     const navigate = useNavigate()
@@ -31,15 +32,7 @@ const PatientProfile = () => {
         const getUser = async () => {
             const res = await axios.get(`http://localhost:8000/patient/${id}`)
             const patient = res.data[0]
-            console.log(patient);
-            setFirstName(patient.firstname)
-            setMiddleName(patient.middlename)
-            setLastName(patient.lastname)
-            setAge(patient.age)
-            setNumber(patient.mobile)
-            setAddress(patient.address)
-            setBirthdate(patient.birthdate)
-            setEmail(patient.email)
+            // console.log(patient);
             // setPassword(patient.password)
         }
         getUser()
@@ -47,151 +40,99 @@ const PatientProfile = () => {
 
     // console.log(id)
     const handleUpdate = async (e) => {
-        // console.log(storedPass)
+        console.log(storedPass)
         e.preventDefault()
         try {
-            const res = await axios.put(`http://localhost:8000/patient/profile/${id}`, {firstname, middlename, lastname, age, mobile:number, address, birthdate, email}) //password
-            console.log(res.data.message)
-            window.location.reload()
+            if(newPassword != conPassword){
+                console.log("new password and current pass does not match")
+            }else{
+                const res = await axios.put(`http://localhost:8000/patient/${id}`, {storedPass, password: newPassword}) //password
+                console.log(res.data.message)
+                window.location.reload()
+                toast.success("New Password has been set", {
+                    position: "top-center",
+                    autoClose: 3500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+            }
         } catch (error) {
-            console.log(error.response.data.message);
+            toast.error(error.response.data.message, {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         }
     }
-
   return (
     <div className='w-screen'>
-        <button><Link to='/patient-dashboard'>back</Link></button>
+    <PatientNavbar />   
     <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
         <h2 className="text-xl font-bold mb-4">Update Information</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
         <div className="mb-4">
-            <label className="block font-bold mb-2" htmlFor="firstname">
-            First Name
+            <label className="block font-bold mb-2" htmlFor="name">
+            Current Password
             </label>
             <input
             className="w-full border border-gray-400 p-2 rounded"
             type="text"
-            value={firstname}
+            value={storedPass}
             onChange={(e) => {
-                setFirstName(e.target.value);
+                setStoredPass(e.target.value);
             }}
-            id="firstname"
+            id="specialty"
             />
         </div>
 
         <div className="mb-4">
-            <label className="block font-bold mb-2" htmlFor="middlename">
-            Middle Name
+            <label className="block font-bold mb-2" htmlFor="name">
+            New Password
             </label>
             <input
             className="w-full border border-gray-400 p-2 rounded"
             type="text"
-            value={middlename}
+            value={newPassword}
             onChange={(e) => {
-                setMiddleName(e.target.value);
+                setNewPassword(e.target.value);
             }}
-            id="middlename"
+            id="specialty"
             />
         </div>
         
         <div className="mb-4">
-            <label className="block font-bold mb-2" htmlFor="lastname">
-            Last Name
+            <label className="block font-bold mb-2" htmlFor="name">
+            Confirm Password
             </label>
             <input
             className="w-full border border-gray-400 p-2 rounded"
             type="text"
-            value={lastname}
+            value={conPassword}
             onChange={(e) => {
-                setLastName(e.target.value);
+                setConPassword(e.target.value);
             }}
-            id="lastname"
+            id="specialty"
             />
         </div>
 
-        <div className="mb-4">
-            <label className="block font-bold mb-2" htmlFor="age">
-            Age
-            </label>
-            <input
-            className="w-full border border-gray-400 p-2 rounded"
-            type="number"
-            value={age}
-            onChange={(e) => {
-                setAge(e.target.value);
-            }}
-            id="age"
-            />
-        </div>
-
-        <div className="mb-4">
-            <label className="block font-bold mb-2" htmlFor="number">
-            Mobile Number
-            </label>
-            <input
-            className="w-full border border-gray-400 p-2 rounded"
-            type="number"
-            value={number}
-            onChange={(e) => {
-                setNumber(e.target.value);
-            }}
-            id="number"
-            />
-        </div>
-
-        <div className="mb-4">
-            <label className="block font-bold mb-2" htmlFor="Address">
-            Address
-            </label>
-            <input
-            className="w-full border border-gray-400 p-2 rounded"
-            type="text"
-            value={address}
-            onChange={(e) => {
-                setAddress(e.target.value);
-            }}
-            id="Address"
-            />
-        </div>
-
-        <div className="mb-4">
-            <label className="block font-bold mb-2" htmlFor="birthdate">
-            Birthday
-            </label>
-            <input
-            disabled
-            className="w-full border border-gray-400 p-2 rounded opacity-50"
-            type="date"
-            value={birthdate}
-            onChange={(e) => {
-                setBirthdate(e.target.value);
-            }}
-            id="birthdate"
-            />
-        </div>
-
-        <div className="mb-4">
-            <label className="block font-bold mb-2" htmlFor="Email">
-            Email
-            </label>
-            <input
-            className="w-full border border-gray-400 p-2 rounded"
-            type="text"
-            value={email}
-            onChange={(e) => {
-                setEmail(e.target.value);
-            }}
-            id="email"
-            />
-        </div>
         </div>
             <button
-            className="w-full bg-rose-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
+            className="w-full bg-rose-500 hover:bg-rose-300 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
             onClick={handleUpdate}
             >
             Submit
             </button>
     </div>
+    <ToastContainer />
 </div>
   )
 }

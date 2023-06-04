@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import DentistNavBar from '../components/DentistNavBar'
 
 const DentistProfile = () => {
     const { user, error, loading, dispatch } = useContext(AuthContext)
@@ -14,15 +15,15 @@ const DentistProfile = () => {
     const id = user?.resp[0]?.id
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (user && user.resp && user.resp.length > 0) {
-          if (user.resp[0].role === 'user') {
-            navigate('/patient-dashboard');
-          }
-        }else if(!user){
-            navigate('/dentist-login')
-        }
-      }, [user, navigate]);
+    // useEffect(() => {
+    //     if (user && user.resp && user.resp.length > 0) {
+    //       if (user.resp[0].role === 'user') {
+    //         navigate('/patient-dashboard');
+    //       }
+    //     }else if(!user){
+    //         navigate('/dentist-login')
+    //     }
+    //   }, [user, navigate]);
 
     useEffect(() => {
         const getUser = async () => {
@@ -50,11 +51,11 @@ const DentistProfile = () => {
     }
 
   return (
-    <div className='w-screen'>
-        <button><Link to='/dentist-dashboard'>back</Link></button>
-    <div className={`bg-white rounded-lg shadow-lg border border-black p-10 h-[500px] mt-10 mx-10 `}>
+    <div className='h-screen bg-white'>
+        <DentistNavBar />
+        <div className={`bg-white rounded-lg shadow-lg border border-black lg:p-10 sm:p-2 h-[500px] mt-10 mx-10 `}>
         <h2 className="text-xl font-bold mb-4">Update Information</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid lg:grid-cols-2 sm:grid-cols-1 lg:gap-4 sm:gap-0">
         <div className="mb-4">
             <label className="block font-bold mb-2" htmlFor="name">
             Name:
@@ -71,7 +72,7 @@ const DentistProfile = () => {
         </div>
         <div className="mb-4">
             <label className="block font-bold mb-2" htmlFor="lastname">
-            specialty:
+            Specialty:
             </label>
             <input
             className="w-full border border-gray-400 p-2 rounded"
@@ -130,13 +131,13 @@ const DentistProfile = () => {
         </div>
         </div>
         <button
-        className="w-full bg-rose-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
+        className="w-full bg-rose-500 hover:bg-rose-300 text-white font-bold py-2 px-4 rounded mt-4 mr-2"
         onClick={handleUpdate}
         >
         Submit
         </button>
     </div>
-</div>
+    </div>
   )
 }
 

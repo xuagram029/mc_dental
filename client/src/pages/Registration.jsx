@@ -5,6 +5,8 @@ import {BsArrowBarLeft} from 'react-icons/bs'
 import { TermsAndConditions } from '../components/TermsAndConditions'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Registration = () => {
 
@@ -55,8 +57,16 @@ export const Registration = () => {
             navigate('/login')
             // console.log(user);
         } catch (error) {
-            console.log(error.response.data.message)
-            alert(error.response.data.message)
+            toast.error(error.response.data.message, {
+                position: "top-center",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         }
     }
 
@@ -75,22 +85,22 @@ export const Registration = () => {
                 <div className='basis-1/3 px-8 space-y-4 py-4'>
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Last Name:</span>
-                        <input name='lastname' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='lastname' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>First Name:</span>
-                        <input name='firstname' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='firstname' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Middle Name:</span>
-                        <input name='middlename' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='middlename' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Gender:</span>
-                        <select name="gender" onChange={(e) => setUser({ ...user, gender: e.target.value })} id="" className='bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'>
+                        <select required name="gender" onChange={(e) => setUser({ ...user, gender: e.target.value })} id="" className='bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'>
                             <option value="">--Select Gender--</option>
                             <option value="Single">Male</option>
                             <option value="Married">Female</option>
@@ -99,7 +109,7 @@ export const Registration = () => {
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Civil Status:</span>
-                        <select name="civil_status" onChange={(e) => setUser({...user, civil_status: e.target.value})} id="" className='bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'>
+                        <select required name="civil_status" onChange={(e) => setUser({...user, civil_status: e.target.value})} id="" className='bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'>
                             <option value="">--Select Civil Status--</option>
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
@@ -109,61 +119,61 @@ export const Registration = () => {
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Birthdate:</span>
-                        <input name='birthdate' onChange={handleChange} type='date' className='text-sm bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'/>
+                        <input required name='birthdate' onChange={handleChange} type='date' className='text-sm bg-white p-2 border-2 border-primary rounded focus:outline-none focus:border-2'/>
                     </label>
                 </div>
 
                 <div className='basis-1/3 px-8 space-y-4 py-4'>
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Age:</span>
-                        <input name='age' onChange={handleChange} type="number" min="0" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='age' onChange={handleChange} type="number" min="0" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Religion:</span>
-                        <input name='religion' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='religion' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Nationality:</span>
-                        <input name='nationality' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='nationality' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Home Address:</span>
-                        <input name='address' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='address' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Mobile No:</span>
-                        <input name='mobile' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='mobile' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Occupation:</span>
-                        <input name='occupation' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='occupation' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
                 </div>
 
                 <div className='basis-1/3 px-8 space-y-4 py-4'>
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Email:</span>
-                        <input name='email' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='email' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Referred By:</span>
-                        <input name='referred_by' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='referred_by' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
                     <label className='flex flex-col'>
                         <span className='font-pop font-semibold'>Username:</span>
-                        <input name='username' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <input required name='username' onChange={handleChange} type="text" className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
                     </label>
 
-                    <label className='flex flex-col'>
+                    <label className='relative flex flex-col'>
                         <span className='font-pop font-semibold'>Password:</span>
-                        <input name='password' onChange={handleChange} type={passType} className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
-                        <span onClick={handlePassType} className='cursor-pointer relative -top-7 lg:left-[240px] sm:left-[270px] w-10 text-xl'><AiOutlineEye /></span>
+                        <input required name='password' onChange={handleChange} type={passType} className='w-full p-2 border-b-2 border-primary bg-white focus:outline-none'/>
+                        <span onClick={handlePassType} className='cursor-pointer absolute inset-y-0 end-0 grid place-content-center text-xl'><AiOutlineEye /></span>
                     </label>
 
                     {agreement && (
@@ -175,9 +185,11 @@ export const Registration = () => {
                     )}
 
                     <span className='font-pop text-sm space-y-3'>
-                        <span className='flex items-center pt-6'>
-                            <input name='' onChange={handleChange} type="checkbox" /> {/* onChange={handleAgreement} name='agreement'*/}
-                            <p className='flex items-center gap-x-1'>I agree with the <p onClick={() => setOpenModal(!openModal)} className='text-violet-500 cursor-pointer hover:text-violet-800'>terms and conditions</p></p>
+                        <span className='flex items-center pt-6 flex-wrap gap-x-2'>
+                            <input name='' onChange={handleChange} type="checkbox" /> 
+                            {/* onChange={handleAgreement} name='agreement'*/}
+                            <p className='flex items-center gap-x-1'>I agree with the </p>
+                            <strong onClick={() => setOpenModal(!openModal)} className='text-violet-500 cursor-pointer hover:text-violet-800'>terms and conditions</strong>
                         </span>
                         <p>Already have an account? <a href="login" className='font-semibold hover:underline text-primary'>Sign In Here.</a></p>
                     </span>
@@ -186,6 +198,7 @@ export const Registration = () => {
                 </div>
             </form>
         </div>
+        <ToastContainer />
     </div>
   )
 }

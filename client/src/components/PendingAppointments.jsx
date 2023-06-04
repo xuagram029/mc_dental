@@ -60,6 +60,27 @@ const PendingAppointments = () => {
         const res = await axios.delete(`http://localhost:8000/appointment/${id}`)
         console.log(res.data.message)
     }
+
+    const customStyles = {
+      header: {
+        style: {
+          fontSize: "1.5rem",
+          fontFamily: "Montserrat",
+        },
+      },
+      headCells: {
+        style: {
+          fontSize: "0.875rem",
+          backgroundColor: "#AD8B73",
+          color: "#fff",
+        },
+      },
+      cells: {
+        style: {
+          fontWeight: 600,
+        },
+      },
+    };
     
     const columns = [
         {
@@ -110,26 +131,27 @@ const PendingAppointments = () => {
       }
       
   return (
-    <div>
-        <div className="flex flex-col md:flex-row">
-        {/* <Sidebar /> */}
-        <div className="flex flex-col w-full md:w-3/4 lg:w-screen">
-            <div className="flex ml-8 mt-5 justify-between items-center space-x-6 font-bold font-pop text-base">
-                <h1 className="text-4xl">Appointment List</h1>
-            </div>
-            <div className={`mt-8 ml-8 max-w-full border border-black ${open ? "w-[75vw] transition-width duration-500" : "w-[85vw] transition-width duration-500 ease-linear"}`}>
-                <div className='p-[50px 10%] mt-2 ml-5 flex'>
-                <RiUserSearchLine className='text-2xl mt-1'/>
-                <input type="text" onChange={handleFilter} placeholder='search user' className='text-center border border-black rounded-md'/>
-                </div>
+    <div className='font-pop font-bold text-black flex items-center justify-center'>
+        <div className={`mt-8 mx-10 w-full border-2 border-black flex flex-col items-center
+        justify-center`}>
                 <DataTable
+                title="Pending Appointments"
                 data={appointments}
                 columns={columns}
                 pagination
+                customStyles={customStyles}
+                fixedHeader
+                fixedHeaderScrollHeight="550px"
+                subHeader
+                subHeaderAlign="left"
+                subHeaderComponent={
+                    <div className='flex items-center gap-x-4'>
+                        <RiUserSearchLine className='text-2xl text-black'/>
+                        <input type="text" onChange={handleFilter} placeholder='Search' className='border-b-2 border-black p-1 text-sm font-normal focus:outline-none'/>
+                    </div>
+                }
                 />
             </div>
-        </div>
-        </div>
     </div>
   )
 }
