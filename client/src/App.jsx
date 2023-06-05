@@ -22,6 +22,7 @@ import DentistSupplies from './pages/DentistSupplies';
 import AdminSupplies from './pages/AdminSupplies';
 import DentistPatientInfo from './pages/DentistPatientInfo';
 import PatientPassword from './pages/PatientPassword';
+import ChartComponent from './components/ChartComponent';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/admin-dashboard",
     element: <AdminDashboard />
+  },
+  {
+    path: "/admin-reports",
+    element: <ChartComponent />
   },
   {
     path: "login-as",

@@ -76,6 +76,9 @@ const AdminNavbar = () => {
                         <NavLink to='/admin-dashboard'>Dashboard</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to='/admin-reports'>Reports</NavLink>
+                    </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to='/admin-patientinfo'>Patient Info</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">

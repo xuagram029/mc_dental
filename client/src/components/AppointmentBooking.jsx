@@ -6,6 +6,7 @@ import { AuthContext } from '../context/AuthContext'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
+import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
 const AppointmentBooking = ({setOpenModal}) => {
   const { user } = useContext(AuthContext);
@@ -88,13 +89,20 @@ const AppointmentBooking = ({setOpenModal}) => {
     getTimes();
   }, [selectedDate, appointments, availableTimes]);
 
-
+  const convertToManilaTime = (date) => {
+    const manilaTimeZone = 'Asia/Manila';
+    const utcDate = zonedTimeToUtc(date, manilaTimeZone);
+    const manilaDate = utcToZonedTime(utcDate, manilaTimeZone);
+    return manilaDate;
+  };
+  
   const handleChange = (e) => {
     setPatient((prev) => ({...prev, [e.target.name]: e.target.value}))
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(selectedDate);
     try {
       const data = {
         ...patient,
@@ -126,7 +134,7 @@ const AppointmentBooking = ({setOpenModal}) => {
         });
     }
   };
-  
+  // console.log(selectedDate);
   return (
     <>
     <div
@@ -156,22 +164,26 @@ const AppointmentBooking = ({setOpenModal}) => {
         <label htmlFor="dentist">
           <span>Appointment Date:</span>
           <DatePicker
-                required
-                className='border-2 w-full p-3 rounded-lg border-gray-200'
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                minDate={new Date()}
-                excludeDates={disabledDates.map((date) => new Date(date))}
-                placeholderText="Select a date"
-                filterDate={(date) => {
-                  const dateString = date.toISOString().split('T')[0];
-                  if (disabledDates.includes(dateString)) {
-                    return false;
-                  }
-                  const appointedDates = appointments ? appointments.map((appointment) => appointment.date) : [];
-                  return !appointedDates.includes(dateString);
-                }}
-              />
+            required
+            className='border-2 w-full p-3 rounded-lg border-gray-200'
+            selected={convertToManilaTime(selectedDate)}
+            onChange={(date) => setSelectedDate(date)}
+            minDate={new Date()}
+            excludeDates={disabledDates.map((date) => new Date(date))}
+            placeholderText="Select a date"
+            filterDate={(date) => {
+              const dateString = date.toISOString().split('T')[0];
+              if (disabledDates.includes(dateString)) {
+                return false;
+              }
+              const appointedDates = appointments ? appointments.map((appointment) => appointment.date) : [];
+              return !appointedDates.includes(dateString);
+            }}
+            dateFormat="yyyy-MM-dd"
+            timeZone="Asia/Manila" // Add this line to set the time zone
+            value={selectedDate && selectedDate.toLocaleDateString('en-PH')}
+          />
+
         </label>
 
         <label htmlFor="name">

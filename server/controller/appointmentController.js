@@ -1,4 +1,5 @@
 const db = require("../database/db");
+const moment = require('moment');
 const {Vonage} = require("@vonage/server-sdk");
 
 const vonage = new Vonage({
@@ -32,48 +33,49 @@ const disabledDates = (req, res) => {
 // const { dentist, name, date, service, number, id } = req.body;
 // console.log(dentist, name, date, service, number, id)
 const makeAppointment = (req, res) => {
-  const {time, name, date, service, number, id} = req.body;
-  const appointmentDate = new Date(date).toISOString().split("T")[0];
+  const { time, name, date, service, number, id } = req.body;
+  const appointmentDate = moment(date).utcOffset('+08:00');
+  const formattedDate = appointmentDate.format('YYYY-MM-DD');
+
   if (!time || !name || !date || !service || !number || !id) {
-    return res.status(401).json({message: "Please Input all fields"});
+    return res.status(401).json({ message: 'Please input all fields' });
   }
 
   // Check if the appointment limit for the given date has been reached
   db.query(
-    "SELECT COUNT(*) AS appointmentCount FROM appointments WHERE date = ?",
-    [appointmentDate],
+    'SELECT COUNT(*) AS appointmentCount FROM appointments WHERE date = ?',
+    [formattedDate],
     (err, results) => {
       if (err) {
-        console.error("Error querying the database: " + err.stack);
-        res.status(500).json({message: "An error occurred."});
+        console.error('Error querying the database: ' + err.stack);
+        res.status(500).json({ message: 'An error occurred.' });
         return;
       }
 
       const appointmentCount = results[0].appointmentCount;
       if (appointmentCount >= 5) {
-        res
-          .status(400)
-          .json({message: "Appointment limit reached for the selected date."});
+        res.status(400).json({ message: 'Appointment limit reached for the selected date.' });
         return;
       }
 
       // Insert the appointment into the database
       db.query(
-        "INSERT INTO appointments (time, name, date, service, number, patient_id) VALUES (?, ?, ?, ?, ?, ?)",
-        [time, name, appointmentDate, service, number, id],
+        'INSERT INTO appointments (time, name, date, service, number, patient_id) VALUES (?, ?, ?, ?, ?, ?)',
+        [time, name, formattedDate, service, number, id],
         (err) => {
           if (err) {
-            console.error("Error inserting the appointment: " + err.stack);
-            res.status(500).json({message: "An error occurred."});
+            console.error('Error inserting the appointment: ' + err.stack);
+            res.status(500).json({ message: 'An error occurred.' });
             return;
           }
 
-          res.json({message: "Appointment created successfully."});
+          res.json({ message: 'Appointment created successfully.' });
         }
       );
     }
   );
 };
+
 
 const getDisabledDates = (req, res) => {
   // Query the database to fetch the disabled dates with 5 or more appointments
