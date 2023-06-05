@@ -112,15 +112,6 @@ const PendingAppointments = () => {
           ),
           button: true
         },
-        {
-          name: "Delete",
-          cell: row => (
-            <button onClick={() => rejectAppointment(row.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-              X
-            </button>
-          ),
-          button: true
-        }
     ]
     
     const handleFilter = (e) => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
+import AdminNavbar from './AdminNavbar';
 
 const ChartComponent = () => {
   const chartRef = useRef(null);
@@ -50,9 +51,9 @@ const ChartComponent = () => {
         {
           label: 'Appointments per Month/Year',
           data: monthYearData,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
+          backgroundColor: '#E3CAA5',
+          borderColor: '#CEAB93',
+          borderWidth: 4,
         },
       ],
     },
@@ -74,7 +75,13 @@ const ChartComponent = () => {
     };
   }, [appointments]);
 
-  return <canvas ref={chartRef} />;
+  return (
+    <>
+      <AdminNavbar />
+      <h1 className='text-center font-pop font-bold text-gray-700 text-3xl my-8'>Logs of Appointments</h1>
+      <canvas ref={chartRef} />
+    </>
+  );
 };
 
 export default ChartComponent;
