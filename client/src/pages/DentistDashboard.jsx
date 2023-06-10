@@ -1,0 +1,34 @@
+import React, { useContext, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { AuthContext } from '../context/AuthContext'
+import DentistNavBar from '../components/DentistNavBar'
+import PendingAppointments from '../components/PendingAppointments'
+import Calendar from '../components/Calendar'
+
+const DentistDashboard = () => {
+    const { user, dispatch } = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(!user){
+          navigate('/dentist-login')
+        }else if(user?.resp[0]?.role === 'admin'){
+          navigate('/admin-dashboard')
+        }else if(user?.resp[0]?.role === 'patient'){
+          navigate('/patient-dashboard')
+        }
+      }, [user])
+
+    
+  return (
+    <div className='h-full'>
+        <DentistNavBar />
+        <PendingAppointments />
+        <h1 className='pt-8 text-center font-pop font-bold text-2xl text-gray-700'>Appoinment Calendar</h1>
+        <Calendar />
+    </div>
+  )
+}
+
+export default DentistDashboard
