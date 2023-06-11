@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
-import AppointmentBooking from '../components/AppointmentBooking'
-import PatientNavbar from '../components/PatientNavbar'
+import { IoMdAddCircle } from 'react-icons/io';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// components
+import AppointmentBooking from '../components/AppointmentBooking'
+import PatientNavbar from '../components/PatientNavbar'
 import Calendar from '../components/Calendar'
-import { IoMdAddCircle } from 'react-icons/io';
 
 const PatientDashboard = () => {
     const [openModal, setOpenModal] = useState(false)

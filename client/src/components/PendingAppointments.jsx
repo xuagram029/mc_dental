@@ -5,13 +5,15 @@ import { RiUserSearchLine } from "react-icons/ri";
 import { AiFillEye } from "react-icons/ai";
 import axios from "axios";
 import { MdTextsms } from "react-icons/md";
-import { AiOutlineSchedule } from "react-icons/ai";
+import { AiOutlineSchedule, AiFillControl } from "react-icons/ai";
 import Message from "./Message";
 import { toast } from "react-toastify";
+import CreateBlog from "./CreateBlog";
 
 const PendingAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [openSMS, setOpenSMS] = useState(false);
+  const [openPanel, setOpenPanel] = useState(false);
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [modal, setModal] = useState(false);
   const [id, setId] = useState('')
@@ -219,8 +221,8 @@ const PendingAppointments = () => {
                   className="border-b-2 border-black p-1 text-sm font-normal focus:outline-none"
                 />
               </div>
-                <div className="flex">
-                <div className="mr-5">
+                <div className="flex gap-x-4">
+                <div>
                   <button
                     onClick={() => setOpenSMS(true)}
                     className="bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second"
@@ -238,12 +240,18 @@ const PendingAppointments = () => {
                     Limit
                   </button>
                 </div>
+                <div>
+              <button onClick={() => setOpenPanel(true)} className='bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second'><AiFillControl/>
+                Control Panel
+              </button>
+            </div>
               </div>
             </div>
           }
         />
       </div>
       {openSMS && <Message setOpenSMS={setOpenSMS} />}
+      {openPanel && <CreateBlog setOpenPanel={setOpenPanel} />}
       {modal && (
         <>
           <div className="font-pop justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-[rgba(49,49,49,0.8)]">
