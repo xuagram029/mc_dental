@@ -22,6 +22,7 @@ const AppointmentBooking = ({setOpenModal}) => {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [time, setTime] = useState([]);
+  const [services, setServices] = useState([])
   const [patient, setPatient] = useState({
     time: '',
     name: patient_fullname,
@@ -30,6 +31,10 @@ const AppointmentBooking = ({setOpenModal}) => {
     service: '',
     id: patient_id,
   });
+
+  useEffect(() => {
+    console.log(patient);
+  },[patient])
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -42,12 +47,13 @@ const AppointmentBooking = ({setOpenModal}) => {
       }
     };
     fetchAppointments();
+    getServices()
   }, []);
 
-  // const getTimes = () => {
-  //   const times = time.map(t => t.time)
-  //   console.log(times);
-  // }
+  const getServices = async () => {
+    const res = await axios.get('http://localhost:8000/services')
+    setServices(res.data);
+  }
 
   useEffect(() => {
     const fetchDisabledDates = async () => {
@@ -138,6 +144,8 @@ const AppointmentBooking = ({setOpenModal}) => {
         });
     }
   };
+  // console.log(patient);
+  
   return (
     <>
     <div
@@ -230,13 +238,11 @@ const AppointmentBooking = ({setOpenModal}) => {
         <label htmlFor="service">
           <span>Select a Service</span>
           <select required name="service" id="" onChange={(e) => setPatient({...patient, service: e.target.value})} className='w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm border-2'>
-              <option hidden>--SELECT--</option>
-              <option value="Composite Restoration">Composite Restoration</option>
-              <option value="Direct Composite Veeners">Direct Composite Veeners</option>
-              <option value="Orthodontic Treatment">Orthodontic Treatment</option>
-              <option value="Diastema Closure">Diastema Closure</option>
-              <option value="Zirconia Crowns">Zirconia Crowns</option>
-            </select>  
+            <option value="">--SELECT--</option>
+            {services.map(service => (
+              <option value={service.name}>{service.name}</option>
+            ))}
+          </select>  
         </label>
   
         

@@ -18,6 +18,7 @@ app.use('/patient', require('./routes/patient'));
 app.use('/dentist', require('./routes/dentist'));
 app.use('/appointment', require('./routes/appointment'));
 app.use('/supplies', require('./routes/supplies'));
+app.use('/services', require('./routes/services'));
 
 // Error Handler Middleware
 app.use((err, req, res, next) => {

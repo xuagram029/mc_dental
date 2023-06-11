@@ -201,7 +201,7 @@ const updatePatient = (req, res) => {
 const getAppointment = (req, res) => {
   const {id} = req.params;
   db.query(
-    "SELECT a.id, a.date, a.service, a.status, a.time FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id WHERE p.id = ?",
+    "SELECT a.id, a.date, a.service, a.status, a.time, a.remarks FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id WHERE p.id = ?",
     id,
     (err, data) => {
       if (err) return res.status(500).json(err);

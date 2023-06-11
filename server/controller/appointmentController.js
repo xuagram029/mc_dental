@@ -53,48 +53,6 @@ const makeAppointment = (req, res) => {
   })
 
 };
-// const makeAppointment = (req, res) => {
-//   const { time, name, date, service, number, id } = req.body;
-//   const appointmentDate = moment(date).utcOffset('+08:00');
-//   const formattedDate = appointmentDate.format('YYYY-MM-DD');
-
-//   if (!time || !name || !date || !service || !number || !id) {
-//     return res.status(401).json({ message: 'Please input all fields' });
-//   }
-
-//   // Check if the selected time slot is available for the given date
-//   const checkAvailabilityQuery = 'SELECT COUNT(*) AS appointmentCount FROM appointments WHERE date = ? AND time = ?';
-//   db.query(checkAvailabilityQuery, [formattedDate, time], (err, results) => {
-//     if (err) {
-//       console.error('Error querying the database: ' + err.stack);
-//       res.status(500).json({ message: 'An error occurred.' });
-//       return;
-//     }
-
-//     const appointmentCount = results[0].appointmentCount;
-//     if (appointmentCount >= 5) {
-//       res.status(400).json({ message: 'Appointment limit reached for the selected time slot.' });
-//       return;
-//     }
-
-//     // Insert the appointment into the database
-//     const createAppointmentQuery = 'INSERT INTO appointments (time, name, date, service, number, patient_id) VALUES (?, ?, ?, ?, ?, ?)';
-//     db.query(
-//       createAppointmentQuery,
-//       [time, name, formattedDate, service, number, id],
-//       (err) => {
-//         if (err) {
-//           console.error('Error inserting the appointment: ' + err.stack);
-//           res.status(500).json({ message: 'An error occurred.' });
-//           return;
-//         }
-
-//         res.json({ message: 'Appointment created successfully.' });
-//       }
-//     );
-//   });
-// };
-
 
 const getDisabledDates = (req, res) => {
   // Query the database to fetch the disabled dates with 5 or more appointments
@@ -227,6 +185,15 @@ const cancelAppointment = (req, res) => {
   });
 };
 
+const addRemark = (req, res) => {
+  const { id } = req.params
+  const { remark } = req.body
+  db.query("UPDATE appointments SET `remarks`= ? WHERE id = ?", [remark, id], (err, resp) => {
+    if(err) return res.status(500).json({message: "Failed to insert remarks"})
+    return res.json({message: "Remarks added"})
+  })
+}
+
 module.exports = {
   getPatients,
   getPatient,
@@ -239,4 +206,5 @@ module.exports = {
   getTimes,
   cancelAppointment,
   getAllAppointment,
+  addRemark
 };

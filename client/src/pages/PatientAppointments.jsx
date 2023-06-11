@@ -12,6 +12,8 @@ const PatientAppointments = () => {
     const { user } = useContext(AuthContext)
     const [ appointments, setAppointments] = useState([])
     const [ filteredAppointments, setFilteredAppointments] = useState([])
+    const [modal, setModal] = useState(false)
+    const [remark, setRemark] = useState('')
     const { id } = useParams()
     const navigate = useNavigate()
 
@@ -38,6 +40,19 @@ const PatientAppointments = () => {
         }
         getAppointments()
     }, [])
+
+    useEffect(() => {
+      if(modal){
+        document.body.style.overflow = 'hidden'
+      }else{
+        document.body.style.overflow = 'visible'
+      }
+    }, [modal])
+
+    const toggleModal = (remarks) => {
+      setModal(true);
+      setRemark(remarks)
+    };
 
     const cancelAppointment = async (id) => {
       try {
@@ -97,11 +112,22 @@ const PatientAppointments = () => {
             sortable: true
         },
         {
+            name: "Remarks",
+            cell: row => (
+              <button onClick={() => toggleModal(row.remarks)}
+              className='bg-blue-500 text-white rounded-lg py-2 px-4'
+              >
+                VIEW
+              </button>
+            ),
+            sortable: true
+        },
+        {
             name: "Action",
             cell: row => (
               row.status === 'pending' ? 
               (<button onClick={() => {cancelAppointment(row.id)}}
-              className='bg-red-500 rounded-lg py-2 px-4'>
+              className='bg-red-500 text-white rounded-lg py-2 px-4'>
                 cancel
               </button>)
               : null
@@ -142,6 +168,41 @@ const PatientAppointments = () => {
             />
         </div>
         </div>
+        {modal && (
+        <>
+          <div className="font-pop justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-[rgba(49,49,49,0.8)]">
+            <div className="relative w-auto my-6 mx-auto max-w-4xl ">
+              {/*content*/}
+              <div className="max-h-[90vh] overflow-y-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <h3 className="text-2xl font-semibold">Remark</h3>
+                </div>
+                {/*body*/}
+                <div className="relative p-6 flex-auto">
+                  <div className="space-y-8">
+                    <div>
+                      <label htmlFor="name">Remarks: </label>
+                      {/* <input required type="text" value={editName} onChange={(e) => {setEditName(e.target.value)}} className='w-full p-2 border border-black rounded focus:outline-none'/> */}
+                      <p>{remark}</p>
+                    </div>
+                  </div>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setModal(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

@@ -23,6 +23,7 @@ import AdminSupplies from './pages/AdminSupplies';
 import DentistPatientInfo from './pages/DentistPatientInfo';
 import PatientPassword from './pages/PatientPassword';
 import ChartComponent from './components/ChartComponent';
+import ClinicServices from './pages/ClinicServices'
 
 const router = createBrowserRouter([
   {
@@ -115,6 +116,10 @@ const router = createBrowserRouter([
   {
     path: "admin-supplies",
     element: <AdminSupplies />
+  },
+  {
+    path: "clinic-services",
+    element: <ClinicServices />
   },
   {
     path: '*',

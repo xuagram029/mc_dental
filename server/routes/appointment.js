@@ -1,5 +1,5 @@
 const express = require('express')
-const { getPatients, makeAppointment, getPatient, getAppointments, getPendingAppointments, acceptAppointment, rejectAppointment, disabledDates, getDisabledDates, getTimes, cancelAppointment, getAllAppointment } = require('../controller/appointmentController')
+const { getPatients, makeAppointment, getPatient, getAppointments, getPendingAppointments, acceptAppointment, rejectAppointment, disabledDates, getDisabledDates, getTimes, cancelAppointment, getAllAppointment, addRemark } = require('../controller/appointmentController')
 const router = express.Router()
 
 router.route('/')
@@ -13,7 +13,10 @@ router.route('/all')
     .get(getAllAppointment)
 
 router.route('/pending')
-    .get(getPendingAppointments);
+    .get(getPendingAppointments)
+
+router.route('/pending/:id')
+    .put(addRemark);
 
 router.route('/disabled')
     .get(getDisabledDates);

@@ -83,6 +83,9 @@ const DentistNavBar = () => {
                         <NavLink to="/dentist-patientinfo">Patient Info</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to='/clinic-services'>Services</NavLink>
+                    </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to='/dentist-supplies'>Supplies</NavLink>
                     </li>
                 </ul>

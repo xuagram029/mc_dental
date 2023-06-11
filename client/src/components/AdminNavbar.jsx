@@ -88,6 +88,9 @@ const AdminNavbar = () => {
                         <NavLink to='/admin-supplies'>Supplies</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to='/clinic-services'>Services</NavLink>
+                    </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to='/admin-manageuser'>Manage Dentist</NavLink>
                     </li>
                 </ul>
