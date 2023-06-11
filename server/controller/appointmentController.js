@@ -51,60 +51,63 @@ const makeAppointment = (req, res) => {
       return res.json({message: "Appointment is booked"})
     })
   })
-
 };
 
 const getDisabledDates = (req, res) => {
   // Query the database to fetch the disabled dates with 5 or more appointments
-  db.query(
-    "SELECT date FROM appointments GROUP BY date HAVING COUNT(*) >= 5",
-    (err, results) => {
-      if (err) {
-        console.error("Error querying the database: " + err.stack);
-        res.status(500).json({message: "An error occurred."});
-        return;
+  db.query("SELECT `limit` FROM `limit` WHERE id = 1", (err, resp) => {
+    if(err) return res.status(500).json(err)
+    const limit = resp[0].limit
+    db.query(
+      "SELECT date FROM appointments GROUP BY date HAVING COUNT(*) >= ?", [limit],
+      (err, results) => {
+        if (err) {
+          console.error("Error querying the database: " + err.stack);
+          res.status(500).json({message: "An error occurred."});
+          return;
+        }
+        const disabledDates = results.map((row) => row.date);
+        res.json({disabledDates});
       }
-      const disabledDates = results.map((row) => row.date);
-      res.json({disabledDates});
-    }
-  );
+    );
+  })
 };
 
-const getTimes = (req, res) => {
-  try {
-    const {date} = req.query;
+// const getTimes = (req, res) => {
+//   try {
+//     const {date} = req.query;
 
-    // Fetch all appointments for the selected date
-    const query = "SELECT time FROM appointments WHERE date = ?";
-    db.query(query, [date], (error, results) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json({message: "Error fetching available times."});
-      } else {
-        const bookedTimes = results.map((row) => row.time);
-        // Define your available times
-        const availableTimes = [
-          {id: 9, startTime: "9am", endTime: "11am"},
-          {id: 11, startTime: "11am", endTime: "1pm"},
-          {id: 1, startTime: "1pm", endTime: "3pm"},
-          {id: 3, startTime: "3pm", endTime: "5pm"},
-          {id: 5, startTime: "5pm", endTime: "7pm"},
-        ];
+//     // Fetch all appointments for the selected date
+//     const query = "SELECT time FROM appointments WHERE date = ?";
+//     db.query(query, [date], (error, results) => {
+//       if (error) {
+//         console.log(error);
+//         res.status(500).json({message: "Error fetching available times."});
+//       } else {
+//         const bookedTimes = results.map((row) => row.time);
+//         // Define your available times
+//         const availableTimes = [
+//           {id: 9, startTime: "9am", endTime: "11am"},
+//           {id: 11, startTime: "11am", endTime: "1pm"},
+//           {id: 1, startTime: "1pm", endTime: "3pm"},
+//           {id: 3, startTime: "3pm", endTime: "5pm"},
+//           {id: 5, startTime: "5pm", endTime: "7pm"},
+//         ];
 
-        const filteredTimes = availableTimes.filter((time) => {
-          return !bookedTimes.some(
-            (bookedTime) => bookedTime === time.startTime
-          );
-        });
+//         const filteredTimes = availableTimes.filter((time) => {
+//           return !bookedTimes.some(
+//             (bookedTime) => bookedTime === time.startTime
+//           );
+//         });
 
-        res.json({times: filteredTimes});
-      }
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({message: "Error fetching available times."});
-  }
-};
+//         res.json({times: filteredTimes});
+//       }
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({message: "Error fetching available times."});
+//   }
+// };
 
 const getAppointments = (req, res) => {
   db.query(
@@ -194,6 +197,44 @@ const addRemark = (req, res) => {
   })
 }
 
+const updateMax = (req, res) => {
+  const { max } = req.body
+  db.query("UPDATE `limit` SET `limit` = ?", [max], (err, data) => {
+    if(err) return res.status(500).json(err)
+    return res.json({message: "Appointment limit is updated"})
+  })
+}
+
+const appointmentLimit = (req, res) => {
+  db.query("SELECT * FROM `limit` WHERE id = 1", (err, data) => {
+    if(err) return res.status(500).json(err)
+    return res.json(data)
+  })
+}
+
+const getTimes = (req, res) => {
+  db.query("SELECT * FROM times WHERE status = 'available' ", (err, data) =>{
+    if(err) return res.status(500).json({message: "Error getting times"})
+    return res.json(data)
+  })
+}
+
+const makeAvailable = (req, res) => {
+  const { id } = req.body
+  db.query("UPDATE times SET status = 'available' WHERE id = ?", [id], (err, data) =>{
+    if(err) return res.status(500).json({message: "Error getting times"})
+    return res.json({message: "Time is now available"})
+  })
+}
+
+const makeNotAvailable = (req, res) => {
+  const { id } = req.params
+  db.query("UPDATE times SET status = 'not available' WHERE id = ?", [id], (err, data) =>{
+    if(err) return res.status(500).json({message: "Error getting times"})
+    return res.json({message: "Time now is not available"})
+  })
+}
+
 module.exports = {
   getPatients,
   getPatient,
@@ -206,5 +247,9 @@ module.exports = {
   getTimes,
   cancelAppointment,
   getAllAppointment,
-  addRemark
+  addRemark,
+  updateMax,
+  appointmentLimit,
+  makeAvailable,
+  makeNotAvailable
 };

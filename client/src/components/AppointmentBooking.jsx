@@ -76,30 +76,13 @@ const AppointmentBooking = ({setOpenModal}) => {
     const getTimes = async () => {
       try {
         const res = await axios.get('http://localhost:8000/appointment/times');
-        setAvailableTimes(res.data.times);
-  
-        if (appointments && appointments.length > 0) {
-          const filteredTimes = availableTimes.filter((time) => {
-            const isBooked = appointments.some(
-              (appointment) =>
-                appointment.date === selectedDate.toISOString().split('T')[0] &&
-                appointment.time === time.startTime &&
-                appointment.status !== 'pending'
-            );
-            return !isBooked;
-          });
-          
-  
-          setFilteredTimes(filteredTimes);
-        } else {
-          setFilteredTimes(res.data.times);
-        }
+        setAvailableTimes(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     getTimes();
-  }, [selectedDate, appointments, availableTimes]);
+  }, []);
 
   const convertToManilaTime = (date) => {
     const manilaTimeZone = 'Asia/Manila';
@@ -227,11 +210,9 @@ const AppointmentBooking = ({setOpenModal}) => {
                 onChange={(e) => setPatient({ ...patient, time: e.target.value })}
                 className='w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm border-2'>
                 <option value="">--SELECT--</option>
-                <option value="9am">9am</option>
-                <option value="11am">11am</option>
-                <option value="1pm">1pm</option>
-                <option value="3pm">3pm</option>
-                <option value="5pm">5pm</option>
+                {availableTimes.map(t =>(
+                  <option value={t.time} key="">{t.time}</option>
+                ))}
             </select>
         </label>
 

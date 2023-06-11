@@ -11,6 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
+app.use("/uploads", express.static("uploads"))
+
 
 // Routes
 app.use('/admin', require('./routes/admin'));
@@ -19,6 +21,7 @@ app.use('/dentist', require('./routes/dentist'));
 app.use('/appointment', require('./routes/appointment'));
 app.use('/supplies', require('./routes/supplies'));
 app.use('/services', require('./routes/services'));
+app.use('/blogs', require('./routes/blogs'));
 
 // Error Handler Middleware
 app.use((err, req, res, next) => {

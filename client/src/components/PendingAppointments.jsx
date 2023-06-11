@@ -5,6 +5,7 @@ import { RiUserSearchLine } from "react-icons/ri";
 import { AiFillEye } from "react-icons/ai";
 import axios from "axios";
 import { MdTextsms } from "react-icons/md";
+import { AiOutlineSchedule } from "react-icons/ai";
 import Message from "./Message";
 import { toast } from "react-toastify";
 
@@ -15,6 +16,9 @@ const PendingAppointments = () => {
   const [modal, setModal] = useState(false);
   const [id, setId] = useState('')
   const [remark, setRemark] = useState('');
+  const [limit, setLimit] = useState('')
+  const [limitModal, setLimitModal] = useState(false)
+  const [appLimit, setAppLimit] = useState('')
 
   useEffect(() => {
     const getAppointments = async () => {
@@ -22,7 +26,8 @@ const PendingAppointments = () => {
       setAppointments(res.data);
       setFilteredAppointments(res.data);
     };
-    getAppointments();
+    getAppointments()
+    maxAppointment()
   }, []);
 
   useEffect(() => {
@@ -33,11 +38,30 @@ const PendingAppointments = () => {
     }
   }, [modal])
 
+  useEffect(() => {
+    if(limitModal){
+      document.body.style.overflow = 'hidden'
+    }else{
+      document.body.style.overflow = 'visible'
+    }
+  }, [limitModal])
+
+  const maxAppointment = async () => {
+    try {
+      const res = await axios.get('http://localhost:8000/appointment/limit')
+      setAppLimit(Number(res.data[0]?.limit));
+    } catch (error) {
+      toast.error(error)
+    }
+  }
+
+
   const acceptAppointment = async (id) => {
     const res = await axios.put(`http://localhost:8000/appointment/${id}`);
     console.log(res.data.message);
     window.location.reload();
   };
+
   const rejectAppointment = async (id) => {
     const res = await axios.delete(`http://localhost:8000/appointment/${id}`);
     console.log(res.data.message);
@@ -46,6 +70,11 @@ const PendingAppointments = () => {
 
   const toggleModal = (id) => {
     setModal(true);
+    setId(id)
+  };
+
+  const toggleLimit = (id) => {
+    setLimitModal(true);
     setId(id)
   };
 
@@ -58,6 +87,17 @@ const PendingAppointments = () => {
       toast.error(error.response.data.message)
     }
   }
+
+  const updateLimit = async (e) => {
+    try {
+      const res = await axios.put(`http://localhost:8000/appointment`, {max:limit})
+      window.location.reload()
+      toast.success(res.data.message)
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
+
   const customStyles = {
     header: {
       style: {
@@ -179,14 +219,25 @@ const PendingAppointments = () => {
                   className="border-b-2 border-black p-1 text-sm font-normal focus:outline-none"
                 />
               </div>
-              <div>
-                <button
-                  onClick={() => setOpenSMS(true)}
-                  className="bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second"
-                >
-                  <MdTextsms />
-                  SMS
-                </button>
+                <div className="flex">
+                <div className="mr-5">
+                  <button
+                    onClick={() => setOpenSMS(true)}
+                    className="bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second"
+                  >
+                    <MdTextsms />
+                    SMS
+                  </button>
+                </div>
+                <div>
+                  <button
+                    onClick={() => toggleLimit(true)}
+                    className="bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second"
+                  >
+                    <AiOutlineSchedule className="text-xl"/>
+                    Limit
+                  </button>
+                </div>
               </div>
             </div>
           }
@@ -230,6 +281,51 @@ const PendingAppointments = () => {
                   <button onClick={addRemark}
                   className="px-4 py-2 text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">
                     ADD REMARKS
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {limitModal && (
+        <>
+          <div className="font-pop justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-[rgba(49,49,49,0.8)]">
+            <div className="relative w-auto my-6 mx-auto max-w-4xl ">
+              {/*content*/}
+              <div className="max-h-[90vh] overflow-y-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <h3 className="text-2xl font-semibold">Appointment Limit</h3>
+                </div>
+                {/*body*/}
+                <div className="relative p-6 flex-auto">
+                  <div className="space-y-8">
+                    <div>
+                      <label htmlFor="name">CURRENT LIMIT: {appLimit}</label>
+                      {/* <input required type="text" value={editName} onChange={(e) => {setEditName(e.target.value)}} className='w-full p-2 border border-black rounded focus:outline-none'/> */}
+                      <input
+                        required
+                        onChange={(e) => setLimit(e.target.value)}
+                        type="text"
+                        className="w-full p-2 border border-black rounded focus:outline-none "
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setLimitModal(false)}
+                  >
+                    Close
+                  </button>
+                  <button onClick={updateLimit}
+                  className="px-4 py-2 text-white transition-colors duration-200 transform bg-indigo-700 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">
+                    UPDATE LIMIT
                   </button>
                 </div>
               </div>

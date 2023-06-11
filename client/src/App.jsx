@@ -24,6 +24,8 @@ import DentistPatientInfo from './pages/DentistPatientInfo';
 import PatientPassword from './pages/PatientPassword';
 import ChartComponent from './components/ChartComponent';
 import ClinicServices from './pages/ClinicServices'
+import CreateBlog from './components/CreateBlog';
+import AppointmentHours from './components/AppointmentHours';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/admin-dashboard",
     element: <AdminDashboard />
+  },
+  {
+    path: "/create-blog",
+    element: <CreateBlog />
   },
   {
     path: "/admin-reports",
@@ -120,6 +126,10 @@ const router = createBrowserRouter([
   {
     path: "clinic-services",
     element: <ClinicServices />
+  },
+  {
+    path: "appointment-hours",
+    element: <AppointmentHours />
   },
   {
     path: '*',
