@@ -80,6 +80,9 @@ const DentistNavBar = () => {
                         <NavLink to="/dentist-dashboard">Dashboard</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to="/dentist-calendar">Calendar</NavLink>
+                    </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to="/dentist-patientinfo">Patient Info</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">

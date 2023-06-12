@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AppointmentBooking from '../components/AppointmentBooking'
 import PatientNavbar from '../components/PatientNavbar'
 import Calendar from '../components/Calendar'
+import Blogs from '../components/Blogs';
 
 const PatientDashboard = () => {
     const [openModal, setOpenModal] = useState(false)
@@ -31,6 +32,7 @@ const PatientDashboard = () => {
   return (
     <div>
         <PatientNavbar />
+        <Blogs />
         <div className='font-pop flex items-center justify-between mx-10 mt-8'>
           <h1 className='text-3xl font-bold text-gray-700'>Appointment Calendar</h1>
           <button onClick={() => setOpenModal(true)} className='bg-primary px-4 py-2 rounded-md text-white font-medium hover:bg-second flex items-center gap-x-2'><IoMdAddCircle /> Set Appointment</button>

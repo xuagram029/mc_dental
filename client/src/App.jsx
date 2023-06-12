@@ -26,11 +26,17 @@ import ChartComponent from './components/ChartComponent';
 import ClinicServices from './pages/ClinicServices'
 import CreateBlog from './components/CreateBlog';
 import AppointmentHours from './components/AppointmentHours';
+import DentistCalendar from './pages/DentistCalendar';
+import Blogsite from './pages/Blogsite';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />
+  },
+  {
+    path: "/blogs/:id",
+    element: <Blogsite />
   },
   {
     path: "/admin-dashboard",
@@ -71,6 +77,10 @@ const router = createBrowserRouter([
   {
     path: "/dentist-patientinfo",
     element: <DentistPatientInfo />
+  },
+  {
+    path: "/dentist-calendar",
+    element: <DentistCalendar />
   },
   // patient
   // client

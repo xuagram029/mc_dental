@@ -10,6 +10,7 @@ import  Message from '../components/Message'
 import { toast } from "react-toastify";
 import axios from 'axios'
 import CreateBlog from '../components/CreateBlog'
+import Blogs from '../components/Blogs'
 
 const AdminDashboard = () => {
   const [openSMS, setOpenSMS] = useState(false)
@@ -67,6 +68,7 @@ const AdminDashboard = () => {
   return (
     <div className='h-screen'>
       <AdminNavbar />
+      <Blogs />
       <div>
         <div className='flex items-center justify-between mx-10 mt-4'>
           <h1 className='pt-8 font-pop font-bold text-2xl text-gray-700'>Appointment Calendar</h1>

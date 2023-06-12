@@ -4,7 +4,10 @@ import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
 import DentistNavBar from '../components/DentistNavBar'
 import PendingAppointments from '../components/PendingAppointments'
-import Calendar from '../components/Calendar'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Blogs from '../components/Blogs'
 
 const DentistDashboard = () => {
     const { user, dispatch } = useContext(AuthContext)
@@ -25,8 +28,8 @@ const DentistDashboard = () => {
     <div className='h-full'>
         <DentistNavBar />
         <PendingAppointments />
-        <h1 className='pt-8 text-center font-pop font-bold text-2xl text-gray-700'>Appoinment Calendar</h1>
-        <Calendar />
+        <Blogs />
+        <ToastContainer />
     </div>
   )
 }

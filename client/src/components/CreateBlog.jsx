@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateBlog = ({setOpenPanel}) => {
   const [title, setTitle] = useState('')
@@ -24,7 +26,6 @@ const CreateBlog = ({setOpenPanel}) => {
       setPhoto5(file)
     }
   }
-  console.log(photo1);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -38,9 +39,28 @@ const CreateBlog = ({setOpenPanel}) => {
       formData.append('image5', photo5);
   
       const res = await axios.post('http://localhost:8000/blogs', formData);
-      console.log(res.data);
+      window.location.reload(true)
+      toast.success("New Blog Added!", {
+        position: "top-center",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message, {
+        position: "top-center",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
   
