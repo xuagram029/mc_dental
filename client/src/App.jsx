@@ -26,6 +26,7 @@ import ChartComponent from './components/ChartComponent';
 import ClinicServices from './pages/ClinicServices'
 import CreateBlog from './components/CreateBlog';
 import AppointmentHours from './components/AppointmentHours';
+import Blogsite from './pages/Blogsite';
 
 const router = createBrowserRouter([
   {
@@ -130,6 +131,14 @@ const router = createBrowserRouter([
   {
     path: "appointment-hours",
     element: <AppointmentHours />
+  },
+  {
+    path: "create-blog",
+    element: <CreateBlog />
+  },
+  {
+    path: "blogs/:id",
+    element: <Blogsite />
   },
   {
     path: '*',
