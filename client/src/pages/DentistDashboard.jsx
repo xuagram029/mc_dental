@@ -28,6 +28,7 @@ const DentistDashboard = () => {
     <div className='h-full'>
         <DentistNavBar />
         <PendingAppointments />
+        <h1 className='pt-8 text-center font-pop font-bold text-3xl text-gray-700'>Clinic Hotest Blogs</h1>
         <Blogs />
         <ToastContainer />
     </div>
