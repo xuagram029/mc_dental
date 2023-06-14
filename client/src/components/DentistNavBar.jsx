@@ -25,7 +25,7 @@ const DentistNavBar = () => {
 
   return (
     <nav className="font-pop w-full bg-second shadow">
-    <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
+    <div className="justify-between px-4 md:items-center md:flex md:px-8">
         <div>
             <div className="flex items-center justify-between py-3 md:py-5 md:block">
                 <a href="javascript:void(0)">
@@ -78,6 +78,9 @@ const DentistNavBar = () => {
                 <ul className="font-medium items-center justify-center space-y-8 md:flex md:space-x-10 md:space-y-0">
                     <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to="/dentist-dashboard">Dashboard</NavLink>
+                    </li>
+                    <li className="text-white hover:text-acsent hover:border-b-2">
+                        <NavLink to="/dentist-calendar">Calendar</NavLink>
                     </li>
                     <li className="text-white hover:text-acsent hover:border-b-2">
                         <NavLink to="/dentist-patientinfo">Patient Info</NavLink>

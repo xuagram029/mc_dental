@@ -5,13 +5,16 @@ import { AuthContext } from '../context/AuthContext'
 import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MdTextsms } from 'react-icons/md'
-import { AiOutlineSchedule } from 'react-icons/ai'
+import { AiOutlineSchedule, AiFillControl } from 'react-icons/ai'
 import  Message from '../components/Message'
 import { toast } from "react-toastify";
 import axios from 'axios'
+import CreateBlog from '../components/CreateBlog'
+import Blogs from '../components/Blogs'
 
 const AdminDashboard = () => {
   const [openSMS, setOpenSMS] = useState(false)
+  const [openPanel, setOpenPanel] =useState(false)
   const { user, error, loading, dispatch } = useContext(AuthContext)
   const [limit, setLimit] = useState('')
   const [limitModal, setLimitModal] = useState(false)
@@ -65,12 +68,15 @@ const AdminDashboard = () => {
   return (
     <div className='h-screen'>
       <AdminNavbar />
+      <Blogs />
       <div>
         <div className='flex items-center justify-between mx-10 mt-4'>
           <h1 className='pt-8 font-pop font-bold text-2xl text-gray-700'>Appointment Calendar</h1>
-          <div className='flex'>
-            <div className='mr-5'>
-              <button onClick={() => setOpenSMS(true)} className='bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second'><MdTextsms/>SMS</button>
+          <div className='flex gap-x-4'>
+            <div>
+              <button onClick={() => setOpenSMS(true)} className='bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second'><MdTextsms/>
+                SMS
+              </button>
             </div>
             <div>
               <button
@@ -81,11 +87,18 @@ const AdminDashboard = () => {
                 Limit
               </button>
             </div>
+            <div>
+              <button onClick={() => setOpenPanel(true)} className='bg-primary text-white px-6 py-3 rounded-md flex items-center gap-x-2 hover:bg-second'><AiFillControl/>
+                Control Panel
+              </button>
+            </div>
           </div>
         </div>
       </div>
       <Calendar />
       {openSMS && <Message setOpenSMS={setOpenSMS} />}
+
+      {openPanel && <CreateBlog setOpenPanel={setOpenPanel} />}
 
       {limitModal && (
         <>

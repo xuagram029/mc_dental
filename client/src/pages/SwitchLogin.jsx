@@ -19,18 +19,18 @@ const SwitchLogin = () => {
         <h1 className='text-3xl text-white font-medium font-pop'>Who is Logging In?</h1>
         <div className='flex items-center lg:gap-x-24 sm:gap-x-8 justify-center pt-24 w-full'>
             <Link to="/login" className='relative group transition duration-300'>
-              <img src={patient} alt="patient" className='rounded-[50px] group-hover:blur' />
-              <span className='absolute scale-0 inset-14 font-pop text-xl font-bold text-white uppercase group-hover:scale-100 transition-all duration-300'>Patient</span>
+              <img src={patient} alt="patient" className='rounded-[50px] group-hover:blur w-[205px] h-[195px]' />
+              <span className='absolute scale-0 inset-16 font-pop text-xl font-bold text-black uppercase group-hover:scale-100 transition-all duration-300'>Patient</span>
               <p className='text-center font-pop text-white pt-4 font-semibold group-hover:scale-0 transition-all duration-300'>Patient</p>
             </Link>
             <Link to="/dentist-login" className='relative group transition duration-300'>
               <img src={dentist} alt="dentist" className='rounded-[50px] group-hover:blur' />
-              <span className='absolute scale-0 inset-14 font-pop text-xl font-bold text-white uppercase group-hover:scale-100 transition-all duration-300'>Dentist</span>
+              <span className='absolute scale-0 inset-[130px] font-pop text-2xl font-bold text-black uppercase group-hover:scale-100 transition-all duration-300'>Dentist</span>
               <p className='text-center font-pop text-white pt-4 font-semibold group-hover:scale-0 transition-all duration-300'>Dentist</p>
             </Link>
             <Link to="/admin-login" className='relative group'>
               <img src={admin} alt="admin" className='rounded-[50px] group-hover:blur' />
-              <span className='absolute scale-0 inset-14 font-pop text-xl font-bold text-white uppercase group-hover:scale-100 transition-all duration-300'>Admin</span>
+              <span className='absolute scale-0 inset-16 font-pop text-xl font-bold text-black uppercase group-hover:scale-100 transition-all duration-300'>Admin</span>
               <p className='text-center font-pop text-white pt-4 font-semibold group-hover:scale-0 transition-all duration-300'>Admin</p>
             </Link>
         </div>
