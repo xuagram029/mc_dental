@@ -95,8 +95,17 @@ const PatientRecords = () => {
         },
         {
           name: "Remarks",
-          selector: row => row.remarks,
-          sortable: true
+          cell: (row) => (
+            <div className="flex gap-2">
+              <button
+                onClick={() => acceptAppointment(row.id)}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                ✓
+              </button>
+            </div>
+          ),
+          button: true,
         }
     ]
     
