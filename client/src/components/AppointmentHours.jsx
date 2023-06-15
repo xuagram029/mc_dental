@@ -43,18 +43,20 @@ const AppointmentHours = () => {
     const makeAvailable = async (id) => {
         try {
             const res = await axios.put(`http://localhost:8000/appointment/times`, {id})
-            console.log(res.data.message);
+            // console.log(res.data.message);
+            window.location.reload(true)
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
 
     const makeNotAvailable = async (id) => {
         try {
             const res = await axios.put(`http://localhost:8000/appointment/times/${id}`)
-            console.log(res.data.message);
+            // console.log(res.data.message);
+            window.location.reload(true)
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
 
@@ -69,7 +71,7 @@ const AppointmentHours = () => {
             toast.success(res.data.message)
             window.location.reload()
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
