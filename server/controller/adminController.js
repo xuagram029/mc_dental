@@ -11,7 +11,7 @@ const vonage = new Vonage({
 
 const getPatientRecords = (req, res) => {
   db.query(
-    "SELECT p.firstname, p.lastname, a.service, a.date FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id",
+    "SELECT p.firstname, p.lastname, a.service, a.time, a.remarks, a.date FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id",
     (err, data) => {
       if (err) return res.sendStatus(500);
       return res.json(data);
@@ -222,19 +222,20 @@ const sendMessage = (req, res) => {
 
   const from = "MC Dental";
   const to = "639994535251";
-  const text = message ;
+  const text = message;
 
-  vonage.sms.send({ to, from, text })
-     .then(resp => {
-       console.log('Message sent successfully');
-       console.log(resp);
-       res.json({ message: 'Updated successfully' });
-       })
-       .catch(err => {
-       console.log('There was an error sending the message.');
-       console.error(err);
-       res.status(500).json({ error: 'Failed to send acceptance message.' });
-   });
+  vonage.sms
+    .send({to, from, text})
+    .then((resp) => {
+      console.log("Message sent successfully");
+      console.log(resp);
+      res.json({message: "Updated successfully"});
+    })
+    .catch((err) => {
+      console.log("There was an error sending the message.");
+      console.error(err);
+      res.status(500).json({error: "Failed to send acceptance message."});
+    });
 };
 
 const login = (req, res) => {
