@@ -171,33 +171,76 @@ const getPendingAppointments = (req, res) => {
 };
 
 const rejectAppointment = (req, res) => {
-  const {id} = req.params;
-  db.query(
-    "SELECT number FROM appointments WHERE id = ?",
-    id,
-    (err, result) => {
-      if (err) {
-        console.error("Error retrieving appointment:", err);
-        res.status(500).json({error: "Failed to retrieve appointment."});
-      }
-      return res.json({message: "Appointment Cancelled"});
+  const { id } = req.params;
+  db.query("SELECT number FROM appointments WHERE id = ?", id, (err, result) => {
+    if (err) {
+      console.error('Error retrieving appointment:', err);
+      res.status(500).json({ error: 'Failed to retrieve appointment.' });
+    } else if (result.length > 0) {
+      const number = result[0].number;
+      db.query("DELETE FROM appointments WHERE id = ?", id, (err, data) => {
+        if (err) {
+          console.error('Error deleting appointment:', err);
+          res.status(500).json({ error: 'Failed to delete appointment.' });
+        } else {
+          const from = "Cara Cares";
+          const to = "639994535251"; //ilagay yung number kapag gusto ng panel dynamic pero di pwede kasi free lang yung gamit 
+          const text = 'Your appointment is rejected.';
+  
+          vonage.sms.send({ to, from, text })
+            .then(resp => {
+              console.log('Message sent successfully');
+              console.log(resp);
+              res.json({ message: 'Deleted successfully' });
+            })
+            .catch(err => {
+              console.log('There was an error sending the message.');
+              console.error(err);
+              res.status(500).json({ error: 'Failed to send rejection message.' });
+            });
+        }
+      });
+    } else {
+      res.status(404).json({ error: 'Appointment not found.' });
     }
-  );
+  });
 };
 
 const acceptAppointment = (req, res) => {
-  const {id} = req.params;
-  db.query(
-    "UPDATE appointments SET status = 'accepted' WHERE id = ?",
-    id,
-    (err, data) => {
-      if (err) {
-        console.error("Error updating appointment:", err);
-        res.status(500).json({error: "Failed to update appointment."});
-      }
-      return res.json({message: "Appointment Accepted"});
+  const { id } = req.params;
+  db.query("UPDATE appointments SET status = 'accepted' WHERE id = ?", id, (err, data) => {
+    if (err) {
+      console.error('Error updating appointment:', err);
+      res.status(500).json({ error: 'Failed to update appointment.' });
+    } else {
+      db.query("SELECT number FROM appointments WHERE id = ?", id, (err, result) => {
+        if (err) {
+          console.error('Error retrieving appointment:', err);
+          res.status(500).json({ error: 'Failed to retrieve appointment.' });
+        } else if (result.length > 0) {
+          const number = result[0].number;
+          const from = "MC DENTAL";
+          const to = "639994535251"; //ilagay yung number kapag gusto ng panel dynamic pero di pwede kasi free lang yung gamit 
+          const text = 'Your appointment has been accepted.';
+  
+          vonage.sms.send({ to, from, text })
+            .then(resp => {
+              console.log('Message sent successfully');
+              console.log(resp);
+              res.json({ message: 'Updated successfully' });
+            })
+            .catch(err => {
+              console.log('There was an error sending the message.');
+              console.error(err);
+              res.status(500).json({ error: 'Failed to send acceptance message.' });
+            });
+        } else {
+          console.log("No results found");
+          res.status(404).json({ error: 'Appointment not found.' });
+        }
+      });
     }
-  );
+  });
 };
 
 const cancelAppointment = (req, res) => {
