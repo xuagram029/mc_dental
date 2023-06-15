@@ -7,6 +7,9 @@ import {BsArrowBarLeft} from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { AiFillEdit, AiFillDelete } from "react-icons/ai"
 
 
 const Blogsite = () => {
@@ -17,17 +20,8 @@ const Blogsite = () => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState(data ? data[0]?.title : '');
   const [description, setDescription] = useState(data ? data[0]?.description : '');
-  // const [photo1, setPhoto1] = useState(data ? data[0]?.photo_1 : '');
-  // const [photo2, setPhoto2] = useState(data ? data[0]?.photo_2 : '');
-  // const [photo3, setPhoto3] = useState(data ? data[0]?.photo_3 : '');
-  // const [photo4, setPhoto4] = useState(data ? data[0]?.photo_4 : '');
-  // const [photo5, setPhoto5] = useState(data ? data[0]?.photo_5 : '');
-  // const [p1, setP1] = useState('')
-  // const [p2, setP2] = useState('')
-  // const [p3, setP3] = useState('')
-  // const [p4, setP4] = useState('')
-  // const [p5, setP5] = useState('')
-  // console.log(title);
+  const {user} = useContext(AuthContext)
+  const role = user?.resp[0]?.role
 
   useEffect(() => {
     const getBlog = async() => {
@@ -123,17 +117,7 @@ const deleteBlog = async () => {
   // }
 
   return (
-    <div className='px-8 pt-16'>
-      <div className='flex flex-col justify-center items-center'>
-        <h1 className='font-pop font-semibold text-2xl text-gray-700'>Blog Title: {data[0]?.title}</h1>
-        <p className='font-pop text-xl text-gray-700'>Description: {data[0]?.description}</p>
-        <button className='bg-blue-500 text-white px-4 py-2 rounded-md' onClick={() => setShowModal(true)}>
-          Edit Blog
-        </button>
-        <button className='bg-red-500 text-white px-4 py-2 rounded-md' onClick={deleteBlog}>
-          Delete Blog
-        </button>
-      </div>
+    <div className='px-8 pt-16 bg-acsent h-screen'>
      <div onClick={() => navigate(-1)} className='cursor-pointer font-pop flex items-center gap-x-2 text-lg font-semibold text-gray-700 mb-8'>
                 <BsArrowBarLeft/> Go Back to Dashboard
         </div>
@@ -192,6 +176,18 @@ const deleteBlog = async () => {
         </Swiper>
       )}
      </div>
+     {role === 'admin' || role === 'dentist' && (
+        <div className='flex justify-center mb-4 gap-x-2 font-pop'>
+        <button className='bg-blue-500 text-white px-4 py-2 rounded-md flex items-center gap-x-2 hover:opacity-70' onClick={() => setShowModal(true)}>
+             <AiFillEdit />
+             Edit Blog
+           </button>
+           <button className='bg-red-500 text-white px-4 py-2 rounded-md flex items-center gap-x-2 hover:opacity-70' onClick={deleteBlog}>
+            <AiFillDelete />
+             Delete Blog
+           </button>
+        </div>
+     )}
      <div className='flex flex-col justify-center items-center'>
             {data[0]?.title && (
               <h1 className='font-pop font-semibold text-2xl text-gray-700'>Blog Title: {data[0]?.title}</h1>
@@ -236,51 +232,6 @@ const deleteBlog = async () => {
                     placeholder='Enter description'
                   />
                 </div>
-                {/* <div className='mb-4'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2'>Photo 1:</label>
-                  <input
-                    type='file'
-                    name='photo1'
-                    onChange={(e) => handleFile(e, 'photo1')}
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  />
-                </div>
-                <div className='mb-4'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2'>Photo 2:</label>
-                  <input
-                    type='file'
-                    name='photo2'
-                    onChange={(e) => handleFile(e, 'photo2')}
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  />
-                </div>
-                <div className='mb-4'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2'>Photo 3:</label>
-                  <input
-                    type='file'
-                    name='photo3'
-                    onChange={(e) => handleFile(e, 'photo3')}
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  />
-                </div>
-                <div className='mb-4'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2'>Photo 4:</label>
-                  <input
-                    type='file'
-                    name='photo4'
-                    onChange={(e) => handleFile(e, 'photo4')}
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  />
-                </div>
-                <div className='mb-4'>
-                  <label className='block text-gray-700 text-sm font-bold mb-2'>Photo 5:</label>
-                  <input
-                    type='file'
-                    name='photo5'
-                    onChange={(e) => handleFile(e, 'photo5')}
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  />
-                </div> */}
                 <div className='flex justify-end'>
                   <button
                     type='submit'

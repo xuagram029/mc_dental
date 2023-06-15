@@ -28,6 +28,7 @@ import CreateBlog from './components/CreateBlog';
 import AppointmentHours from './components/AppointmentHours';
 import DentistCalendar from './pages/DentistCalendar';
 import Blogsite from './pages/Blogsite';
+import DentistPatientRecords from './pages/DentistPatientRecords';
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
   {
     path: "/dentist-calendar",
     element: <DentistCalendar />
+  },
+  {
+    path: "/dentist-patient-records",
+    element: <DentistPatientRecords />
   },
   // patient
   // client

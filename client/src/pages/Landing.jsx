@@ -4,13 +4,13 @@ import { AboutUs } from '../components/Landing Page/AboutUs'
 import { Services } from '../components/Landing Page/Services'
 import { Contacts } from '../components/Landing Page/Contacts'
 import { NavBar } from '../components/NavBar'
-import Calendar from '../components/Calendar'
+import Blogs from '../components/Blogs'
 
 const Landing = () => {
   return (
     <div className='w-full'>
       <NavBar />
-      <div id="home" className='h-screen lg:px-8 sm:px-2 bg-primary shadow-inner pt-16'>
+      <div id="home" className='h-full lg:px-8 sm:px-2 bg-primary shadow-inner pt-16'>
         <section className='flex items-center lg:py-28 sm:py-0 px-8 gap-x-8'>
             <div className='lg:basis-1/2 sm:basis-full'>
                 <h1 className='text-white uppercase lg:text-8xl sm:text-4xl font-pop font-bold'>
@@ -26,7 +26,12 @@ const Landing = () => {
             <div className='basis-1/2 lg:block sm:hidden py-4'>
                 <img src={heropic} alt="hero image" className='rounded-full w-[550px] h-full m-auto border-4 border-white' />
             </div>
+
         </section>
+        <div>
+          <h1 className='pt-8 text-center font-pop font-bold text-3xl text-white'>Clinic Hotest Blogs</h1>
+          <Blogs />
+        </div>
       </div>
       <div id='about' className='h-screen bg-second'>
         <AboutUs />

@@ -9,7 +9,6 @@ const Blogs = () => {
 
   return (
     <div>
-      <h1 className='pt-8 text-center font-pop font-bold text-3xl text-gray-700'>Clinic Hotest Blogs</h1>
       <div className='grid grid-cols-3 gap-4 px-8 py-8'>
       {Array.isArray(data) ? (
         data.map((blog) => (

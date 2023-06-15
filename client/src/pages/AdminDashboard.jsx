@@ -68,6 +68,7 @@ const AdminDashboard = () => {
   return (
     <div className='h-screen'>
       <AdminNavbar />
+      <h1 className='pt-8 text-center font-pop font-bold text-3xl text-gray-700'>Clinic Hotest Blogs</h1>
       <Blogs />
       <div>
         <div className='flex items-center justify-between mx-10 mt-4'>

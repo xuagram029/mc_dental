@@ -222,19 +222,20 @@ const sendMessage = (req, res) => {
 
   const from = "MC Dental";
   const to = "639994535251";
-  const text = message ;
+  const text = message;
 
-  vonage.sms.send({ to, from, text })
-     .then(resp => {
-       console.log('Message sent successfully');
-       console.log(resp);
-       res.json({ message: 'Updated successfully' });
-       })
-       .catch(err => {
-       console.log('There was an error sending the message.');
-       console.error(err);
-       res.status(500).json({ error: 'Failed to send acceptance message.' });
-   });
+  vonage.sms
+    .send({to, from, text})
+    .then((resp) => {
+      console.log("Message sent successfully");
+      console.log(resp);
+      res.json({message: "Updated successfully"});
+    })
+    .catch((err) => {
+      console.log("There was an error sending the message.");
+      console.error(err);
+      res.status(500).json({error: "Failed to send acceptance message."});
+    });
 };
 
 const login = (req, res) => {
