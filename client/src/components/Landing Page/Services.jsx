@@ -14,7 +14,7 @@ export const Services = () => {
         </div>
 
         <div className="lg:grid lg:grid-cols-3 lg:gap-x-4 lg:pb-8 lg:px-4">
-            <div className="glassV2 p-4 text-gray-800 rounded-lg shadow-md bg-slate-200">
+            <div className="glassV2 hover:bg-primary p-4 text-gray-800 rounded-lg shadow-md bg-slate-200">
                 <div className="mb-2">
                     <div className="flex flex-col items-center justify-center">
                         <div className="w-64 overflow-hidden">
@@ -26,7 +26,7 @@ export const Services = () => {
                 </div>
             </div>
 
-            <div className="glassV2 p-4 text-gray-800 rounded-lg shadow-md bg-slate-200">
+            <div className="glassV2 hover:bg-primary p-4 text-gray-800 rounded-lg shadow-md bg-slate-200">
                 <div className="mb-2">
                     <div className="flex flex-col items-center justify-center">
                         <div className="w-64 overflow-hidden">
@@ -36,7 +36,7 @@ export const Services = () => {
                     </div>
                 </div>
             </div>
-            <div className="glassV2 p-4 text-gray-800 rounded-lg shadow-md bg-slate-200">
+            <div className="glassV2 hover:bg-primary p-4 text-gray-800 rounded-lg shadow-md bg-slate-200">
                 <div className="mb-2">
                     <div className="flex flex-col items-center justify-center">
                         <div className="w-64 overflow-hidden">
@@ -49,7 +49,7 @@ export const Services = () => {
         </div>
 
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-4 pb-8 lg:mx-72">
-            <div className="glassV2 p-4 text-gray-800 rounded-lg shadow-md bg-slate-200 px-6">
+            <div className="glassV2 hover:bg-primary p-4 text-gray-800 rounded-lg shadow-md bg-slate-200 px-6">
                 <div className="mb-2">
                     <div className="flex flex-col items-center justify-center">
                         <div className="w-64 overflow-hidden">
@@ -59,7 +59,7 @@ export const Services = () => {
                     </div>
                 </div>
             </div>
-            <div className="glassV2 p-4 text-gray-800 rounded-lg shadow-md bg-slate-200 px-6">
+            <div className="glassV2 hover:bg-primary p-4 text-gray-800 rounded-lg shadow-md bg-slate-200 px-6">
                 <div className="mb-2">
                     <div className="flex flex-col items-center justify-center">
                         <div className="w-64 overflow-hidden">

@@ -24,7 +24,11 @@ const Blogs = () => {
             </div>
         ))
         ) : (
-        <p>No data available</p>
+        <>
+          <p></p>
+          <p className='text-xl text-center w-full'>No data available</p>
+          <p></p>
+        </>
         )}
       </div>
     </div>
