@@ -11,7 +11,7 @@ const vonage = new Vonage({
 
 const getPatientRecords = (req, res) => {
   db.query(
-    "SELECT p.firstname, p.lastname, a.service, a.date FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id",
+    "SELECT p.firstname, p.lastname, a.service, a.date, a.remarks, a.time FROM appointments AS a INNER JOIN patients AS p ON a.patient_id = p.id",
     (err, data) => {
       if (err) return res.sendStatus(500);
       return res.json(data);

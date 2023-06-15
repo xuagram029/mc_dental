@@ -17,16 +17,16 @@ const Blogsite = () => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState(data ? data[0]?.title : '');
   const [description, setDescription] = useState(data ? data[0]?.description : '');
-  const [photo1, setPhoto1] = useState(data ? data[0]?.photo_1 : '');
-  const [photo2, setPhoto2] = useState(data ? data[0]?.photo_2 : '');
-  const [photo3, setPhoto3] = useState(data ? data[0]?.photo_3 : '');
-  const [photo4, setPhoto4] = useState(data ? data[0]?.photo_4 : '');
-  const [photo5, setPhoto5] = useState(data ? data[0]?.photo_5 : '');
-  const [p1, setP1] = useState('')
-  const [p2, setP2] = useState('')
-  const [p3, setP3] = useState('')
-  const [p4, setP4] = useState('')
-  const [p5, setP5] = useState('')
+  // const [photo1, setPhoto1] = useState(data ? data[0]?.photo_1 : '');
+  // const [photo2, setPhoto2] = useState(data ? data[0]?.photo_2 : '');
+  // const [photo3, setPhoto3] = useState(data ? data[0]?.photo_3 : '');
+  // const [photo4, setPhoto4] = useState(data ? data[0]?.photo_4 : '');
+  // const [photo5, setPhoto5] = useState(data ? data[0]?.photo_5 : '');
+  // const [p1, setP1] = useState('')
+  // const [p2, setP2] = useState('')
+  // const [p3, setP3] = useState('')
+  // const [p4, setP4] = useState('')
+  // const [p5, setP5] = useState('')
   // console.log(title);
 
   useEffect(() => {
