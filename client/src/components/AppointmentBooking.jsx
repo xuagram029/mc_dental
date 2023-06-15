@@ -75,7 +75,7 @@ const AppointmentBooking = ({setOpenModal}) => {
   useEffect(() => {
     const getTimes = async () => {
       try {
-        const res = await axios.get('http://localhost:8000/appointment/times');
+        const res = await axios.get('http://localhost:8000/appointment/availableTimes');
         setAvailableTimes(res.data);
       } catch (error) {
         console.log(error);

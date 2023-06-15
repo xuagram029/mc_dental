@@ -238,7 +238,14 @@ const appointmentLimit = (req, res) => {
 };
 
 const getTimes = (req, res) => {
-  db.query("SELECT * FROM times WHERE status = 'available' ", (err, data) => {
+  db.query("SELECT * FROM times", (err, data) => {
+    if (err) return res.status(500).json({message: "Error getting times"});
+    return res.json(data);
+  });
+};
+
+const getAvailableTimes = (req, res) => {
+  db.query("SELECT * FROM times WHERE status = 'available'", (err, data) => {
     if (err) return res.status(500).json({message: "Error getting times"});
     return res.json(data);
   });
@@ -285,4 +292,5 @@ module.exports = {
   appointmentLimit,
   makeAvailable,
   makeNotAvailable,
+  getAvailableTimes
 };

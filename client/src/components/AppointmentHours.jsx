@@ -32,6 +32,7 @@ const AppointmentHours = () => {
                 const res = await axios.get(`http://localhost:8000/appointment/times`)
                 setHours(res.data)
                 setFilteredHours(res.data)
+                console.log(res.data);
             } catch (error) {
                 console.log(error)
             }
